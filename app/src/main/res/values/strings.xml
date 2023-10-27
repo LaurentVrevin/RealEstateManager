@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">Real Estate Manager</string>
+
+    <!-- fragment_estate_list_view -->
+
+    <!-- fragment_estate_detail_view -->
+
+    <string name="estate_list_view_text">LIST FRAGMENT</string>
+    <string name="estate_detail_view_text"> DESCRIPTION FRAGMENT</string>
+    <string name="item_estate_typename_textview">TYPE</string>
+    <string name="item_estate_cityname_textview">CITY</string>
+    <string name="item_estate_price_textview">$1000</string>
 </resources>

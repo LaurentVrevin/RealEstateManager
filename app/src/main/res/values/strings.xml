@@ -10,4 +10,8 @@
     <string name="item_estate_typename_textview">TYPE</string>
     <string name="item_estate_cityname_textview">CITY</string>
     <string name="item_estate_price_textview">$1000</string>
+
+    <!-- drawer menu -->
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
 </resources>

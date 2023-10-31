@@ -1,4 +1,4 @@
-package com.openclassrooms.realestatemanager
+package com.openclassrooms.realestatemanager.ui.activities
 
 
 import android.os.Bundle
@@ -8,6 +8,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
+import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.ui.fragments.EstateDetailViewFragment
 import com.openclassrooms.realestatemanager.ui.fragments.EstateListViewFragment
 
@@ -32,7 +33,10 @@ class MainActivity : AppCompatActivity() {
         drawer = findViewById(R.id.drawer_layout)
 
         // Create the ActionBarDrawerToggle and set it as the drawer listener
-        val toggle = ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
+        val toggle = ActionBarDrawerToggle(this, drawer, toolbar,
+            R.string.navigation_drawer_open,
+            R.string.navigation_drawer_close
+        )
         drawer.addDrawerListener(toggle)
         toggle.syncState()
 

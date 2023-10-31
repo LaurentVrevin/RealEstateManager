@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <corners android:radius="20dp" /> <!-- Définissez le rayon pour arrondir le bouton -->
+    <solid android:color="@color/colorPrimary" /> <!-- Remplacez par la couleur souhaitée -->
+</shape>

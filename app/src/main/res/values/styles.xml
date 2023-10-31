@@ -8,4 +8,9 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="LoginButtonStyle">
+        <item name="android:background">@drawable/rounded_button</item> <!-- Utilisation d'un fond personnalisé -->
+        <item name="android:padding">12dp</item> <!-- Ajustez la taille du bouton selon vos préférences -->
+    </style>
+
 </resources>

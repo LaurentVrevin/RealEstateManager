@@ -5,18 +5,22 @@
     android:orientation="vertical"
     android:background="@color/colorPrimary"
     android:padding="16dp"
-        android:gravity="center">
+    android:gravity="center"
+    style="@style/AppTheme">
+
     <TextView
+        android:id="@+id/title_login_activity_textview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Real Estate Manager"
+        android:text="@string/login_title_real_estate_manager_textview"
         android:textColor="@color/white"
         android:textSize="20sp"
         android:textStyle="bold"
         android:gravity="center"
-        android:paddingBottom="40dp"/>
+        android:paddingBottom="@dimen/login_activity_paddingBottom"/>
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cardview"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
         app:cardCornerRadius="20dp"
@@ -25,33 +29,40 @@
         >
 
         <LinearLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:padding="20dp"
+            android:padding="@dimen/login_activity_padding_linear_layout"
             android:layout_margin="8dp">
 
 
             <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:id="@+id/til_price_of_property"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Email">
+                android:hint="@string/login_activity_email"
+                >
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/til_price_of_property_edit"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="wrap_content"
                     android:inputType="textEmailAddress"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:id="@+id/password_textinput_layout"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:hint="Mot de passe"
+                android:layout_height="wrap_content"
+                android:hint="@string/login_activity_password"
+                app:passwordToggleEnabled="true"
                 android:layout_marginBottom="10dp">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/password_textinput_edittext"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPassword"/>
@@ -62,7 +73,7 @@
                 android:id="@+id/login_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Se connecter"
+                android:text="@string/login_activity_login_button"
                 android:textColor="@color/white"
                 style="@style/LoginButtonStyle"
                 android:layout_marginBottom="10dp"/>
@@ -70,7 +81,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Vous n'avez pas de compte ? S'inscrire"/>
+                android:text="@string/login_activity_signup"/>
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>

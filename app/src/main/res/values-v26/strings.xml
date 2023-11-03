@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- detail edit activity -->
+    <string name="estate_activity_edition_type_property">Type</string>
+    <string name="estate_activity_edition_price_of_property">Price of property</string>
+    <string name="estate_activity_edition_number_of_rooms">Rooms</string>
+    <string name="estate_activity_edition_number_of_bedrooms">Bedrooms</string>
+    <string name="estate_activity_edition_number_of_bathrooms">Bathrooms</string>
+    <string name="estate_activity_edition_checkbox_schools">Schools</string>
+
+    <string name="estate_activity_edition_checkbox_restaurants">Foods</string>
+    <string name="estate_activity_edition_checkbox_shops">Shops</string>
+</resources>

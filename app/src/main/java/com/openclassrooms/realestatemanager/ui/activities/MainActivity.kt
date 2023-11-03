@@ -1,6 +1,7 @@
 package com.openclassrooms.realestatemanager.ui.activities
 
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -26,8 +27,6 @@ class MainActivity : AppCompatActivity() {
         val listFragment = supportFragmentManager.findFragmentById(R.id.main_fragment_container_list) as EstateListViewFragment?
         val detailFragment = supportFragmentManager.findFragmentById(R.id.main_fragment_container_detail) as EstateDetailViewFragment?
 
-        toolbar = findViewById(R.id.toolbar)
-        setSupportActionBar(toolbar)
 
         // Initialize the DrawerLayout
         drawer = findViewById(R.id.drawer_layout)
@@ -55,7 +54,8 @@ class MainActivity : AppCompatActivity() {
                 return true
             }
             R.id.editIcon -> {
-
+                val intent = Intent(this, EstateDetailEditActivity::class.java)
+                startActivity(intent)
                 return true
             }
             R.id.addIcon -> {

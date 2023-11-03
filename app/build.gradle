@@ -5,11 +5,12 @@ android {
     compileSdkVersion 34
     defaultConfig {
         applicationId "com.openclassrooms.realestatemanager"
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 34
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
+
     }
 
     compileOptions {
@@ -26,6 +27,7 @@ android {
     namespace 'com.openclassrooms.realestatemanager'
     buildFeatures {
         viewBinding true
+
     }
 }
 
@@ -38,12 +40,13 @@ dependencies {
     // Material Design
     implementation 'com.google.android.material:material:1.10.0'
     implementation 'androidx.core:core-ktx:1.12.0'
-    implementation 'androidx.core:core-ktx:+'
     implementation 'androidx.annotation:annotation:1.7.0'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.6.2'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2'
 
+
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+
 }

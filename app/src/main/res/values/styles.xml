@@ -1,16 +1,27 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
     </style>
 
+    <style name="AppTheme.WithActionBar" parent="Theme.MaterialComponents.Light.DarkActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:colorForeground">@color/white</item>
+        </style>
+
+
+
     <style name="LoginButtonStyle">
-        <item name="android:background">@drawable/rounded_button</item> <!-- Utilisation d'un fond personnalisé -->
-        <item name="android:padding">12dp</item> <!-- Ajustez la taille du bouton selon vos préférences -->
+        <item name="android:background">@drawable/rounded_button</item>
+        <item name="android:padding">12dp</item>
+
     </style>
 
 </resources>

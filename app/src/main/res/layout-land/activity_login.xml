@@ -18,7 +18,7 @@
         android:paddingBottom="@dimen/login_activity_paddingBottom"/>
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cardview"
+        android:id="@+id/cardview1"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
         app:cardCornerRadius="20dp"

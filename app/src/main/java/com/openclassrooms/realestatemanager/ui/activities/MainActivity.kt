@@ -27,7 +27,6 @@ class MainActivity : AppCompatActivity() {
         val listFragment = supportFragmentManager.findFragmentById(R.id.main_fragment_container_list) as EstateListViewFragment?
         val detailFragment = supportFragmentManager.findFragmentById(R.id.main_fragment_container_detail) as EstateDetailViewFragment?
 
-
         // Initialize the DrawerLayout
         drawer = findViewById(R.id.drawer_layout)
 
@@ -50,16 +49,14 @@ class MainActivity : AppCompatActivity() {
         when (item.itemId) {
 
             R.id.searchIcon -> {
-
                 return true
             }
             R.id.editIcon -> {
-                val intent = Intent(this, EstateDetailEditActivity::class.java)
-                startActivity(intent)
                 return true
             }
             R.id.addIcon -> {
-
+                val intent = Intent(this, AddEstateActivity::class.java)
+                startActivity(intent)
                 return true
             }
             else -> return super.onOptionsItemSelected(item)

@@ -33,6 +33,9 @@
     <string name="estate_activity_edition_checkbox_schools">Schools</string>
     <string name="estate_activity_edition_checkbox_restaurants">Foods</string>
     <string name="estate_activity_edition_checkbox_shops">Shops</string>
+    <string name="estate_activity_edition_checkbox_buses">Buses</string>
+    <string name="estate_activity_edition_checkbox_tramway">Tramway</string>
+    <string name="estate_activity_edition_checkbox_park">Park</string>
 
 
 </resources>

@@ -6,11 +6,11 @@ import android.os.Bundle
 import android.view.MenuItem
 import com.openclassrooms.realestatemanager.R
 
-class EstateDetailEditActivity : AppCompatActivity() {
+class AddEstateActivity : AppCompatActivity() {
     @SuppressLint("RestrictedApi")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_estate_detail_edit)
+        setContentView(R.layout.activity_estate_add)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }

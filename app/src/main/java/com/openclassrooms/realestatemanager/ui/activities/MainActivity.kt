@@ -23,9 +23,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         var toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
-
+        /**
         val listFragment = supportFragmentManager.findFragmentById(R.id.main_fragment_container_list) as EstateListViewFragment?
-        val detailFragment = supportFragmentManager.findFragmentById(R.id.main_fragment_container_detail) as EstateDetailViewFragment?
+        val detailFragment = supportFragmentManager.findFragmentById(R.id.main_fragment_container_detail) as EstateDetailViewFragment?*/
 
         // Initialize the DrawerLayout
         drawer = findViewById(R.id.drawer_layout)

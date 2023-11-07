@@ -70,8 +70,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
+                app:backgroundTint="@color/gold"
                 android:text="@string/login_activity_login_button"
-                android:textColor="@color/white" />
+                android:textColor="@color/white"
+                android:textStyle="bold"/>
 
             <TextView
                 android:layout_width="match_parent"

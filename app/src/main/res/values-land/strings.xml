@@ -1,13 +1,32 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">Real Estate Manager</string>
+
+    <!-- fragment_estate_list_view -->
+
+    <!-- fragment_estate_detail_view -->
+
+    <string name="estate_list_view_text">LIST FRAGMENT</string>
+    <string name="estate_detail_view_text"> DESCRIPTION FRAGMENT</string>
+    <string name="item_estate_typename_textview">TYPE</string>
+    <string name="item_estate_cityname_textview">CITY</string>
+    <string name="item_estate_price_textview">$1000</string>
+
+    <!-- drawer menu -->
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <!-- login activity -->
+    <string name="title_activity_login">LoginActivity</string>
     <string name="login_title_real_estate_manager_textview">Real Estate Manager</string>
     <string name="login_activity_email">Email</string>
     <string name="login_activity_password">Password</string>
     <string name="login_activity_login_button">Log in</string>
     <string name="login_activity_signup">No account ? Sign up here !</string>
+    <string name="title_activity_estate_detail_edit">Add Real Estate</string>
+
     <!-- detail edit activity -->
     <string name="estate_activity_edition_type_property">Type</string>
-    <string name="estate_activity_edition_price_of_property">Price of property</string>
+    <string name="estate_activity_edition_price_of_property">Price</string>
     <string name="estate_activity_edition_number_of_rooms">Rooms</string>
     <string name="estate_activity_edition_number_of_bedrooms">Bedrooms</string>
     <string name="estate_activity_edition_number_of_bathrooms">Bathrooms</string>
@@ -17,4 +36,13 @@
     <string name="estate_activity_edition_checkbox_buses">Buses</string>
     <string name="estate_activity_edition_checkbox_tramway">Tramway</string>
     <string name="estate_activity_edition_checkbox_park">Park</string>
+    <string name="estate_activity_edition_surface_of_property">Surface</string>
+    <string name="estate_activity_edition_description">Description</string>
+    <string name="estate_activity_edition_address_of_property">Address</string>
+    <string name="estate_activity_take_photography_button">Camera</string>
+    <string name="estate_activity_take_image_from_gallery_button">Browse</string>
+    <string name="estate_activity_edition_postal_code_of_property">ZIP</string>
+    <string name="estate_activity_edition_country_of_property">Country</string>
+
+
 </resources>

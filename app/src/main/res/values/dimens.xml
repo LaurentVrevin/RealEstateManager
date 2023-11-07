@@ -5,5 +5,5 @@
 
 
     <dimen name="login_activity_paddingBottom">40dp</dimen>
-    <dimen name="login_activity_padding_linear_layout">20dp</dimen>
+    <dimen name="login_activity_padding_linear_layout">30dp</dimen>
 </resources>

@@ -1,0 +1,10 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/add_estate_toolbar_action_save"
+        android:icon="@drawable/baseline_done_24"
+        android:title="Valider"
+        app:showAsAction="always"
+        />
+</menu>

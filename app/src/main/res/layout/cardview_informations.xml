@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView android:id="@+id/cardview_informations"
+    android:layout_width="350dp"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="4dp"
+    app:cardUseCompatPadding="true"
+    app:layout_constraintStart_toStartOf="parent"
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp"
+    >
+    <TextView
+        android:id="@+id/txtview_informations"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Informations"
+        android:textColor="@color/gold"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:paddingLeft="10dp"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_type_of_property"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:hint="@string/estate_activity_edition_type_property"
+        android:padding="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txtview_informations">
+
+        <AutoCompleteTextView
+            android:id="@+id/til_type_of_property_autocomplete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:importantForAccessibility="yes"
+            android:inputType="none" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_price_of_property"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:hint="@string/estate_activity_edition_price_of_property"
+        android:padding="5dp"
+        app:layout_constraintStart_toStartOf="@+id/til_type_of_property"
+        app:layout_constraintTop_toBottomOf="@+id/til_type_of_property">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/til_price_of_property_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:textColor="@color/colorPrimary" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_surface_of_property"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:hint="@string/estate_activity_edition_surface_of_property"
+        android:padding="5dp"
+        app:layout_constraintEnd_toEndOf="@+id/til_type_of_property"
+        app:layout_constraintStart_toEndOf="@+id/til_price_of_property"
+        app:layout_constraintTop_toBottomOf="@+id/til_type_of_property">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/til_surface_of_property_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:textColor="@color/colorPrimary" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_number_of_rooms"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:hint="@string/estate_activity_edition_number_of_rooms"
+        android:padding="5dp"
+        android:paddingBottom="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/til_price_of_property"
+        app:layout_constraintTop_toBottomOf="@+id/til_price_of_property">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/til_number_of_rooms_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:textColor="@color/colorPrimary" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_number_of_bedrooms"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:hint="@string/estate_activity_edition_number_of_bedrooms"
+        android:padding="5dp"
+        android:paddingBottom="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/til_number_of_rooms"
+        app:layout_constraintTop_toBottomOf="@+id/til_price_of_property">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/til_number_of_bedrooms_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:textColor="@color/colorPrimary" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_number_of_bathrooms"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:hint="@string/estate_activity_edition_number_of_bathrooms"
+        android:padding="5dp"
+        android:paddingBottom="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/til_surface_of_property"
+        app:layout_constraintStart_toEndOf="@+id/til_number_of_bedrooms"
+        app:layout_constraintTop_toBottomOf="@+id/til_price_of_property">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/til_number_of_bathrooms_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:textColor="@color/colorPrimary" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

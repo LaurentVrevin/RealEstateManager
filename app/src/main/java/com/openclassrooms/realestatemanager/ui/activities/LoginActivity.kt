@@ -22,7 +22,7 @@ class LoginActivity : AppCompatActivity() {
         val emailEditText = findViewById<TextInputEditText>(R.id.til_price_of_property_edit)
         val passwordEditText = findViewById<TextInputEditText>(R.id.password_textinput_edittext)
         val loginButton = findViewById<Button>(R.id.login_button)
-        val cardView = findViewById<CardView>(R.id.cardview1)
+        val cardView = findViewById<CardView>(R.id.cardview_informations)
         val logoImageView = findViewById<ImageView>(R.id.login_logo_imv)
 
         // Load animations for elements

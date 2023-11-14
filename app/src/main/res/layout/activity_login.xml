@@ -14,7 +14,7 @@
         android:src="@drawable/realestatelogo" />
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cardview1"
+        android:id="@+id/cardview_informations"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
         app:cardCornerRadius="20dp"

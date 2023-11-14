@@ -43,6 +43,11 @@
     <string name="estate_activity_take_image_from_gallery_button">Browse</string>
     <string name="estate_activity_edition_postal_code_of_property">ZIP</string>
     <string name="estate_activity_edition_country_of_property">Country</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="menu_bottom_mapview">Map</string>
+    <string name="menu_bottom_listview">List</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">MAP VIEW FRAGMENT</string>
 
 
 </resources>

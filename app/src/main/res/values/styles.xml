@@ -6,7 +6,6 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/gold</item>
-        <item name="colorPrimarySurface">@color/gold</item>
 
     </style>
 
@@ -15,7 +14,15 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/gold</item>
         <item name="android:colorForeground">@color/white</item>
-        </style>
+    </style>
+
+    <style name="BottomNavigationView">
+        <item name="colorPrimary">@color/gold</item>
+        <item name="colorOnSurface">@color/white</item>
+        <item name="backgroundTint">@color/colorPrimary</item>
+        <item name="colorAccent">@color/white</item>
+        <item name="android:foregroundTint">@color/white</item>
+    </style>
 
     <style name="LoginButtonStyle">
         <item name="android:background">@drawable/rounded_button</item>

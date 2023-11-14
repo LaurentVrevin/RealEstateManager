@@ -24,7 +24,7 @@ class AddEstateActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.add_estate_toolbar_action_save -> {
-                // Insérez ici le code à exécuter lorsque le bouton "Valider" est cliqué.
+                // TODO : code to save adding new estate
                 return true
             }
             android.R.id.home -> {

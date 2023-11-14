@@ -43,6 +43,8 @@
     <string name="estate_activity_take_image_from_gallery_button">Browse</string>
     <string name="estate_activity_edition_postal_code_of_property">ZIP</string>
     <string name="estate_activity_edition_country_of_property">Country</string>
+    <string name="menu_bottom_mapview">Mapview</string>
+    <string name="menu_bottom_listview">Listview</string>
 
 
 </resources>

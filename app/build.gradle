@@ -44,7 +44,9 @@ dependencies {
     implementation 'androidx.annotation:annotation:1.7.0'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.6.2'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2'
-    implementation 'androidx.navigation:navigation-fragment:2.7.4'
+    implementation 'androidx.navigation:navigation-fragment:2.7.5'
+    implementation "androidx.navigation:navigation-fragment-ktx:2.7.5"
+    implementation "androidx.navigation:navigation-ui-ktx:2.7.5"
 
     // tests
     testImplementation 'junit:junit:4.13.2'

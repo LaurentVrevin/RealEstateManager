@@ -23,6 +23,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(false)
 
         drawer = findViewById(R.id.drawer_layout)
         bottomNavigationView = findViewById(R.id.bottom_nav_view)
@@ -32,7 +33,7 @@ class MainActivity : AppCompatActivity() {
         toggle.syncState()
         configureBottomView()
 
-        // Initial fragment to display
+        // Initialize fragment to display
         displayFragment(EstateListViewFragment())
     }
 

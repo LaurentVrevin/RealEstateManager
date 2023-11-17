@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="400dp"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:padding="16dp"
+    >
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/dialog_add_photo_editTextPhotoName"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:textColorHint="@color/colorPrimary"
+        android:hint="@string/dialog_add_name_of_picture"
+        android:padding="5dp"
+        app:counterEnabled="true"
+        app:counterMaxLength="20">
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/dialog_add_photo_editTextPhotoNameEdit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:textColor="@color/colorPrimary"
+        android:maxLength="20"
+        />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+</LinearLayout>

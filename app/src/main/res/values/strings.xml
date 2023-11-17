@@ -15,39 +15,68 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <!-- login activity -->
+    <!-- Login activity -->
     <string name="title_activity_login">LoginActivity</string>
     <string name="login_title_real_estate_manager_textview">Real Estate Manager</string>
     <string name="login_activity_email">Email</string>
     <string name="login_activity_password">Password</string>
     <string name="login_activity_login_button">Log in</string>
     <string name="login_activity_signup">No account ? Sign up here !</string>
-    <string name="title_activity_estate_detail_edit">Add Real Estate</string>
 
-    <!-- detail edit activity -->
-    <string name="estate_activity_edition_type_property">Type</string>
-    <string name="estate_activity_edition_price_of_property">Price</string>
-    <string name="estate_activity_edition_number_of_rooms">Rooms</string>
-    <string name="estate_activity_edition_number_of_bedrooms">Bedrooms</string>
-    <string name="estate_activity_edition_number_of_bathrooms">Bathrooms</string>
-    <string name="estate_activity_edition_checkbox_schools">Schools</string>
-    <string name="estate_activity_edition_checkbox_restaurants">Foods</string>
-    <string name="estate_activity_edition_checkbox_shops">Shops</string>
-    <string name="estate_activity_edition_checkbox_buses">Buses</string>
-    <string name="estate_activity_edition_checkbox_tramway">Tramway</string>
-    <string name="estate_activity_edition_checkbox_park">Park</string>
-    <string name="estate_activity_edition_surface_of_property">Surface</string>
-    <string name="estate_activity_edition_description">Description</string>
-    <string name="estate_activity_edition_address_of_property">Address</string>
-    <string name="estate_activity_take_photography_button">Camera</string>
-    <string name="estate_activity_take_image_from_gallery_button">Browse</string>
-    <string name="estate_activity_edition_postal_code_of_property">ZIP</string>
-    <string name="estate_activity_edition_country_of_property">Country</string>
+    <!-- Add Estate Activity -->
+    <string name="add_estate_activity_title">Add Real Estate</string>
+    <string name="add_estate_activity_type_property">Type</string>
+    <string name="add_estate_activity_price_of_property">Price</string>
+    <string name="add_estate_activity_number_of_rooms">Rooms</string>
+    <string name="add_estate_activity_number_of_bedrooms">Bedrooms</string>
+    <string name="add_estate_activity_number_of_bathrooms">Bathrooms</string>
+    <string name="add_estate_activity_checkbox_schools">Schools</string>
+    <string name="add_estate_activity_checkbox_restaurants">Foods</string>
+    <string name="add_estate_activity_checkbox_shops">Shops</string>
+    <string name="add_estate_activity_checkbox_buses">Buses</string>
+    <string name="add_estate_activity_checkbox_tramway">Tramway</string>
+    <string name="add_estate_activity_checkbox_park">Park</string>
+    <string name="add_estate_activity_surface_of_property">Surface</string>
+    <string name="add_estate_activity_description">Description</string>
+    <string name="add_estate_activity_address_of_property">Address</string>
+    <string name="add_estate_activity_take_photography_button">Camera</string>
+    <string name="add_estate_activity_take_image_from_gallery_button">Browse</string>
+    <string name="add_estate_activity_postal_code_of_property">ZIP</string>
+    <string name="add_estate_activity_country_of_property">Country</string>
+    <string name="add_estate_activity_dialog_add_title">Name of the picture</string>
+    <string name="add_estate_activity_dialog_add_add_button">Add</string>
+    <string name="add_estate_activity_dialog_add_cancel_button">Cancel</string>
+    <string name="add_estate_activity_dialog_add_ok_button">OK</string>
+    <string name="add_estate_activity_dialog_add_error_title">Error</string>
+    <string name="add_estate_activity_dialog_add_error_message">Please, enter a name for the picture.</string>
+    <string name="add_estate_activity_dialog_save_error_title">Error</string>
+    <string name="add_estate_activity_dialog_save_error_message">You must fill all the fields</string>
+
+    <!-- Add Estate Photo Adapter -->
+    <string name="add_estate_photo_adapter_dialog_edit_title">Change the name for the picture</string>
+    <string name="add_estate_photo_adapter_dialog_edit_validate_button">Validate</string>
+    <string name="add_estate_photo_adapter_dialog_edit_error_title">Error</string>
+    <string name="add_estate_photo_adapter_dialog_edit_error_message">Please, enter a name for the picture.</string>
+    <string name="add_estate_photo_adapter_dialog_edit_cancel_button">Cancel</string>
+    <string name="add_estate_photo_adapter_dialog_edit_ok_button">OK</string>
+    <string name="add_estate_photo_adapter_dialog_delete_title">Delete Photo</string>
+    <string name="add_estate_photo_adapter_dialog_delete_message">Are you sure you want to delete this photo?</string>
+    <string name="add_estate_photo_adapter_dialog_delete_yes_button">Yes</string>
+    <string name="add_estate_photo_adapter_dialog_delete_no_button">No</string>
+
+    <!-- Dialog Add Photo -->
+    <string name="dialog_add_name_of_picture">Name of picture</string>
+
+    <!-- Dialog Add Photo -->
+    <string name="dialog_edit_photo_name_new_name_of_picture">New name of picture</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="menu_bottom_mapview">Map</string>
     <string name="menu_bottom_listview">List</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">MAP VIEW FRAGMENT</string>
+    <string name="add_estate_activity_dialog_add_success_title">Success</string>
+    <string name="add_estate_activity_dialog_add_success_message">You\'ve saved with success</string>
 
 
 </resources>

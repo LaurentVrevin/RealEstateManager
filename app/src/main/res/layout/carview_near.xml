@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
+<androidx.cardview.widget.CardView xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cardview_near"
-    android:layout_width="350dp"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="10dp"
     app:cardCornerRadius="20dp"
@@ -15,23 +15,26 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="10dp"
-        >
+        android:padding="10dp">
+
         <TextView
             android:id="@+id/txtview_near"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
             android:text="Near"
             android:textColor="@color/gold"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:paddingLeft="10dp"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.checkbox.MaterialCheckBox
             android:id="@+id/checkbox_schools"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:text="@string/estate_activity_edition_checkbox_schools"
+            android:text="@string/add_estate_activity_checkbox_schools"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txtview_near">
 
@@ -41,7 +44,8 @@
             android:id="@+id/checkbox_restaurants"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:text="@string/estate_activity_edition_checkbox_restaurants"
+            android:text="@string/add_estate_activity_checkbox_restaurants"
+            app:layout_constraintEnd_toStartOf="@+id/checkbox_Shops"
             app:layout_constraintStart_toEndOf="@+id/checkbox_schools"
             app:layout_constraintTop_toBottomOf="@+id/txtview_near">
 
@@ -51,8 +55,8 @@
             android:id="@+id/checkbox_Shops"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:text="@string/estate_activity_edition_checkbox_shops"
-            app:layout_constraintStart_toEndOf="@+id/checkbox_restaurants"
+            android:text="@string/add_estate_activity_checkbox_shops"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txtview_near">
 
         </com.google.android.material.checkbox.MaterialCheckBox>
@@ -61,7 +65,7 @@
             android:id="@+id/checkbox_buses"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:text="@string/estate_activity_edition_checkbox_buses"
+            android:text="@string/add_estate_activity_checkbox_buses"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/checkbox_schools">
@@ -72,10 +76,11 @@
             android:id="@+id/checkbox_tramway"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:text="@string/estate_activity_edition_checkbox_tramway"
+            android:text="@string/add_estate_activity_checkbox_tramway"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/checkbox_buses"
-            app:layout_constraintTop_toBottomOf="@+id/checkbox_schools">
+            app:layout_constraintEnd_toStartOf="@+id/checkbox_park"
+            app:layout_constraintStart_toEndOf="@+id/checkbox_buses"
+            app:layout_constraintTop_toBottomOf="@+id/checkbox_restaurants">
 
         </com.google.android.material.checkbox.MaterialCheckBox>
 
@@ -83,10 +88,11 @@
             android:id="@+id/checkbox_park"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:text="@string/estate_activity_edition_checkbox_park"
+            android:text="@string/add_estate_activity_checkbox_park"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/checkbox_tramway"
-            app:layout_constraintTop_toBottomOf="@+id/checkbox_schools">
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/checkbox_Shops"
+            tools:ignore="MissingConstraints">
 
         </com.google.android.material.checkbox.MaterialCheckBox>
     </androidx.constraintlayout.widget.ConstraintLayout>

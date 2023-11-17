@@ -20,7 +20,6 @@ class EstateListViewFragment : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_estate_list_view, container, false)
 
-        // Show the back arrow in the action bar
         setHasOptionsMenu(true)
         (requireActivity() as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
 

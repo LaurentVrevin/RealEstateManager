@@ -6,10 +6,10 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="false">
+    android:fitsSystemWindows="true"
+    tools:context=".ui.activities.MainActivity">
 
 <androidx.constraintlayout.widget.ConstraintLayout
-
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.openclassrooms.realestatemanager.ui.activities.MainActivity"
@@ -17,11 +17,11 @@
 
             <!-- Toolbar -->
     <androidx.appcompat.widget.Toolbar
-        android:theme="@style/AppTheme.WithActionBar"
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
+        app:titleTextColor="@color/white"
         android:minHeight="?attr/actionBarSize"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

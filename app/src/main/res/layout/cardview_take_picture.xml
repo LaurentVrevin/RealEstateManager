@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cardview_take_picture"
-    android:layout_width="350dp"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="10dp"
     app:cardCornerRadius="20dp"
@@ -31,10 +31,10 @@
         <Button
             android:id="@+id/take_photography_button"
             style="@style/LoginButtonStyle"
-            android:layout_width="150dp"
+            android:layout_width="160dp"
             android:layout_height="wrap_content"
             android:paddingRight="10dp"
-            android:text="@string/estate_activity_take_photography_button"
+            android:text="@string/add_estate_activity_take_photography_button"
             android:textColor="@color/white"
             app:backgroundTint="@color/gold"
             android:padding="5dp"
@@ -46,16 +46,16 @@
         <Button
             android:id="@+id/take_from_gallery_button"
             style="@style/LoginButtonStyle"
-            android:layout_width="150dp"
+            android:layout_width="160dp"
             android:layout_height="wrap_content"
             android:padding="5dp"
-            android:text="@string/estate_activity_take_image_from_gallery_button"
+            android:text="@string/add_estate_activity_take_image_from_gallery_button"
             android:textColor="@color/white"
             app:backgroundTint="@color/gold"
             app:icon="@drawable/baseline_image_search_24"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/take_photography_button"
+
             app:layout_constraintTop_toBottomOf="@+id/txtview_take_picture" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

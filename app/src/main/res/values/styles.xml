@@ -3,18 +3,44 @@
     <!-- Base application theme. -->
     <style name="AppTheme.NoActionBar" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your theme here. -->
+        <!-- couleur de la toolbar etc -->
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimaryDark">@color/colorPrimary</item>
+        <!-- couleur quand on clique sur un objet type checkbox etc -->
         <item name="colorAccent">@color/gold</item>
+        <!-- couleur du text etc -->
+        <item name="android:textColor">@color/colorPrimary</item>
+        <!-- couleur du text dans les editbox-->
+        <item name="android:textColorPrimary">@color/colorPrimary</item>
+        <item name="android:textColorSecondary">@color/white</item>
+
 
     </style>
 
-    <style name="AppTheme.WithActionBar" parent="Theme.MaterialComponents.Light.DarkActionBar">
+    <style name="AppTheme.WithActionBar" parent="Theme.MaterialComponents.Light">
+        <!-- Customize your theme here. -->
+        <!-- couleur de la toolbar etc -->
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimaryDark">@color/colorPrimary</item>
+        <!-- couleur quand on clique sur un objet type checkbox etc -->
         <item name="colorAccent">@color/gold</item>
-        <item name="android:colorForeground">@color/white</item>
+        <!-- couleur du text etc -->
+        <item name="android:textColor">@color/colorPrimary</item>
+        <!-- couleur du text dans les editbox-->
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:textColorSecondary">@color/white</item>
     </style>
+
+
+    <style name="MyAlertDialogStyle" parent="Theme.MaterialComponents.Light.Dialog">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+        <!-- couleur du text dans les editbox-->
+        <item name="android:textColorPrimary">@color/colorPrimary</item>
+        <item name="android:textColorSecondary">@color/colorPrimary</item>
+        <item name="dialogCornerRadius">12dp</item>
+    </style>
+
 
     <style name="BottomNavigationView">
         <item name="colorPrimary">@color/gold</item>

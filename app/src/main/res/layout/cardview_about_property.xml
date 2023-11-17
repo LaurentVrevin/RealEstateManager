@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView
     android:id="@+id/cardview_about_property"
-    android:layout_width="350dp"
+    android:layout_width="match_parent"
     android:layout_height="200dp"
     app:cardCornerRadius="20dp"
     app:cardElevation="4dp"
@@ -36,7 +36,7 @@
                 android:foregroundTint="@color/gold"
                 android:gravity="center"
                 android:elevation="4dp"
-                android:hint="@string/estate_activity_edition_description"
+                android:hint="@string/add_estate_activity_description"
                 android:inputType="textMultiLine"
 
                 app:counterEnabled="true"

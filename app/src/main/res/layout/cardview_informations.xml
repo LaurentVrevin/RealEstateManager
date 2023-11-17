@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView android:id="@+id/cardview_informations"
-    android:layout_width="350dp"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:cardCornerRadius="20dp"
     app:cardElevation="4dp"
@@ -28,10 +28,10 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_type_of_property"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-        android:layout_width="300dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:hint="@string/estate_activity_edition_type_property"
+        android:hint="@string/add_estate_activity_type_property"
         android:padding="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -41,17 +41,18 @@
             android:id="@+id/til_type_of_property_autocomplete"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/colorPrimary"
             android:importantForAccessibility="yes"
-            android:inputType="none" />
+            android:inputType="text" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_price_of_property"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="150dp"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:hint="@string/estate_activity_edition_price_of_property"
+        android:hint="@string/add_estate_activity_price_of_property"
         android:padding="5dp"
         app:layout_constraintStart_toStartOf="@+id/til_type_of_property"
         app:layout_constraintTop_toBottomOf="@+id/til_type_of_property">
@@ -68,10 +69,10 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_surface_of_property"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="150dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:hint="@string/estate_activity_edition_surface_of_property"
+        android:hint="@string/add_estate_activity_surface_of_property"
         android:padding="5dp"
         app:layout_constraintEnd_toEndOf="@+id/til_type_of_property"
         app:layout_constraintStart_toEndOf="@+id/til_price_of_property"
@@ -89,10 +90,10 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_number_of_rooms"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="100dp"
+        android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:hint="@string/estate_activity_edition_number_of_rooms"
+        android:hint="@string/add_estate_activity_number_of_rooms"
         android:padding="5dp"
         android:paddingBottom="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -111,10 +112,10 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_number_of_bedrooms"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="100dp"
+        android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:hint="@string/estate_activity_edition_number_of_bedrooms"
+        android:hint="@string/add_estate_activity_number_of_bedrooms"
         android:padding="5dp"
         android:paddingBottom="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -133,10 +134,10 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_number_of_bathrooms"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="100dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:hint="@string/estate_activity_edition_number_of_bathrooms"
+        android:hint="@string/add_estate_activity_number_of_bathrooms"
         android:padding="5dp"
         android:paddingBottom="10dp"
         app:layout_constraintBottom_toBottomOf="parent"

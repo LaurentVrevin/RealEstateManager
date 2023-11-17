@@ -14,13 +14,13 @@
         <activity
             android:name=".ui.activities.AddEstateActivity"
             android:exported="false"
-            android:label="@string/title_activity_estate_detail_edit"
-            android:theme="@style/AppTheme.WithActionBar" />
+            android:label="@string/add_estate_activity_title"
+            android:theme="@style/AppTheme.WithActionBar"
+            />
         <activity
             android:name=".ui.activities.LoginActivity"
             android:exported="true"
             android:label="@string/title_activity_login"
-            android:theme="@style/AppTheme.NoActionBar"
             >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -31,6 +31,7 @@
         <activity
             android:name=".ui.activities.MainActivity"
             android:exported="true"
+
             />
     </application>
 

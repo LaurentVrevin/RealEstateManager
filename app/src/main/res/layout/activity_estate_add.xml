@@ -4,7 +4,7 @@
     tools:context=".ui.activities.AddEstateActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary_light">
+    android:background="@color/colorPrimary">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,6 +21,12 @@
         <include layout="@layout/carview_where" />
 
         <include layout="@layout/cardview_take_picture"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewPhotos"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:foregroundGravity="center"/>
 
     </LinearLayout>
 

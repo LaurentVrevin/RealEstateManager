@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.openclassrooms.realestatemanager.R
+import com.openclassrooms.realestatemanager.data.model.Estate
 import com.openclassrooms.realestatemanager.data.model.Photo
 import com.openclassrooms.realestatemanager.ui.adapters.AddEstatePhotoAdapter
 import java.util.UUID
@@ -173,9 +174,29 @@ class AddEstateActivity : AppCompatActivity() {
         )
     }
     private fun saveEstate() {
-        // TODO : Add logic to save the estate
-        if (checkIfAllFieldsFilled(/* Add references to other required fields */)) {
-            // TODO : Add logic to save the estate
+        // TODO : Ajouter la logique pour sauvegarder le bien immobilier
+        if (checkIfAllFieldsFilled()) {
+            // Créer un nouvel objet Estate
+            val newEstate = Estate(
+                descriptionEditText.text.toString(),
+                typeOfPropertyEditText.text.toString(),
+                priceOfPropertyEditText.text.toString(),
+                surfaceOfPropertyEditText.text.toString(),
+                numberOfRoomsEditText.text.toString(),
+                numberOfBedroomsEditText.text.toString(),
+                numberOfBathroomsEditText.text.toString(),
+                addressOfPropertyEditText.text.toString(),
+                postalCodeOfPropertyEditText.text.toString(),
+                countryOfPropertyEditText.text.toString(),
+                photoList
+            )
+
+            // Ajouter le nouvel objet Estate à une liste (vous devrez gérer cette liste dans votre architecture)
+            // estateList.add(newEstate)
+
+            // TODO : Ajouter la logique pour sauvegarder la liste de biens immobiliers
+
+            // Afficher le message de succès
             showDialog(R.string.add_estate_activity_dialog_add_success_title, R.string.add_estate_activity_dialog_add_success_message)
         }
     }

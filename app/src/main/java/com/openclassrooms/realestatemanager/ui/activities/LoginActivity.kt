@@ -6,22 +6,33 @@ import android.os.Bundle
 import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import com.google.android.material.textfield.TextInputEditText
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import com.openclassrooms.realestatemanager.R
 
 
 class LoginActivity : AppCompatActivity() {
+    private lateinit var auth: FirebaseAuth;
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
+
+
+        // Initialize Firebase Auth
+        auth = Firebase.auth
+
         // Initialize UI elements
         val emailEditText = findViewById<TextInputEditText>(R.id.til_price_of_property_edit)
         val passwordEditText = findViewById<TextInputEditText>(R.id.password_textinput_edittext)
         val loginButton = findViewById<Button>(R.id.login_button)
+        val signinbutton = findViewById<TextView>(R.id.signin_button)
         val cardView = findViewById<CardView>(R.id.cardview_informations)
         val logoImageView = findViewById<ImageView>(R.id.login_logo_imv)
 

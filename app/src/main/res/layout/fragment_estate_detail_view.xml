@@ -4,12 +4,47 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.fragments.EstateDetailViewFragment">
-
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <!-- Description Section -->
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/estate_detail_view_text" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+    <!-- Carousel for photos -->
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/photoViewPager"
+        android:layout_width="match_parent"
+        android:layout_height="300dp" />
+
+
+
+        <!-- Type, Nombre de pièces, etc. -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Type: Villa, Chambres: 3, Salles de bain: 2"
+            android:padding="16dp" />
+
+        <!-- Autres détails si nécessaire -->
+
+        <!-- Geographic Location Section -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Emplacement géographique"
+            android:padding="16dp" />
+
+        <!-- Google Map Fragment or MapView can be added here -->
+        <com.google.android.gms.maps.MapView
+            android:id="@+id/mapView"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            />
+
+
+    </LinearLayout>
+
 
 
 </FrameLayout>

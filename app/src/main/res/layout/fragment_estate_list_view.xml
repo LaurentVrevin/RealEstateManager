@@ -6,12 +6,16 @@
     tools:context=".ui.fragments.EstateListViewFragment">
 
     <TextView
+        android:id="@+id/no_property_textview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/estate_list_view_text" />
+        android:gravity="center"
+        android:text="@string/estate_list_view_text"
+        android:layout_gravity="center"
+        />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/estate_detail_recyclerview"
+        android:id="@+id/estate_list_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"

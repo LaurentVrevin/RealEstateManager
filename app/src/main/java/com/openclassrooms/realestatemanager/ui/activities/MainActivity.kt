@@ -2,7 +2,9 @@ package com.openclassrooms.realestatemanager.ui.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
+import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -12,11 +14,17 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.ui.fragments.EstateListViewFragment
 import com.openclassrooms.realestatemanager.ui.fragments.MapViewFragment
+import com.openclassrooms.realestatemanager.viewmodels.EstateViewModel
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var drawer: DrawerLayout
     private lateinit var bottomNavigationView: BottomNavigationView
+
+    private val estateViewModel: EstateViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,7 +36,22 @@ class MainActivity : AppCompatActivity() {
         drawer = findViewById(R.id.drawer_layout)
         bottomNavigationView = findViewById(R.id.bottom_nav_view)
 
-        val toggle = ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
+        val toggle = ActionBarDrawerToggle(
+            this,
+            drawer,
+            toolbar,
+            R.string.navigation_drawer_open,
+            R.string.navigation_drawer_close
+        )
+
+
+        // Récupérer la liste LiveData de propriétés
+        val propertyListLiveData = estateViewModel.getPropertyList()
+        // Observer la liste LiveData pour les mises à jour
+        propertyListLiveData.observe(this) { propertyList ->
+            Log.d("TESTLIVEDATA", "La liste contient : ${propertyList.size} objets")
+            Log.d("TESTLIVEDATA", "Cet objet contient :  $propertyList")
+        }
         drawer.addDrawerListener(toggle)
         toggle.syncState()
         configureBottomView()
@@ -37,13 +60,14 @@ class MainActivity : AppCompatActivity() {
         displayFragment(EstateListViewFragment())
     }
 
-    private fun configureBottomView(){
+    private fun configureBottomView() {
         bottomNavigationView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.nav_listview -> {
                     displayFragment(EstateListViewFragment())
 
                 }
+
                 R.id.nav_mapview -> {
                     displayFragment(MapViewFragment())
 
@@ -54,8 +78,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId){
-            R.id.addIcon ->{
+        when (item.itemId) {
+            R.id.addIcon -> {
                 // Open AddEstateActivity
                 val intent = Intent(this, AddEstateActivity::class.java)
                 startActivity(intent)
@@ -71,5 +95,23 @@ class MainActivity : AppCompatActivity() {
             .replace(R.id.main_fragment_container, fragment)
             .commit()
     }
+
+    override fun onResume() {
+        super.onResume()
+        Log.d("ETAT", "onResume")
+
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.d("ETAT", "onPause")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.d("ETAT", "onStop")
+    }
+
+
 
 }

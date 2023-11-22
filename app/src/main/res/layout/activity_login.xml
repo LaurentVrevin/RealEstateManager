@@ -76,6 +76,7 @@
                 android:textStyle="bold"/>
 
             <TextView
+                android:id="@+id/signin_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/login_activity_signup" />

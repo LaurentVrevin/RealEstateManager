@@ -1,6 +1,7 @@
 package com.openclassrooms.realestatemanager.data.model
 
-data class Estate(
+data class Property(
+    val id: String,
     val description: String,
     val typeOfProperty: String,
     val price: String,

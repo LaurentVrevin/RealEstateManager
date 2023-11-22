@@ -6,6 +6,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
@@ -13,21 +14,26 @@ import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Button
 import android.widget.EditText
-import androidx.appcompat.app.AlertDialog
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.openclassrooms.realestatemanager.R
-import com.openclassrooms.realestatemanager.data.model.Estate
+import com.openclassrooms.realestatemanager.data.model.Property
 import com.openclassrooms.realestatemanager.data.model.Photo
 import com.openclassrooms.realestatemanager.ui.adapters.AddEstatePhotoAdapter
+import com.openclassrooms.realestatemanager.viewmodels.EstateViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.UUID
 
+
+@AndroidEntryPoint
 class AddEstateActivity : AppCompatActivity() {
 
     private val PICK_IMAGE_REQUEST = 1
     private lateinit var photoList: ArrayList<Photo>
+    private val propertyDataList = mutableListOf<Property>()
     private lateinit var addEstatePhotoAdapter: AddEstatePhotoAdapter
     private lateinit var descriptionEditText: EditText
     private lateinit var typeOfPropertyEditText: AutoCompleteTextView
@@ -39,6 +45,8 @@ class AddEstateActivity : AppCompatActivity() {
     private lateinit var addressOfPropertyEditText: EditText
     private lateinit var postalCodeOfPropertyEditText: EditText
     private lateinit var countryOfPropertyEditText: EditText
+
+    private val estateViewModel: EstateViewModel by viewModels()
 
     @SuppressLint("RestrictedApi")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,6 +70,7 @@ class AddEstateActivity : AppCompatActivity() {
         photoList = ArrayList()
         addEstatePhotoAdapter = AddEstatePhotoAdapter(photoList)
 
+
         // Configure the RecyclerView with a GridLayoutManager
         val recyclerView: RecyclerView = findViewById(R.id.recyclerViewPhotos)
         recyclerView.layoutManager = GridLayoutManager(this, 2)
@@ -79,6 +88,8 @@ class AddEstateActivity : AppCompatActivity() {
 
         val propertyTypeAdapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, propertyTypesList)
         typeOfPropertyEditText.setAdapter(propertyTypeAdapter)
+
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -176,8 +187,10 @@ class AddEstateActivity : AppCompatActivity() {
     private fun saveEstate() {
         // TODO : Ajouter la logique pour sauvegarder le bien immobilier
         if (checkIfAllFieldsFilled()) {
-            // Créer un nouvel objet Estate
-            val newEstate = Estate(
+            // Make a new property object
+            val estateId = UUID.randomUUID().toString()
+            val newProperty = Property(
+                estateId,
                 descriptionEditText.text.toString(),
                 typeOfPropertyEditText.text.toString(),
                 priceOfPropertyEditText.text.toString(),
@@ -191,15 +204,18 @@ class AddEstateActivity : AppCompatActivity() {
                 photoList
             )
 
-            // Ajouter le nouvel objet Estate à une liste (vous devrez gérer cette liste dans votre architecture)
-            // estateList.add(newEstate)
+            propertyDataList.add(newProperty)
+            estateViewModel.addProperty(newProperty)
 
-            // TODO : Ajouter la logique pour sauvegarder la liste de biens immobiliers
+            Log.d("PROPERTYTEST", "The property list is :${propertyDataList}")
 
-            // Afficher le message de succès
+
+            // show successed message
             showDialog(R.string.add_estate_activity_dialog_add_success_title, R.string.add_estate_activity_dialog_add_success_message)
+            finish()
         }
     }
+
 
     private fun showDialog(titleResId: Int, messageResId: Int) {
         MaterialAlertDialogBuilder(this, R.style.MyAlertDialogStyle)
@@ -207,6 +223,12 @@ class AddEstateActivity : AppCompatActivity() {
             .setMessage(getString(messageResId))
             .setPositiveButton(R.string.add_estate_activity_dialog_add_ok_button, null)
             .show()
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+
     }
 
 

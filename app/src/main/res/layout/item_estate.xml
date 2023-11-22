@@ -1,46 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+
+<androidx.cardview.widget.CardView
+    android:id="@+id/cardview_item_photo"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="200dp"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="4dp"
+    app:cardUseCompatPadding="true"
+    app:layout_constraintStart_toStartOf="parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <ImageView
-        android:id="@+id/item_estate_photo_imageview"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:background="@drawable/ic_launcher_foreground"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/item_estate_typename_textview"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="16dp"
-        android:text="@string/item_estate_typename_textview"
-        app:layout_constraintStart_toEndOf="@+id/item_estate_photo_imageview"
-        app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/item_estate_cityname_textview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:text="@string/item_estate_cityname_textview"
-        app:layout_constraintStart_toEndOf="@+id/item_estate_photo_imageview"
-        app:layout_constraintTop_toBottomOf="@+id/item_estate_typename_textview" />
+        android:padding="10dp">
 
-    <TextView
-        android:id="@+id/item_estate_price_textview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:text="@string/item_estate_price_textview"
-        app:layout_constraintStart_toEndOf="@+id/item_estate_photo_imageview"
-        app:layout_constraintTop_toBottomOf="@+id/item_estate_cityname_textview" />
+        <ImageView
+            android:id="@+id/item_estate_photo_imageview"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:background="@drawable/ic_launcher_foreground"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
+        <TextView
+            android:id="@+id/item_estate_typename_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="16dp"
+            android:text="@string/item_estate_typename_textview"
+            android:textSize="15dp"
+            android:textStyle="italic"
+            app:layout_constraintStart_toEndOf="@+id/item_estate_photo_imageview"
+            app:layout_constraintTop_toTopOf="parent" />
 
+        <TextView
+            android:id="@+id/item_estate_cityname_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/item_estate_cityname_textview"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/item_estate_photo_imageview"
+            app:layout_constraintTop_toBottomOf="@+id/item_estate_typename_textview" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/item_estate_price_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="@string/item_estate_price_textview"
+            android:textColor="@color/gold"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/item_estate_photo_imageview"
+            app:layout_constraintTop_toBottomOf="@+id/item_estate_cityname_textview" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>
+

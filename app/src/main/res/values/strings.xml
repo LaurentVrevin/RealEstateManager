@@ -5,7 +5,7 @@
 
     <!-- fragment_estate_detail_view -->
 
-    <string name="estate_list_view_text">LIST FRAGMENT</string>
+    <string name="estate_list_view_text">No Property for the moment</string>
     <string name="estate_detail_view_text"> DESCRIPTION FRAGMENT</string>
     <string name="item_estate_typename_textview">TYPE</string>
     <string name="item_estate_cityname_textview">CITY</string>

@@ -4,10 +4,8 @@ plugins{
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
     id 'com.google.gms.google-services'
-
-
+    id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
 }
-
 
 android {
     compileSdkVersion 34
@@ -73,6 +71,10 @@ dependencies {
 
     //LOCATION
     implementation 'com.google.android.gms:play-services-maps:18.2.0'
+    // Dependency to include Places SDK for Android
+    implementation 'com.google.android.libraries.places:places:3.3.0'
+    // Places SDK for Android KTX Library
+    implementation 'com.google.maps.android:places-ktx:2.0.0'
 
     // Tests
     testImplementation 'junit:junit:4.13.2'

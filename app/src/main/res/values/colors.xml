@@ -7,7 +7,7 @@
 
     <color name="white">#FFFFFFFF</color>
     <color name="gold">#DBC061</color>
-    <color name="gold_light">#EADCAD</color>
-    <color name="colorPrimary_light">#88B3C9</color>
+    <color name="gold_light">#FBF9F3</color>
+    <color name="colorPrimary_light">#335C72</color>
 
 </resources>

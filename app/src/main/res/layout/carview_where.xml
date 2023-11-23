@@ -26,69 +26,59 @@
             android:textSize="20sp"
             android:textStyle="bold" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/til_address_of_property"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        <fragment
+            android:id="@+id/autocomplete_fragment"
+            android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
+            app:layout_constraintTop_toBottomOf="@+id/txtview_where" />
+
+        <!-- Remplacez til_address_of_property par txt_address_of_property -->
+        <TextView
+            android:id="@+id/txt_address_of_property"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
             android:hint="@string/add_estate_activity_address_of_property"
             android:padding="5dp"
+            android:textColor="@color/colorPrimary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txtview_where">
+            app:layout_constraintTop_toBottomOf="@+id/autocomplete_fragment" />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/til_address_of_property_edit"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="text"
-                android:textColor="@color/colorPrimary" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/til_postal_code_of_property"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="100dp"
+        <!-- Remplacez til_postal_code_of_property par txt_postal_code_of_property -->
+        <TextView
+            android:id="@+id/txt_city_of_property"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:hint="@string/add_estate_activity_postal_code_of_property"
             android:padding="5dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:textColor="@color/colorPrimary"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/til_address_of_property">
+            app:layout_constraintTop_toBottomOf="@+id/txt_address_of_property" />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/til_postal_code_of_property_edit"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="number"
-                android:textColor="@color/colorPrimary" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/til_country_of_property"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="0dp"
+        <!-- Remplacez til_country_of_property par txt_country_of_property -->
+        <TextView
+            android:id="@+id/txt_country_of_property"
+            android:layout_width="161dp"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:hint="@string/add_estate_activity_country_of_property"
             android:padding="5dp"
+            android:paddingBottom="10dp"
+            android:textColor="@color/colorPrimary"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_city_of_property" />
+
+        <fragment
+            android:id="@+id/add_estate_mapContainer"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/til_postal_code_of_property"
-            app:layout_constraintTop_toBottomOf="@+id/til_address_of_property">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_country_of_property" />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/til_country_of_property_edit"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="text"
-                android:textColor="@color/colorPrimary" />
-
-        </com.google.android.material.textfield.TextInputLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

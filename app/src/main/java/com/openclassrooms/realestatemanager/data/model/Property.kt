@@ -10,7 +10,13 @@ data class Property(
     val numberOfBedrooms: String,
     val numberOfBathrooms: String,
     val address: String,
-    val postalCode: String,
+    val city: String,
     val country: String,
-    val photos: List<Photo>
+    val photos: List<Photo>,
+    val isNearSchools: Boolean,
+    val isNearRestaurants: Boolean,
+    val isNearShops: Boolean,
+    val isNearBuses: Boolean,
+    val isNearTramway: Boolean,
+    val isNearPark: Boolean
 )

@@ -41,7 +41,7 @@
     <string name="add_estate_activity_address_of_property">Address</string>
     <string name="add_estate_activity_take_photography_button">Camera</string>
     <string name="add_estate_activity_take_image_from_gallery_button">Browse</string>
-    <string name="add_estate_activity_postal_code_of_property">ZIP</string>
+    <string name="add_estate_activity_postal_code_of_property">City</string>
     <string name="add_estate_activity_country_of_property">Country</string>
     <string name="add_estate_activity_dialog_add_title">Name of the picture</string>
     <string name="add_estate_activity_dialog_add_add_button">Add</string>

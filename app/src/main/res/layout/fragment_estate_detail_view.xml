@@ -4,12 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.fragments.EstateDetailViewFragment">
-    <!-- Description Section -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        >
 
     <!-- Carousel for photos -->
     <androidx.viewpager2.widget.ViewPager2
@@ -17,19 +11,42 @@
         android:layout_width="match_parent"
         android:layout_height="300dp" />
 
+    <!-- Description Section -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="bottom">
 
+        <!-- Description détaillée -->
+        <TextView
+            android:id="@+id/descriptionTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Description détaillée du bien immobilier..."
+            android:padding="16dp" />
 
         <!-- Type, Nombre de pièces, etc. -->
         <TextView
+            android:id="@+id/detailsTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Type: Villa, Chambres: 3, Salles de bain: 2"
+            android:padding="16dp" />
+
+        <!-- Prix, Surface, Adresse, etc. -->
+        <TextView
+            android:id="@+id/priceSurfaceTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Prix: $300,000, Surface: 150 m²"
             android:padding="16dp" />
 
         <!-- Autres détails si nécessaire -->
 
         <!-- Geographic Location Section -->
         <TextView
+            android:id="@+id/geographicLocationTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Emplacement géographique"
@@ -42,8 +59,8 @@
             android:layout_height="200dp"
             />
 
-
     </LinearLayout>
+
 
 
 

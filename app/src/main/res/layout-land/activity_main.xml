@@ -44,10 +44,10 @@
             android:layout_height="wrap_content"/>
 
         <!-- Include the estate detail fragment -->
-        <include
-            layout="@layout/fragment_estate_detail_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            <include
+                layout="@layout/fragment_estate_detail_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
         </LinearLayout>
 
     </FrameLayout>

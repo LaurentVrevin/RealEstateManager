@@ -1,6 +1,7 @@
 package com.openclassrooms.realestatemanager.ui.fragments
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.Menu
@@ -21,7 +22,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class EstateListViewFragment : Fragment() {
 
-    private lateinit var recyclerView: RecyclerView
+    private lateinit var estateListRecyclerView: RecyclerView
     private lateinit var noPropertyTextView: TextView
     private lateinit var estateListAdapter: EstateListAdapter
 
@@ -48,25 +49,26 @@ class EstateListViewFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // Initialization recyclerview and adapter
-        recyclerView = view.findViewById(R.id.estate_list_recyclerview)
+        estateListRecyclerView = view.findViewById(R.id.estate_list_recyclerview)
         noPropertyTextView = view.findViewById(R.id.no_property_textview)
         estateListAdapter = EstateListAdapter()
 
         // Define Layout
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        estateListRecyclerView.layoutManager = LinearLayoutManager(requireContext())
 
         // Attach adapter
-        recyclerView.adapter = estateListAdapter
+        estateListRecyclerView.adapter = estateListAdapter
 
         // Observe livedata
         estateViewModel.getPropertyList().observe(viewLifecycleOwner) { propertyList ->
+            Log.d("TESTDATA", "$propertyList")
             if (propertyList.isEmpty()) {
                 // ANY PROPERTY ?
-                setViewVisibility(recyclerView, View.GONE)
+                setViewVisibility(estateListRecyclerView, View.GONE)
                 setViewVisibility(noPropertyTextView, View.VISIBLE)
             } else {
                 // Properties ok in the list
-                setViewVisibility(recyclerView, View.VISIBLE)
+                setViewVisibility(estateListRecyclerView, View.VISIBLE)
                 setViewVisibility(noPropertyTextView, View.GONE)
 
                 // update adapter with new list

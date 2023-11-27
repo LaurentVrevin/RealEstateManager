@@ -147,8 +147,6 @@ class AddEstateActivity : AppCompatActivity(), OnMapReadyCallback {
         autocompleteFragment?.setOnPlaceSelectedListener(object : PlaceSelectionListener {
             override fun onPlaceSelected(place: Place) {
                 updateAddressFields(place)
-                selectedLatitude = place.latLng?.latitude ?: 0.0
-                selectedLongitude = place.latLng?.longitude ?: 0.0
                 showAddressFields()
             }
 
@@ -181,9 +179,9 @@ class AddEstateActivity : AppCompatActivity(), OnMapReadyCallback {
 
     override fun onMapReady(gMap: GoogleMap) {
         googleMap = gMap
-        // La carte est initialement cachée, alors ne la mettez à jour que si une adresse est sélectionnée
+
         if (mapContainer.visibility == View.VISIBLE) {
-            // Mettez à jour la carte lorsque l'adresse est sélectionnée
+            // Update address when address selected
             updateMapWithLocation()
         }
     }
@@ -198,13 +196,13 @@ class AddEstateActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private fun updateAddressFields(place: Place) {
-        selectedLatitude = place.latLng?.latitude ?: 0.0
-        selectedLongitude = place.latLng?.longitude ?: 0.0
+        selectedLatitude = place.latLng.latitude
+        selectedLongitude = place.latLng.longitude
         updateMapWithLocation()
 
         val geocoder = Geocoder(this)
         try {
-            val addresses: List<Address> = geocoder.getFromLocation(selectedLatitude, selectedLongitude, 1) as List<Address>
+            val addresses: List<Address> = geocoder.getFromLocation(selectedLatitude, selectedLongitude, 3) as List<Address>
 
             if (addresses.isNotEmpty()) {
                 val address = addresses[0]
@@ -216,6 +214,7 @@ class AddEstateActivity : AppCompatActivity(), OnMapReadyCallback {
                 addressOfPropertyTxt.text = fullStreet
                 cityOfPropertyTxt.text = city
                 countryOfPropertyTxt.text = country
+
 
                 Log.d("ADDRESS", "City: $city, Street: $street, Country: $country, full adress : $fullStreet")
             }
@@ -322,9 +321,7 @@ class AddEstateActivity : AppCompatActivity(), OnMapReadyCallback {
             numberOfRoomsEditText,
             numberOfBedroomsEditText,
             numberOfBathroomsEditText,
-            /*addressOfPropertyTxt,
-            cityOfPropertyTxt,
-            countryOfPropertyTxt*/
+
         )
     }
 

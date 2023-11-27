@@ -49,7 +49,7 @@ class EstateListAdapter : RecyclerView.Adapter<EstateListAdapter.EstateViewHolde
 
             if (property.photos.isNotEmpty()) {
                 val photoUrl = property.photos[0].imageUri?.toString()
-                // Chargez l'image avec Glide
+                // Load image with glide
                 Glide.with(itemView.context)
                     .load(photoUrl)
                     .placeholder(R.drawable.placeholder_image)

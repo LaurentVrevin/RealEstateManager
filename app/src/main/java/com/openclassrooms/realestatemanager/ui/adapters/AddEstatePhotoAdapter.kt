@@ -18,7 +18,7 @@ class AddEstatePhotoAdapter(private val photoMutableList: MutableList<Photo>) : 
 
     // Create a new view (invoked by the layout manager)
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_photo, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_photo_add_estate_activity, parent, false)
         return ViewHolder(view)
     }
 

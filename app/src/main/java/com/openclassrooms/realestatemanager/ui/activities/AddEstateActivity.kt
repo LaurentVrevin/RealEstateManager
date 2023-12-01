@@ -321,7 +321,6 @@ class AddEstateActivity : AppCompatActivity(), OnMapReadyCallback {
             numberOfRoomsEditText,
             numberOfBedroomsEditText,
             numberOfBathroomsEditText,
-
         )
     }
 

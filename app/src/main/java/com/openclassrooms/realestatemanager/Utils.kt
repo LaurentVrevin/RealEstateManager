@@ -20,6 +20,13 @@ object Utils {
         return Math.round(dollars * 0.812).toInt()
     }
 
+    //I can do like this, but result is not really the same.
+    //Or i can save the original result with dollar and go back to this, i'll see
+    fun convertEuroToDollar(euros: Int): Int {
+        val exchangeRate = 1.23
+        return Math.round(euros * exchangeRate).toInt()
+    }
+
     /**
      * Conversion de la date d'aujourd'hui en un format plus approprié
      * NOTE : NE PAS SUPPRIMER, A MONTRER DURANT LA SOUTENANCE
@@ -31,6 +38,11 @@ object Utils {
             return dateFormat.format(Date())
         }
 
+    val formattedTodayDate: String
+        get() {
+            val dateFormat: DateFormat = SimpleDateFormat("dd/MM/yyyy")
+            return dateFormat.format(Date())
+        }
     /**
      * Vérification de la connexion réseau
      * NOTE : NE PAS SUPPRIMER, A MONTRER DURANT LA SOUTENANCE

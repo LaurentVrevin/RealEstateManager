@@ -1,67 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.fragments.EstateDetailViewFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.fragments.EstateDetailViewFragment"
+    android:orientation="vertical">
 
-    <!-- Carousel for photos -->
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/photoViewPager"
+    <TextView
+        android:id="@+id/txtview_detailfragment"
         android:layout_width="match_parent"
-        android:layout_height="300dp" />
+        android:layout_height="match_parent"
+        android:text="detail view fragment"/>
 
-    <!-- Description Section -->
-    <LinearLayout
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/fragment_estate_detail_view_photoRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_gravity="bottom">
+        android:orientation="horizontal"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
-        <!-- Description détaillée -->
-        <TextView
-            android:id="@+id/descriptionTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Description détaillée du bien immobilier..."
-            android:padding="16dp" />
-
-        <!-- Type, Nombre de pièces, etc. -->
-        <TextView
-            android:id="@+id/detailsTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Type: Villa, Chambres: 3, Salles de bain: 2"
-            android:padding="16dp" />
-
-        <!-- Prix, Surface, Adresse, etc. -->
-        <TextView
-            android:id="@+id/priceSurfaceTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Prix: $300,000, Surface: 150 m²"
-            android:padding="16dp" />
-
-        <!-- Autres détails si nécessaire -->
-
-        <!-- Geographic Location Section -->
-        <TextView
-            android:id="@+id/geographicLocationTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Emplacement géographique"
-            android:padding="16dp" />
-
-        <!-- Google Map Fragment or MapView can be added here -->
-        <com.google.android.gms.maps.MapView
-            android:id="@+id/mapView"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            />
-
-    </LinearLayout>
-
-
-
-
-</FrameLayout>
+</LinearLayout>

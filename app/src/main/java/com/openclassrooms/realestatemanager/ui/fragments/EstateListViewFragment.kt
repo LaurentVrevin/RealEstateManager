@@ -15,18 +15,20 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 import com.openclassrooms.realestatemanager.R
+import com.openclassrooms.realestatemanager.data.model.Property
+import com.openclassrooms.realestatemanager.repositories.EstateItemClickListener
 import com.openclassrooms.realestatemanager.ui.adapters.EstateListAdapter
 import com.openclassrooms.realestatemanager.viewmodels.EstateViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class EstateListViewFragment : Fragment() {
+class EstateListViewFragment : Fragment(), EstateItemClickListener {
 
     private lateinit var estateListRecyclerView: RecyclerView
     private lateinit var noPropertyTextView: TextView
     private lateinit var estateListAdapter: EstateListAdapter
 
-    private val estateViewModel: EstateViewModel by viewModels()
+    private val estateViewModel: EstateViewModel by viewModels({ requireActivity() })
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,7 +53,7 @@ class EstateListViewFragment : Fragment() {
         // Initialization recyclerview and adapter
         estateListRecyclerView = view.findViewById(R.id.estate_list_recyclerview)
         noPropertyTextView = view.findViewById(R.id.no_property_textview)
-        estateListAdapter = EstateListAdapter()
+        estateListAdapter = EstateListAdapter(this)
 
         // Define Layout
         estateListRecyclerView.layoutManager = LinearLayoutManager(requireContext())
@@ -77,8 +79,36 @@ class EstateListViewFragment : Fragment() {
         }
 
     }
+
     private fun setViewVisibility(view: View, visibility: Int) {
         view.visibility = visibility
+    }
+
+    override fun onEstateItemClick(property: Property) {
+        // define selected property in the viewmodel
+        estateViewModel.setSelectedProperty(property)
+        Log.d("TESTDATA", " estate list fragment  / voici la propriété : $property")
+
+        // Open the fragment "detail" with data of estate selected
+        val detailFragment = EstateDetailViewFragment()
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.main_fragment_container, detailFragment)
+            .commit()
+    }
+    override fun onResume() {
+        super.onResume()
+        Log.d("ETAT", "list fragment onResume")
+
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.d("ETAT", "list fragment onPause")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.d("ETAT", "list fragment onStop")
     }
 
 

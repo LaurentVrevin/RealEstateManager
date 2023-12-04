@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
@@ -27,6 +28,7 @@ class EstateListViewFragment : Fragment(), EstateItemClickListener {
     private lateinit var estateListRecyclerView: RecyclerView
     private lateinit var noPropertyTextView: TextView
     private lateinit var estateListAdapter: EstateListAdapter
+    private lateinit var propertyList: List<Property>
 
     private val estateViewModel: EstateViewModel by viewModels({ requireActivity() })
 
@@ -38,33 +40,24 @@ class EstateListViewFragment : Fragment(), EstateItemClickListener {
         val view = inflater.inflate(R.layout.fragment_estate_list_view, container, false)
 
         setHasOptionsMenu(true)
-        (requireActivity() as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
-
-        return view
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.toolbar_menu_list, menu)
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
+        //(requireActivity() as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
         // Initialization recyclerview and adapter
         estateListRecyclerView = view.findViewById(R.id.estate_list_recyclerview)
         noPropertyTextView = view.findViewById(R.id.no_property_textview)
-        estateListAdapter = EstateListAdapter(this)
 
         // Define Layout
         estateListRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-
+        // Initialize an empty property list
+        propertyList = emptyList()
+        // Initialize adapter with an empty list
+        estateListAdapter = EstateListAdapter(propertyList)
         // Attach adapter
         estateListRecyclerView.adapter = estateListAdapter
 
         // Observe livedata
-        estateViewModel.getPropertyList().observe(viewLifecycleOwner) { propertyList ->
-            Log.d("TESTDATA", "$propertyList")
-            if (propertyList.isEmpty()) {
+        estateViewModel.getPropertyList().observe(viewLifecycleOwner) { propertyListLiveData ->
+            Log.d("TESTDATA", "$propertyListLiveData")
+            if (propertyListLiveData.isEmpty()) {
                 // ANY PROPERTY ?
                 setViewVisibility(estateListRecyclerView, View.GONE)
                 setViewVisibility(noPropertyTextView, View.VISIBLE)
@@ -74,9 +67,31 @@ class EstateListViewFragment : Fragment(), EstateItemClickListener {
                 setViewVisibility(noPropertyTextView, View.GONE)
 
                 // update adapter with new list
-                estateListAdapter.updateData(propertyList)
+                propertyList = propertyListLiveData
+                estateListAdapter.updateData(propertyListLiveData)
+
             }
         }
+
+        // Ajoute un OnClickListener pour les éléments de la RecyclerView
+        estateListAdapter.setOnItemClickListener { selectedItem ->
+            estateViewModel.setSelectedProperty(selectedItem)
+            // Navigue vers le fragment détaillé en utilisant le NavController
+            findNavController().navigate(R.id.action_estateListViewFragment_to_estateDetailViewFragment)
+        }
+
+        return view
+    }
+
+
+
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.toolbar_menu_list, menu)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
     }
 
@@ -92,7 +107,7 @@ class EstateListViewFragment : Fragment(), EstateItemClickListener {
         // Open the fragment "detail" with data of estate selected
         val detailFragment = EstateDetailViewFragment()
         parentFragmentManager.beginTransaction()
-            .replace(R.id.main_fragment_container, detailFragment)
+            .replace(R.id.nav_host_fragment, detailFragment)
             .commit()
     }
     override fun onResume() {

@@ -4,30 +4,23 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
-import android.view.View
 import androidx.activity.viewModels
-import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.drawerlayout.widget.DrawerLayout
-import androidx.fragment.app.Fragment
+import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.openclassrooms.realestatemanager.R
-import com.openclassrooms.realestatemanager.ui.fragments.EstateDetailViewFragment
-import com.openclassrooms.realestatemanager.ui.fragments.EstateListViewFragment
-import com.openclassrooms.realestatemanager.ui.fragments.MapViewFragment
 import com.openclassrooms.realestatemanager.viewmodels.EstateViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-    private lateinit var drawer: DrawerLayout
+
+
+
     private lateinit var bottomNavigationView: BottomNavigationView
 
     private val estateViewModel: EstateViewModel by viewModels()
@@ -39,49 +32,66 @@ class MainActivity : AppCompatActivity() {
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
 
-        drawer = findViewById(R.id.drawer_layout)
+        //Initialize the nav host fragment as the container with a controller
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        val navController: NavController = navHostFragment.navController
+        setupActionBarWithNavController(navController)
+
+
         bottomNavigationView = findViewById(R.id.bottom_nav_view)
 
-        val toggle = ActionBarDrawerToggle(
-            this,
-            drawer,
-            toolbar,
-            R.string.navigation_drawer_open,
-            R.string.navigation_drawer_close
-        )
+        configureBottomView(navController)
 
-        drawer.addDrawerListener(toggle)
-        toggle.syncState()
-        configureBottomView()
+        // Add listener for destination changes
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            // Update the selected item in BottomNavigationView based on the current destination
+            when (destination.id) {
+                R.id.nav_listview_fragment -> {
+                    if (bottomNavigationView.selectedItemId != R.id.nav_listview) {
+                        bottomNavigationView.selectedItemId = R.id.nav_listview
+                    }
+                }
 
-        // Initialize fragment to display
-        displayFragment(EstateListViewFragment())
-        supportActionBar?.setDisplayHomeAsUpEnabled(false)
+                R.id.nav_mapViewFragment -> {
+                    if (bottomNavigationView.selectedItemId != R.id.nav_mapview) {
+                        bottomNavigationView.selectedItemId = R.id.nav_mapview
+                    }
+                }
+            }
+        }
 
 
-        // Récupérer la liste LiveData de propriétés
         // Get back the list with livedata (property)
         val propertyListLiveData = estateViewModel.getPropertyList()
 
         // Observe list with livedata about updates
         propertyListLiveData.observe(this) { propertyList ->
             Log.d("TESTLIVEDATA", "La liste contient : ${propertyList.size} objets")
-            Log.d("TESTLIVEDATA", "Cet objet contient :  $propertyList")
         }
     }
 
 
-    private fun configureBottomView() {
+    //HANDLES THE BACKWARD OF FRAGMENTS
+    override fun onSupportNavigateUp(): Boolean {
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        val navController: NavController = navHostFragment.navController
+        return navController.navigateUp() || super.onSupportNavigateUp()
+    }
+
+
+    private fun configureBottomView(navController: NavController) {
         bottomNavigationView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.nav_listview -> {
-                    displayFragment(EstateListViewFragment())
-
+                    if (navController.currentDestination?.id != R.id.nav_listview_fragment) {
+                        navController.navigate(R.id.nav_listview_fragment)
+                    }
                 }
 
                 R.id.nav_mapview -> {
-                    displayFragment(MapViewFragment())
-
+                    if (navController.currentDestination?.id != R.id.nav_mapViewFragment) {
+                        navController.navigate(R.id.nav_mapViewFragment)
+                    }
                 }
             }
             true
@@ -102,15 +112,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     //A function to display a fragment
-    private fun displayFragment(fragment: Fragment) {
+    /*private fun displayFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
-            .replace(R.id.main_fragment_container, fragment)
+            .replace(R.id.nav_host_fragment, fragment)
             .addToBackStack(null)
             .commit()
-    }
+    }*/
 
     override fun onResume() {
         super.onResume()
+        //displayFragment(EstateListViewFragment())
         Log.d("ETAT", "onResume")
 
     }

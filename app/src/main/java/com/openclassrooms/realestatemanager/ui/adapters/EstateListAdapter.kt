@@ -5,18 +5,20 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.navigation.NavController
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.data.model.Property
-import com.openclassrooms.realestatemanager.repositories.EstateItemClickListener
-import com.openclassrooms.realestatemanager.ui.fragments.EstateListViewFragment
 
-class EstateListAdapter(private val itemClickListener: EstateItemClickListener) : RecyclerView.Adapter<EstateListAdapter.EstateViewHolder>() {
+
+class EstateListAdapter(private val itemList: List<Property>) : RecyclerView.Adapter<EstateListAdapter.EstateViewHolder>() {
 
     private var propertyList: List<Property> = emptyList()
+    private var onItemClickListener: ((Property) -> Unit)? = null
+
+    fun setOnItemClickListener(listener: (Property) -> Unit) {
+        onItemClickListener = listener
+    }
 
     //update data to the adapter
     fun updateData(newPropertyList: List<Property>) {
@@ -31,12 +33,12 @@ class EstateListAdapter(private val itemClickListener: EstateItemClickListener) 
     }
 
     override fun onBindViewHolder(holder: EstateViewHolder, position: Int) {
-        val estate = propertyList[position]
-        holder.bind(estate)
+        val currentItem = propertyList[position]
+        holder.bind(currentItem)
 
         // Ajouter un écouteur de clic à l'élément de la liste
         holder.itemView.setOnClickListener {
-            itemClickListener.onEstateItemClick(estate)
+            onItemClickListener?.invoke(currentItem)
         }
     }
 

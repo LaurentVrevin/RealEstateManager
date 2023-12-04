@@ -8,31 +8,30 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
+        android:name=".MainApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/mdpirealestatelogo"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme.NoActionBar"
-        android:name=".MainApplication"
-        >
+        android:theme="@style/AppTheme.NoActionBar">
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="${MAPS_API_KEY}" />
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
+
         <activity
             android:name=".ui.activities.AddEstateActivity"
             android:exported="false"
             android:label="@string/add_estate_activity_title"
-            android:theme="@style/AppTheme.WithActionBar"
-            />
+            android:theme="@style/AppTheme.WithActionBar" />
         <activity
             android:name=".ui.activities.LoginActivity"
             android:exported="true"
-            android:label="@string/title_activity_login"
-            >
+            android:label="@string/title_activity_login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -43,9 +42,7 @@
             android:name=".ui.activities.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar"
-
-            />
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

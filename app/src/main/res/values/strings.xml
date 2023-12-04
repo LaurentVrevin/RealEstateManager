@@ -9,14 +9,15 @@
     <string name="estate_detail_view_text"> DESCRIPTION FRAGMENT</string>
     <string name="item_estate_typename_textview">TYPE</string>
     <string name="item_estate_cityname_textview">CITY</string>
-    <string name="item_estate_price_textview">$1000</string>
+    <string name="item_estate_price_textview">1000</string>
+    <string name="item_estate_currency_textview">$</string>
 
     <!-- drawer menu -->
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <!-- Login activity -->
-    <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_login">Real Estate Manager</string>
     <string name="login_title_real_estate_manager_textview">Real Estate Manager</string>
     <string name="login_activity_email">Email</string>
     <string name="login_activity_password">Password</string>
@@ -74,7 +75,7 @@
     <string name="menu_bottom_mapview">Map</string>
     <string name="menu_bottom_listview">List</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">MAP VIEW FRAGMENT</string>
+    <string name="favorite_fragment_name">Favorite fragment</string>
     <string name="add_estate_activity_dialog_add_success_title">Success</string>
     <string name="add_estate_activity_dialog_add_success_message">You\'ve saved with success</string>
 

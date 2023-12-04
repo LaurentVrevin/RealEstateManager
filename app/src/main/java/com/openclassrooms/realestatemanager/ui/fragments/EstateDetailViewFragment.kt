@@ -31,9 +31,6 @@ class EstateDetailViewFragment : Fragment() {
 
     private val estateViewModel: EstateViewModel by viewModels({ requireActivity() })
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     @SuppressLint("MissingInflatedId", "SetTextI18n")
     override fun onCreateView(
@@ -43,7 +40,7 @@ class EstateDetailViewFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_estate_detail_view, container, false)
 
         setHasOptionsMenu(true)
-        (requireActivity() as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
+        (requireActivity() as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         // Initialize RecyclerView and Adapter
         photoRecyclerView = view.findViewById(R.id.fragment_estate_detail_view_photoRecyclerView)

@@ -17,7 +17,6 @@ import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Button
-import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.TextView
@@ -39,12 +38,15 @@ import com.google.android.material.checkbox.MaterialCheckBox
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.openclassrooms.realestatemanager.R
+import com.openclassrooms.realestatemanager.Utils
 import com.openclassrooms.realestatemanager.data.model.Property
 import com.openclassrooms.realestatemanager.data.model.Photo
+import com.openclassrooms.realestatemanager.helper.PropertyTypeAdapterHelper
 import com.openclassrooms.realestatemanager.ui.adapters.AddEstatePhotoAdapter
 import com.openclassrooms.realestatemanager.viewmodels.EstateViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.Arrays
+import java.util.Date
 import java.util.UUID
 
 @AndroidEntryPoint
@@ -80,11 +82,13 @@ class AddEstateActivity : AppCompatActivity(), OnMapReadyCallback {
     private var selectedLatitude: Double = 0.0
     private var selectedLongitude: Double = 0.0
 
-
     @SuppressLint("RestrictedApi")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_estate_add)
+
+        Log.d("addEstateCycle", "AddEstateActivity - onCreate")
+        // Initialisation et configuration de l'activité
 
         val takeFromGalleryButton: Button = findViewById(R.id.take_from_gallery_button)
 
@@ -97,16 +101,8 @@ class AddEstateActivity : AppCompatActivity(), OnMapReadyCallback {
         initRecyclerView()
         initMap()
 
-        val propertyTypesList = ArrayList<String>()
-        propertyTypesList.add("Villa")
-        propertyTypesList.add("Manoir")
-        propertyTypesList.add("Appartement")
-        propertyTypesList.add("Maison")
-        propertyTypesList.add("Loft")
 
-        val propertyTypeAdapter =
-            ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, propertyTypesList)
-        typeOfPropertyEditText.setAdapter(propertyTypeAdapter)
+        PropertyTypeAdapterHelper.createAdapter(this, typeOfPropertyEditText)
     }
     private fun setupActionBar() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -166,7 +162,7 @@ class AddEstateActivity : AppCompatActivity(), OnMapReadyCallback {
     private fun initRecyclerView() {
         photoList = ArrayList()
         addEstatePhotoAdapter = AddEstatePhotoAdapter(photoList)
-        val recyclerView: RecyclerView = findViewById(R.id.recyclerViewPhotos)
+        val recyclerView: RecyclerView = findViewById(R.id.recyclerViewPhotos_add_estate_activity)
         recyclerView.layoutManager = GridLayoutManager(this, 2)
         recyclerView.adapter = addEstatePhotoAdapter
     }
@@ -194,6 +190,7 @@ class AddEstateActivity : AppCompatActivity(), OnMapReadyCallback {
             googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(propertyLocation, 15f))
         }
     }
+
 
     private fun updateAddressFields(place: Place) {
         selectedLatitude = place.latLng.latitude
@@ -276,6 +273,9 @@ class AddEstateActivity : AppCompatActivity(), OnMapReadyCallback {
                 val id = UUID.randomUUID().toString()
                 val photoName = editTextPhotoName.text.toString()
                 if (imageUri != null && photoName.isNotEmpty()) {
+                    // Load and resize the image with Glide
+
+
                     // Add the photo with the name to the lis
                     val photo = Photo(id, imageUri, photoName)
                     photoList.add(photo)
@@ -329,7 +329,6 @@ class AddEstateActivity : AppCompatActivity(), OnMapReadyCallback {
             val newProperty = createPropertyFromInput()
             propertyDataList.add(newProperty)
             estateViewModel.addProperty(newProperty)
-            showDialog(R.string.add_estate_activity_dialog_add_success_title, R.string.add_estate_activity_dialog_add_success_message)
             finish()
         }
     }
@@ -341,6 +340,19 @@ class AddEstateActivity : AppCompatActivity(), OnMapReadyCallback {
         val isBusesNearby = checkboxBuses.isChecked
         val isTramwayNearby = checkboxTramway.isChecked
         val isParkNearby = checkboxPark.isChecked
+        val dateAdded = Utils.formattedTodayDate
+
+        //if property is not sold, dateSold & agentId can be null for the moment
+        var dateSold: Date? = null
+        var agentId: String = ""
+        var isSold = false
+
+        // If sold, update these :
+       /* if (/* property is sold so */) {
+            dateSold = /* get the date of sell */
+                agentId = /* id of agent */
+                isSold = true
+        }*/
         return Property(
             UUID.randomUUID().toString(),
             descriptionEditText.text.toString(),
@@ -359,19 +371,24 @@ class AddEstateActivity : AppCompatActivity(), OnMapReadyCallback {
             isShopsNearby,
             isBusesNearby,
             isTramwayNearby,
-            isParkNearby
+            isParkNearby,
+            selectedLatitude,
+            selectedLongitude,
+            dateAdded,
+            dateSold,
+            agentId,
+            isSold
         )
     }
 
-
     private fun showDialog(titleResId: Int, messageResId: Int) {
-        MaterialAlertDialogBuilder(this, R.style.MyAlertDialogStyle)
-            .setTitle(getString(titleResId))
-            .setMessage(getString(messageResId))
-            .setPositiveButton(R.string.add_estate_activity_dialog_add_ok_button, null)
-            .show()
-    }
 
+            MaterialAlertDialogBuilder(this, R.style.MyAlertDialogStyle)
+                .setTitle(getString(titleResId))
+                .setMessage(getString(messageResId))
+                .setPositiveButton(R.string.add_estate_activity_dialog_add_ok_button, null)
+                .show()
+    }
 }
 
 

@@ -2,6 +2,7 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme.NoActionBar" parent="Theme.MaterialComponents.Light.NoActionBar">
+
         <!-- Customize your theme here. -->
         <!-- couleur de la toolbar etc -->
         <item name="colorPrimary">@color/colorPrimary</item>
@@ -13,6 +14,8 @@
         <!-- couleur du text dans les editbox-->
         <item name="android:textColorPrimary">@color/colorPrimary</item>
         <item name="android:textColorSecondary">@color/white</item>
+
+
 
 
     </style>

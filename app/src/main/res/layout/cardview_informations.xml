@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView android:id="@+id/cardview_informations"
+<androidx.cardview.widget.CardView xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cardview_informations"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardCornerRadius="20dp"
-    app:cardElevation="4dp"
+    app:cardCornerRadius="5dp"
+    app:cardElevation="1dp"
     app:cardUseCompatPadding="true"
     app:layout_constraintStart_toStartOf="parent"
 
@@ -15,15 +16,19 @@
     android:layout_height="wrap_content"
     android:padding="10dp"
     >
+
     <TextView
         android:id="@+id/txtview_informations"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
         android:text="Informations"
         android:textColor="@color/gold"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:paddingLeft="10dp"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_type_of_property"

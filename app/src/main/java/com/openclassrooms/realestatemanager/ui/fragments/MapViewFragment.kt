@@ -1,46 +1,103 @@
 package com.openclassrooms.realestatemanager.ui.fragments
 
+import android.content.pm.PackageManager
+import android.location.Location
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import com.openclassrooms.realestatemanager.R
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+class MapViewFragment : Fragment(), OnMapReadyCallback {
 
-/**
- * A simple [Fragment] subclass.
- * Use the [MapViewFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class MapViewFragment : Fragment() {
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
+    private lateinit var googleMap: GoogleMap
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_map_view, container, false)
 
-        setHasOptionsMenu(true)
-        (requireActivity() as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
+        // Initialize the FusedLocationProviderClient
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
+
+        // Initialize the map fragment asynchronously
+        val mapFragment =
+            childFragmentManager.findFragmentById(R.id.map_position) as SupportMapFragment
+        mapFragment.getMapAsync(this)
+
         return view
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.toolbar_menu_list, menu)
+    override fun onMapReady(gMap: GoogleMap) {
+        googleMap = gMap
+
+        myPosition()
+
+
+    }
+    private fun myPosition(){
+        // Check if permission is granted
+        if (ActivityCompat.checkSelfPermission(
+                requireContext(),
+                android.Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            // Enable the location layer. Request the last known location of the device.
+            googleMap.isMyLocationEnabled = true
+
+            // Get the last known location and move the camera there
+            fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
+                if (location != null) {
+                    val latLng = LatLng(location.latitude, location.longitude)
+
+                    // Add a marker at the user's location
+                    googleMap.addMarker(MarkerOptions().position(latLng).title("My Location"))
+
+                    // Move the camera to the user's location with a zoom level of 15
+                    googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f))
+                }
+            }
+        } else {
+            // Request permission if not granted
+            ActivityCompat.requestPermissions(
+                requireActivity(),
+                arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
+                REQUEST_LOCATION_PERMISSION
+            )
+        }
     }
 
+    companion object {
+        const val REQUEST_LOCATION_PERMISSION = 1
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // wait googlemap is initialized with coroutine
+        lifecycleScope.launch {
+            waitForMapInitialization()
+            myPosition()
+        }
+    }
+    private suspend fun waitForMapInitialization() {
+        while (!::googleMap.isInitialized) {
+            // wait a delay, and check one more time
+            delay(100)
+        }
+    }
 }

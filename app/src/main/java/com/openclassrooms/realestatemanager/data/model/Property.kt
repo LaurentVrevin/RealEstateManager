@@ -1,5 +1,7 @@
 package com.openclassrooms.realestatemanager.data.model
 
+import java.util.Date
+
 data class Property(
     val id: String,
     val description: String,
@@ -18,5 +20,11 @@ data class Property(
     val isNearShops: Boolean,
     val isNearBuses: Boolean,
     val isNearTramway: Boolean,
-    val isNearPark: Boolean
+    val isNearPark: Boolean,
+    val latitude: Double,
+    val longitude: Double,
+    val dateAdded: String,
+    val dateSold: Date?,
+    val agentId: String,
+    val isSold: Boolean
 )

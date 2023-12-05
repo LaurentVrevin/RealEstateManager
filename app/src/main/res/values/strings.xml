@@ -78,6 +78,8 @@
     <string name="favorite_fragment_name">Favorite fragment</string>
     <string name="add_estate_activity_dialog_add_success_title">Success</string>
     <string name="add_estate_activity_dialog_add_success_message">You\'ve saved with success</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="home_fragment_name">Home fragment</string>
 
 
 </resources>

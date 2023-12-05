@@ -12,10 +12,10 @@
         tools:layout="@layout/fragment_estate_list_view" >
         <action
             android:id="@+id/action_estateListViewFragment_to_estateDetailViewFragment"
-            app:destination="@id/nav_detailview" />
+            app:destination="@id/nav_detailview_fragment" />
     </fragment>
     <fragment
-        android:id="@+id/nav_detailview"
+        android:id="@+id/nav_detailview_fragment"
         android:name="com.openclassrooms.realestatemanager.ui.fragments.EstateDetailViewFragment"
         android:label="DETAIL VIEW"
         tools:layout="@layout/fragment_estate_detail_view" />
@@ -24,10 +24,20 @@
         app:argType="integer" />
 
     <fragment
-        android:id="@+id/nav_mapViewFragment"
+        android:id="@+id/nav_mapview_fragment"
         android:name="com.openclassrooms.realestatemanager.ui.fragments.MapViewFragment"
         android:label="Map View"
         tools:layout="@layout/fragment_map_view">
 
     </fragment>
+    <fragment
+        android:id="@+id/nav_favorite_fragment"
+        android:name="com.openclassrooms.realestatemanager.ui.fragments.FavoriteFragment"
+        android:label="FAVORITE"
+        tools:layout="@layout/fragment_favorite" />
+    <fragment
+        android:id="@+id/nav_home_fragment"
+        android:name="com.openclassrooms.realestatemanager.ui.fragments.HomeFragment"
+        android:label="HOME"
+        tools:layout="@layout/fragment_home" />
 </navigation>

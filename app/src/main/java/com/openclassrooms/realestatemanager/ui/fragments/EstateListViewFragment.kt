@@ -9,7 +9,6 @@ import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,13 +16,12 @@ import androidx.recyclerview.widget.RecyclerView
 
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.data.model.Property
-import com.openclassrooms.realestatemanager.repositories.EstateItemClickListener
 import com.openclassrooms.realestatemanager.ui.adapters.EstateListAdapter
 import com.openclassrooms.realestatemanager.viewmodels.EstateViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class EstateListViewFragment : Fragment(), EstateItemClickListener {
+class EstateListViewFragment : Fragment(){
 
     private lateinit var estateListRecyclerView: RecyclerView
     private lateinit var noPropertyTextView: TextView
@@ -99,17 +97,7 @@ class EstateListViewFragment : Fragment(), EstateItemClickListener {
         view.visibility = visibility
     }
 
-    override fun onEstateItemClick(property: Property) {
-        // define selected property in the viewmodel
-        estateViewModel.setSelectedProperty(property)
-        Log.d("TESTDATA", " estate list fragment  / voici la propriété : $property")
 
-        // Open the fragment "detail" with data of estate selected
-        val detailFragment = EstateDetailViewFragment()
-        parentFragmentManager.beginTransaction()
-            .replace(R.id.nav_host_fragment, detailFragment)
-            .commit()
-    }
     override fun onResume() {
         super.onResume()
         Log.d("ETAT", "list fragment onResume")

@@ -10,7 +10,8 @@ import com.openclassrooms.realestatemanager.R
 
 
 
-class FavoriteFragment : Fragment() {
+class HomeFragment : Fragment() {
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,8 +23,8 @@ class FavoriteFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_favorite, container, false)
-        (requireActivity() as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
+        return inflater.inflate(R.layout.fragment_home, container, false)
+
     }
 
 }

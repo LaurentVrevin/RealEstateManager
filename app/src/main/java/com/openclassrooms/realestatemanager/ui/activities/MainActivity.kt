@@ -51,12 +51,25 @@ class MainActivity : AppCompatActivity() {
                         bottomNavigationView.selectedItemId = R.id.nav_listview
                     }
                 }
-
-                R.id.nav_mapViewFragment -> {
+                R.id.nav_mapview_fragment -> {
                     if (bottomNavigationView.selectedItemId != R.id.nav_mapview) {
                         bottomNavigationView.selectedItemId = R.id.nav_mapview
+                        supportActionBar?.setDisplayHomeAsUpEnabled(false)
                     }
                 }
+                R.id.nav_favorite_fragment -> {
+                    if (bottomNavigationView.selectedItemId != R.id.nav_favorite) {
+                        bottomNavigationView.selectedItemId = R.id.nav_favorite
+                        supportActionBar?.setDisplayHomeAsUpEnabled(false)
+                    }
+                }
+                R.id.nav_home_fragment -> {
+                    if (bottomNavigationView.selectedItemId != R.id.nav_home) {
+                        bottomNavigationView.selectedItemId = R.id.nav_home
+                        supportActionBar?.setDisplayHomeAsUpEnabled(false)
+                    }
+                }
+
             }
         }
 
@@ -89,8 +102,19 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 R.id.nav_mapview -> {
-                    if (navController.currentDestination?.id != R.id.nav_mapViewFragment) {
-                        navController.navigate(R.id.nav_mapViewFragment)
+                    if (navController.currentDestination?.id != R.id.nav_mapview_fragment) {
+                        navController.navigate(R.id.nav_mapview_fragment)
+                    }
+                }
+                R.id.nav_favorite -> {
+                    if (navController.currentDestination?.id != R.id.nav_favorite_fragment) {
+                        navController.navigate(R.id.nav_favorite_fragment)
+                    }
+                }
+
+                R.id.nav_home -> {
+                    if (navController.currentDestination?.id != R.id.nav_home_fragment) {
+                        navController.navigate(R.id.nav_home_fragment)
                     }
                 }
             }
@@ -111,30 +135,6 @@ class MainActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    //A function to display a fragment
-    /*private fun displayFragment(fragment: Fragment) {
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.nav_host_fragment, fragment)
-            .addToBackStack(null)
-            .commit()
-    }*/
-
-    override fun onResume() {
-        super.onResume()
-        //displayFragment(EstateListViewFragment())
-        Log.d("ETAT", "onResume")
-
-    }
-
-    override fun onPause() {
-        super.onPause()
-        Log.d("ETAT", "onPause")
-    }
-
-    override fun onStop() {
-        super.onStop()
-        Log.d("ETAT", "onStop")
-    }
 
 
 

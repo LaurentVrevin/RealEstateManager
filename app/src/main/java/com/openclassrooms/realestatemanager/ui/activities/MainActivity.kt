@@ -20,7 +20,6 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
 
-
     private lateinit var bottomNavigationView: BottomNavigationView
 
     private val estateViewModel: EstateViewModel by viewModels()
@@ -49,24 +48,28 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_listview_fragment -> {
                     if (bottomNavigationView.selectedItemId != R.id.nav_listview) {
                         bottomNavigationView.selectedItemId = R.id.nav_listview
+                        supportActionBar?.show()
                     }
                 }
                 R.id.nav_mapview_fragment -> {
                     if (bottomNavigationView.selectedItemId != R.id.nav_mapview) {
                         bottomNavigationView.selectedItemId = R.id.nav_mapview
+                        supportActionBar?.show()
                         supportActionBar?.setDisplayHomeAsUpEnabled(false)
+
                     }
                 }
                 R.id.nav_favorite_fragment -> {
                     if (bottomNavigationView.selectedItemId != R.id.nav_favorite) {
                         bottomNavigationView.selectedItemId = R.id.nav_favorite
+                        supportActionBar?.show()
                         supportActionBar?.setDisplayHomeAsUpEnabled(false)
                     }
                 }
                 R.id.nav_home_fragment -> {
                     if (bottomNavigationView.selectedItemId != R.id.nav_home) {
                         bottomNavigationView.selectedItemId = R.id.nav_home
-                        supportActionBar?.setDisplayHomeAsUpEnabled(false)
+                        supportActionBar?.hide()
                     }
                 }
 

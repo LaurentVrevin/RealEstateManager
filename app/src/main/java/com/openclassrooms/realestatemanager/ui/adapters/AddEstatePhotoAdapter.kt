@@ -10,6 +10,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.data.model.Photo
@@ -25,7 +26,10 @@ class AddEstatePhotoAdapter(private val photoMutableList: MutableList<Photo>) : 
     // Replace the contents of the view (invoked by the layout manager)
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val photo = photoMutableList[position]
-        holder.imageViewPhoto.setImageURI(photo.imageUri)
+        // Utiliser Glide pour charger l'image à partir de l'URL stockée en tant que String
+        Glide.with(holder.itemView.context)
+            .load(photo.imageUrl)
+            .into(holder.imageViewPhoto)
         holder.textViewPhotoName.text = photo.photoName
 
         // Add an OnClickListener to modify the name

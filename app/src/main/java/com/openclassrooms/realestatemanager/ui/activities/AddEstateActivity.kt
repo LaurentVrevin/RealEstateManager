@@ -1,8 +1,10 @@
 package com.openclassrooms.realestatemanager.ui.activities
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.location.Address
 import android.location.Geocoder
 import android.net.Uri
@@ -22,6 +24,8 @@ import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.common.api.Status
@@ -53,7 +57,12 @@ import java.util.UUID
 class AddEstateActivity : AppCompatActivity(), OnMapReadyCallback {
 
 
-    private val PICK_IMAGE_REQUEST = 1
+
+    companion object {
+        private const val REQUEST_CODE_STORAGE_PERMISSION = 100
+        private const val REQUEST_CODE_PICK_IMAGE = 101
+        private const val PICK_IMAGE_REQUEST = 1
+    }
     private lateinit var photoList: ArrayList<Photo>
     private val propertyDataList = mutableListOf<Property>()
     private lateinit var addEstatePhotoAdapter: AddEstatePhotoAdapter
@@ -104,6 +113,8 @@ class AddEstateActivity : AppCompatActivity(), OnMapReadyCallback {
 
         PropertyTypeAdapterHelper.createAdapter(this, typeOfPropertyEditText)
     }
+
+
     private fun setupActionBar() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
@@ -243,7 +254,8 @@ class AddEstateActivity : AppCompatActivity(), OnMapReadyCallback {
 
     //--- ADD PICTURE FROM GALLERY ---//
     private fun openGallery() {
-        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+
+        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT, MediaStore.Images.Media.EXTERNAL_CONTENT_URI).apply { type = "image/jpeg" }
         startActivityForResult(intent, PICK_IMAGE_REQUEST)
     }
 
@@ -272,12 +284,11 @@ class AddEstateActivity : AppCompatActivity(), OnMapReadyCallback {
             .setPositiveButton(R.string.add_estate_activity_dialog_add_add_button) { dialog, _ ->
                 val id = UUID.randomUUID().toString()
                 val photoName = editTextPhotoName.text.toString()
-                if (imageUri != null && photoName.isNotEmpty()) {
-                    // Load and resize the image with Glide
+                if (imageUri != null && photoName.isNotEmpty()) {                   // Load and resize the image with Glide
 
 
                     // Add the photo with the name to the lis
-                    val photo = Photo(id, imageUri, photoName)
+                    val photo = Photo(id, imageUri.toString(), photoName)
                     photoList.add(photo)
                     addEstatePhotoAdapter.notifyDataSetChanged()
 

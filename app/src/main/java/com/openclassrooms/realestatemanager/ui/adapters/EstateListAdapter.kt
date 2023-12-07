@@ -1,5 +1,6 @@
 package com.openclassrooms.realestatemanager.ui.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -36,7 +37,7 @@ class EstateListAdapter(private val itemList: List<Property>) : RecyclerView.Ada
         val currentItem = propertyList[position]
         holder.bind(currentItem)
 
-        // Ajouter un écouteur de clic à l'élément de la liste
+        // add a click listener
         holder.itemView.setOnClickListener {
             onItemClickListener?.invoke(currentItem)
         }
@@ -59,15 +60,14 @@ class EstateListAdapter(private val itemList: List<Property>) : RecyclerView.Ada
             priceTextView.text = property.price
 
             if (property.photos.isNotEmpty()) {
-                val photoUrl = property.photos[0].imageUri?.toString()
+                val photoUrl = property.photos[0].imageUrl
+                Log.d("EstateDetail", "estate list adapter :url : $photoUrl")
                 // Load image with glide
                 Glide.with(itemView.context)
                     .load(photoUrl)
                     .placeholder(R.drawable.placeholder_image)
                     .error(R.drawable.error_image)
                     .into(photoImageView)
-
-
             }
         }
     }

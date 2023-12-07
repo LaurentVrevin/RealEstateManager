@@ -54,7 +54,7 @@ class EstateListViewFragment : Fragment(){
 
         // Observe livedata
         estateViewModel.getPropertyList().observe(viewLifecycleOwner) { propertyListLiveData ->
-            Log.d("TESTDATA", "$propertyListLiveData")
+            Log.d("listphotofragment", "EstateListViewFragment - Property List LiveData: $propertyListLiveData")
             if (propertyListLiveData.isEmpty()) {
                 // ANY PROPERTY ?
                 setViewVisibility(estateListRecyclerView, View.GONE)
@@ -66,15 +66,16 @@ class EstateListViewFragment : Fragment(){
 
                 // update adapter with new list
                 propertyList = propertyListLiveData
-                estateListAdapter.updateData(propertyListLiveData)
+                estateListAdapter.updateData(propertyList)
+
 
             }
         }
 
-        // Ajoute un OnClickListener pour les éléments de la RecyclerView
+        // Add a OnClickListener for elements in the recyclerview
         estateListAdapter.setOnItemClickListener { selectedItem ->
             estateViewModel.setSelectedProperty(selectedItem)
-            // Navigue vers le fragment détaillé en utilisant le NavController
+            // go to the detail fragment
             findNavController().navigate(R.id.action_estateListViewFragment_to_estateDetailViewFragment)
         }
 

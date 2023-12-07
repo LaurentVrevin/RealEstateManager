@@ -10,27 +10,24 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.data.model.Photo
-import com.openclassrooms.realestatemanager.data.model.Property
 
-class EstateDetailPhotoAdapter : RecyclerView.Adapter<EstateDetailPhotoAdapter.PhotoViewHolder>() {
+class DetailPhotoListAdapter(private val itemList: List<Photo>) : RecyclerView.Adapter<DetailPhotoListAdapter.PhotoViewHolder>() {
 
     private var photoList: List<Photo> = emptyList()
 
-    // Mettez à jour les données de la liste des photos
     fun updateData(newPhotoList: List<Photo>) {
         photoList = newPhotoList
         notifyDataSetChanged()
-        Log.d("EstateDetail", "Adapter Updated data: $photoList")
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotoViewHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_photo_detail_fragment, parent, false)
-        return PhotoViewHolder(itemView)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_photo_detail_fragment, parent, false)
+        return PhotoViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: PhotoViewHolder, position: Int) {
-        val photo = photoList[position]
-        holder.bind(photo)
+        val currentPhoto = photoList[position]
+        holder.bind(currentPhoto)
     }
 
     override fun getItemCount(): Int {
@@ -42,14 +39,17 @@ class EstateDetailPhotoAdapter : RecyclerView.Adapter<EstateDetailPhotoAdapter.P
         private val textViewPhotoName: TextView = itemView.findViewById(R.id.item_photo_detail_fragment_textViewPhotoName)
 
         fun bind(photo: Photo) {
-            // Charger l'image avec Glide
-            Glide.with(itemView.context)
-                .load(photo.imageUri)
-                .placeholder(R.drawable.placeholder_image)
-                .error(R.drawable.error_image)
-                .into(imageViewPhoto)
+            textViewPhotoName.text = photo.photoName
+            if(photo.imageUrl != null){
+                val photoUrl = photo.imageUrl
+                Log.d("EstateDetail", "estate detail adapter :url : $photoUrl")
+                Glide.with(itemView.context)
 
-            textViewPhotoName.text = photo.photoName ?: ""
+                    .load(photoUrl)
+                    .placeholder(R.drawable.placeholder_image)
+                    .error(R.drawable.error_image)
+                    .into(imageViewPhoto)
+            }
         }
     }
 }

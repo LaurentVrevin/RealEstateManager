@@ -36,15 +36,21 @@ class MapViewFragment : Fragment(), OnMapReadyCallback {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
 
         // Initialize the map fragment asynchronously
-        val mapFragment =
-            childFragmentManager.findFragmentById(R.id.map_position) as SupportMapFragment
-        mapFragment.getMapAsync(this)
+        val mapFragment = childFragmentManager.findFragmentById(R.id.map_position) as? SupportMapFragment
+        if (mapFragment != null) {
+            mapFragment.getMapAsync(this)
+        } else {
+            // Gérer l'erreur ou afficher un message d'avertissement
+        }
 
         return view
     }
 
     override fun onMapReady(gMap: GoogleMap) {
         googleMap = gMap
+
+
+        googleMap.uiSettings.isZoomControlsEnabled = true
 
         myPosition()
 
@@ -69,7 +75,7 @@ class MapViewFragment : Fragment(), OnMapReadyCallback {
                     googleMap.addMarker(MarkerOptions().position(latLng).title("My Location"))
 
                     // Move the camera to the user's location with a zoom level of 15
-                    googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f))
+                    googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 25f))
                 }
             }
         } else {

@@ -19,10 +19,15 @@
             android:icon="@drawable/baseline_favorite_24"
             android:title="Favorite" />
         <item
+            android:id="@+id/nav_loan_simulator"
+            android:icon="@drawable/baseline_calculate_24"
+            android:title="Loan simulator" />
+        <item
             android:id="@+id/nav_home"
             android:icon="@drawable/baseline_person_24"
             android:titleCondensed="Home"
             android:title="Home" />
+
     </group>
 
 

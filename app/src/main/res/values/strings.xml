@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">Real Estate Manager</string>
 
+    <string name="currency_euros">€</string>
+    <string name="currency_dollars">$</string>
+
     <!-- fragment_estate_list_view -->
 
     <!-- fragment_estate_detail_view -->
@@ -52,6 +55,9 @@
     <string name="add_estate_activity_dialog_add_error_message">Please, enter a name for the picture.</string>
     <string name="add_estate_activity_dialog_save_error_title">Error</string>
     <string name="add_estate_activity_dialog_save_error_message">You must fill all the fields</string>
+    <string name="add_estate_activity_storage_permission">We need permission to access your storage for selecting images.</string>
+    <string name="add_estate_activity_dialog_add_success_title">Success</string>
+    <string name="add_estate_activity_dialog_add_success_message">You\'ve saved with success</string>
 
     <!-- Add Estate Photo Adapter -->
     <string name="add_estate_photo_adapter_dialog_edit_title">Change the name for the picture</string>
@@ -71,15 +77,37 @@
     <!-- Dialog Add Photo -->
     <string name="dialog_edit_photo_name_new_name_of_picture">New name of picture</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
+    <!-- menu bottom -->
     <string name="menu_bottom_mapview">Map</string>
     <string name="menu_bottom_listview">List</string>
-    <!-- TODO: Remove or change this placeholder text -->
+
+    <!-- favorite fragment -->
     <string name="favorite_fragment_name">Favorite fragment</string>
-    <string name="add_estate_activity_dialog_add_success_title">Success</string>
-    <string name="add_estate_activity_dialog_add_success_message">You\'ve saved with success</string>
-    <!-- TODO: Remove or change this placeholder text -->
+
+    <!-- home fragment -->
     <string name="home_fragment_name">Home fragment</string>
+    <string name="read_external_storage_rationale">Vous n\'avez pas la permissions</string>
+
+    <!-- Loan Simulation Fragment -->
+    <string name="fragment_loan_simulation_title">Loan Simulation</string>
+    <string name="fragment_loan_simulation_income_hint">Monthly Net Income</string>
+    <string name="fragment_loan_simulation_repayment_hint">Desired Monthly Repayment</string>
+    <string name="fragment_loan_simulation_deposit_hint">Initial Deposit</string>
+    <string name="fragment_loan_simulation_loan_term_hint">Loan Term (Years)</string>
+    <string name="fragment_loan_simulation_calculate_button">Calculate Loan Capacity</string>
+    <string name="fragment_loan_simulation_result_label">"You can borrow "</string>
+    <string name="fragment_loan_simulation_interest_rate_label">Interest Rate: </string>
+    <string name="fragment_loan_simulation_loan_capacity_result">This is your result</string>
+
+    <!-- Error Messages -->
+    <string name="fragment_loan_simulation_monthly_repayment_error">Monthly repayment cannot exceed 30% of monthly income.</string>
+    <string name="fragment_loan_simulation_storage_permission_error">We need permission to access your storage for selecting images.</string>
+
+    <!-- Success Message -->
+    <string name="fragment_loan_simulation_calculation_success_title">Success</string>
+    <string name="fragment_loan_simulation_calculation_success_message">Your loan capacity has been calculated successfully.</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>

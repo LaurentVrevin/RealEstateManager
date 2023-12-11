@@ -30,6 +30,7 @@
         tools:layout="@layout/fragment_map_view">
 
     </fragment>
+
     <fragment
         android:id="@+id/nav_favorite_fragment"
         android:name="com.openclassrooms.realestatemanager.ui.fragments.FavoriteFragment"
@@ -40,4 +41,14 @@
         android:name="com.openclassrooms.realestatemanager.ui.fragments.HomeFragment"
         android:label="HOME"
         tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/nav_loanSimulationFragment"
+        android:name="com.openclassrooms.realestatemanager.ui.fragments.LoanSimulationFragment"
+        android:label="Loan Simulator"
+        tools:layout="@layout/fragment_loan_simulation"/>
+    <fragment
+        android:id="@+id/nav_loanHostFragment"
+        android:name="com.openclassrooms.realestatemanager.ui.fragments.LoanHostFragment"
+        android:label="Loan Host"
+        tools:layout="@layout/fragment_loan_host" />
 </navigation>

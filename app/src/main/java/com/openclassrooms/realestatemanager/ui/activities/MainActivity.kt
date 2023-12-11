@@ -66,6 +66,13 @@ class MainActivity : AppCompatActivity() {
                         supportActionBar?.setDisplayHomeAsUpEnabled(false)
                     }
                 }
+                R.id.nav_loanSimulationFragment -> {
+                    if (bottomNavigationView.selectedItemId != R.id.nav_loan_simulator) {
+                        bottomNavigationView.selectedItemId = R.id.nav_loan_simulator
+                        supportActionBar?.hide()
+
+                    }
+                }
                 R.id.nav_home_fragment -> {
                     if (bottomNavigationView.selectedItemId != R.id.nav_home) {
                         bottomNavigationView.selectedItemId = R.id.nav_home
@@ -112,6 +119,11 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_favorite -> {
                     if (navController.currentDestination?.id != R.id.nav_favorite_fragment) {
                         navController.navigate(R.id.nav_favorite_fragment)
+                    }
+                }
+                R.id.nav_loan_simulator -> {
+                    if (navController.currentDestination?.id != R.id.nav_loanHostFragment) {
+                        navController.navigate(R.id.nav_loanHostFragment)
                     }
                 }
 

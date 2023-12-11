@@ -1,6 +1,8 @@
 package com.openclassrooms.realestatemanager.ui.activities
 
 import android.Manifest
+import android.Manifest.permission.READ_EXTERNAL_STORAGE
+import android.Manifest.permission.READ_MEDIA_IMAGES
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
@@ -8,6 +10,7 @@ import android.content.pm.PackageManager
 import android.location.Address
 import android.location.Geocoder
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 
@@ -23,6 +26,7 @@ import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -49,12 +53,14 @@ import com.openclassrooms.realestatemanager.helper.PropertyTypeAdapterHelper
 import com.openclassrooms.realestatemanager.ui.adapters.AddEstatePhotoAdapter
 import com.openclassrooms.realestatemanager.viewmodels.EstateViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import pub.devrel.easypermissions.AppSettingsDialog
+import pub.devrel.easypermissions.EasyPermissions
 import java.util.Arrays
 import java.util.Date
 import java.util.UUID
 
 @AndroidEntryPoint
-class AddEstateActivity : AppCompatActivity(), OnMapReadyCallback {
+class AddEstateActivity : AppCompatActivity(), OnMapReadyCallback,  EasyPermissions.PermissionCallbacks {
 
 
 
@@ -91,13 +97,12 @@ class AddEstateActivity : AppCompatActivity(), OnMapReadyCallback {
     private var selectedLatitude: Double = 0.0
     private var selectedLongitude: Double = 0.0
 
-    @SuppressLint("RestrictedApi")
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_estate_add)
 
         Log.d("addEstateCycle", "AddEstateActivity - onCreate")
-        // Initialisation et configuration de l'activité
 
         val takeFromGalleryButton: Button = findViewById(R.id.take_from_gallery_button)
 
@@ -253,10 +258,68 @@ class AddEstateActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     //--- ADD PICTURE FROM GALLERY ---//
-    private fun openGallery() {
 
-        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT, MediaStore.Images.Media.EXTERNAL_CONTENT_URI).apply { type = "image/jpeg" }
+    private fun openGallery() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
+            // With SDK <33, ask permissions with READ_EXTERNAL_STORAGE
+            if (EasyPermissions.hasPermissions(
+                    this,
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+                )
+            ) {
+                // Permissions granted, open browse
+                openGalleryInternal()
+            } else {
+                // Asks permission with EasyPermissions
+                EasyPermissions.requestPermissions(
+                    this,
+                    getString(R.string.add_estate_activity_storage_permission),
+                    REQUEST_CODE_STORAGE_PERMISSION,
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+                )
+            }
+        } else {
+            // With SDK up to 33, ask permissions with READ_MEDIA_IMAGES
+            if (EasyPermissions.hasPermissions(
+                    this,
+                    Manifest.permission.READ_MEDIA_IMAGES
+                )
+            ) {
+                // Permission granted, open browse
+                openGalleryInternal()
+            } else {
+                // Asks permission with EasyPermissions
+                EasyPermissions.requestPermissions(
+                    this,
+                    getString(R.string.add_estate_activity_storage_permission),
+                    REQUEST_CODE_STORAGE_PERMISSION,
+                    Manifest.permission.READ_MEDIA_IMAGES
+                )
+            }
+        }
+    }
+
+    private fun openGalleryInternal() {
+        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT, MediaStore.Images.Media.EXTERNAL_CONTENT_URI).apply {
+            type = "image/jpeg"
+        }
         startActivityForResult(intent, PICK_IMAGE_REQUEST)
+    }
+    override fun onPermissionsGranted(requestCode: Int, perms: MutableList<String>) {
+        if (requestCode == REQUEST_CODE_STORAGE_PERMISSION) {
+            // Permission granted, proceed with opening the gallery
+            openGalleryInternal()
+        }
+    }
+
+    override fun onPermissionsDenied(requestCode: Int, perms: MutableList<String>) {
+        if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
+            // Display a dialog to the user if some permissions are permanently denied
+            AppSettingsDialog.Builder(this).build().show()
+        } else {
+            // Request permission again
+            openGallery()
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

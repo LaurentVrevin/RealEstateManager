@@ -28,10 +28,10 @@ class LoginActivity : AppCompatActivity() {
         auth = Firebase.auth
 
         // Initialize UI elements
-        val emailEditText = findViewById<TextInputEditText>(R.id.til_price_of_property_edit)
-        val passwordEditText = findViewById<TextInputEditText>(R.id.password_textinput_edittext)
+
+
         val loginButton = findViewById<Button>(R.id.login_button)
-        val signinbutton = findViewById<TextView>(R.id.signin_button)
+
         val cardView = findViewById<CardView>(R.id.cardview_informations)
         val logoImageView = findViewById<ImageView>(R.id.login_logo_imv)
 

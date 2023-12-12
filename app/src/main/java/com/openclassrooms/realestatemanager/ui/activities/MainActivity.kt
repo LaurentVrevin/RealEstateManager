@@ -49,6 +49,7 @@ class MainActivity : AppCompatActivity() {
                     if (bottomNavigationView.selectedItemId != R.id.nav_listview) {
                         bottomNavigationView.selectedItemId = R.id.nav_listview
                         supportActionBar?.show()
+                        supportActionBar?.setDisplayHomeAsUpEnabled(false)
                     }
                 }
                 R.id.nav_mapview_fragment -> {
@@ -78,6 +79,7 @@ class MainActivity : AppCompatActivity() {
                     if (bottomNavigationView.selectedItemId != R.id.nav_home) {
                         bottomNavigationView.selectedItemId = R.id.nav_home
                         supportActionBar?.hide()
+                        supportActionBar?.setDisplayHomeAsUpEnabled(false)
                     }
                 }
 

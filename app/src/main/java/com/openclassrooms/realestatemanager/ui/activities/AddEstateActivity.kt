@@ -5,13 +5,16 @@ import android.Manifest.permission.READ_EXTERNAL_STORAGE
 import android.Manifest.permission.READ_MEDIA_IMAGES
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.ContentValues
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.location.Address
 import android.location.Geocoder
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.provider.MediaStore
 
 import android.util.Log
@@ -57,8 +60,11 @@ import com.openclassrooms.realestatemanager.viewmodels.EstateViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
+import java.io.IOException
+import java.text.SimpleDateFormat
 import java.util.Arrays
 import java.util.Date
+import java.util.Locale
 import java.util.UUID
 
 @AndroidEntryPoint
@@ -67,6 +73,8 @@ class AddEstateActivity : AppCompatActivity(), OnMapReadyCallback {
     companion object {
         private const val REQUEST_CODE_STORAGE_PERMISSION = 100
         private const val PICK_IMAGE_REQUEST = 1
+        private const val REQUEST_CAMERA_PERMISSION = 101
+        private val REQUEST_IMAGE_CAPTURE = 2
     }
     private lateinit var photoList: ArrayList<Photo>
     private val propertyDataList = mutableListOf<Property>()
@@ -104,19 +112,23 @@ class AddEstateActivity : AppCompatActivity(), OnMapReadyCallback {
         Log.d("addEstateCycle", "AddEstateActivity - onCreate")
 
         val takeFromGalleryButton: Button = findViewById(R.id.take_from_gallery_button)
+        val takeFromCameraButton: Button = findViewById(R.id.take_photography_button)
 
         takeFromGalleryButton.setOnClickListener {
             openGallery()
         }
+        takeFromCameraButton.setOnClickListener{
+            openCamera()
+        }
+
         setupActionBar()
         initViews()
         setupAutoComplete()
         initRecyclerView()
         initMap()
-
-
         PropertyTypeAdapterHelper.createAdapter(this, typeOfPropertyEditText)
     }
+
 
 
     private fun setupActionBar() {
@@ -202,7 +214,7 @@ class AddEstateActivity : AppCompatActivity(), OnMapReadyCallback {
         googleMap.clear()
         if (propertyLocation != null) {
             googleMap.addMarker(MarkerOptions().position(propertyLocation).title("Property Location"))
-            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(propertyLocation, 15f))
+            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(propertyLocation, 10f))
         }
     }
 
@@ -255,6 +267,59 @@ class AddEstateActivity : AppCompatActivity(), OnMapReadyCallback {
         }
         return super.onOptionsItemSelected(item)
     }
+    //-- ADD PICTURE FROM CAMERA ---//
+
+    private fun openCamera() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            // Permission not granted, ask to the user
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CAMERA), REQUEST_CAMERA_PERMISSION)
+        } else {
+            // Permission already granted, onpen camera
+            launchCamera()
+        }
+    }
+    private fun launchCamera() {
+        val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        if (takePictureIntent.resolveActivity(packageManager) != null) {
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
+        }
+    }
+
+    private fun saveCapturedPhoto(imageBitmap: Bitmap): Uri? {
+        // give a filename to the image with pattern
+        val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
+        val fileName = "IMG_$timeStamp.jpg"
+
+        // Make a content
+        val imageCollection = MediaStore.Images.Media.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY)
+        val imageDetails = ContentValues().apply {
+            put(MediaStore.Images.Media.DISPLAY_NAME, fileName)
+            put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg")
+            put(MediaStore.Images.Media.RELATIVE_PATH, Environment.DIRECTORY_PICTURES)
+        }
+
+        // Use ContentResolver to insert the image in the store
+        val contentResolver = applicationContext.contentResolver
+        val imageUri = contentResolver.insert(imageCollection, imageDetails)
+
+        try {
+            // Open the exit flux to write the image in Uri
+            val outputStream = contentResolver.openOutputStream(imageUri!!)
+            if (outputStream != null) {
+                imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
+            }
+            outputStream?.close()
+
+            // The picture is record with succeed in the store
+            // Uri fo picture can use to refefrence the recorded image
+
+            return imageUri
+        } catch (e: IOException) {
+            e.printStackTrace()
+            // Manage error
+            return null
+        }
+    }
 
     //--- ADD PICTURE FROM GALLERY ---//
 
@@ -288,22 +353,40 @@ class AddEstateActivity : AppCompatActivity(), OnMapReadyCallback {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == REQUEST_CODE_STORAGE_PERMISSION && grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             openGalleryForOlderVersions()
+        } else if (requestCode == REQUEST_CAMERA_PERMISSION && grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            launchCamera()
         }
     }
 
     @SuppressLint("WrongConstant")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK) {
-            data?.data?.also { uri ->
-                //Flags are used to ask read and writing access to the file
-                val takeFlags: Int = data.flags and (Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
 
-                // Check and take persitent permissions for Uri
-                contentResolver.takePersistableUriPermission(uri, takeFlags)
+        when (requestCode) {
+            PICK_IMAGE_REQUEST -> {
+                if (resultCode == Activity.RESULT_OK) {
+                    data?.data?.also { uri ->
+                        //Flags are used to ask read and writing access to the file
+                        val takeFlags: Int = data.flags and (Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
 
-                // use : uri
-                showAddPhotoDialog(uri)
+                        // Check and take persitent permissions for Uri
+                        contentResolver.takePersistableUriPermission(uri, takeFlags)
+
+                        // use : uri
+                        showAddPhotoDialog(uri)
+                    }
+                }
+            }
+            REQUEST_IMAGE_CAPTURE -> {
+                if (resultCode == Activity.RESULT_OK) {
+                    // Manage image capture from camera
+                    val imageBitmap = data?.extras?.get("data") as Bitmap
+
+
+                    // After the photo was captured and get the bitmap, show the dialog to rename picture
+                    val imageUri = saveCapturedPhoto(imageBitmap)
+                    showAddPhotoDialog(imageUri)
+                }
             }
         }
     }

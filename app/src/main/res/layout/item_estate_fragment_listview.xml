@@ -4,8 +4,8 @@
     android:id="@+id/cardview_item_photo"
     android:layout_width="match_parent"
     android:layout_height="200dp"
-    app:cardCornerRadius="20dp"
-    app:cardElevation="4dp"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="2dp"
     app:cardUseCompatPadding="true"
     app:layout_constraintStart_toStartOf="parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -14,7 +14,6 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
         android:padding="10dp">
 
         <ImageView
@@ -23,6 +22,8 @@
             android:layout_height="150dp"
             android:background="@drawable/ic_launcher_foreground"
             android:scaleType="centerCrop"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="2dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

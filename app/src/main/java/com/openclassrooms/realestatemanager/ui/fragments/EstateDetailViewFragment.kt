@@ -56,6 +56,7 @@ class EstateDetailViewFragment : Fragment() {
         setHasOptionsMenu(true)
         (requireActivity() as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+
         // Initialize RecyclerView
         estatePhotoRecyclerView = view.findViewById(R.id.recyclerViewPhotos)
         estatePhotoRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)

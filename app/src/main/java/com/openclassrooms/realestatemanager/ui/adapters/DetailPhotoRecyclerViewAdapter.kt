@@ -11,7 +11,8 @@ import com.bumptech.glide.Glide
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.data.model.Photo
 
-class DetailPhotoListAdapter(private var itemPhoto: List<Photo>) : RecyclerView.Adapter<DetailPhotoListAdapter.PhotoViewHolder>() {
+class DetailPhotoRecyclerViewAdapter(private var itemPhoto: List<Photo>) :
+    RecyclerView.Adapter<DetailPhotoRecyclerViewAdapter.PhotoViewHolder>() {
 
     private var photoList: List<Photo> = emptyList()
 

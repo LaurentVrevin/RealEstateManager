@@ -2,7 +2,7 @@ package com.openclassrooms.realestatemanager.ui.fragments
 
 
 import android.Manifest
-import android.Manifest.permission.READ_EXTERNAL_STORAGE
+import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -18,27 +18,23 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.widget.ViewPager2
 
 
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.data.model.Photo
-import com.openclassrooms.realestatemanager.ui.adapters.DetailPhotoListAdapter
+import com.openclassrooms.realestatemanager.ui.adapters.DetailPhotoPagerAdapter
 
 
 import com.openclassrooms.realestatemanager.viewmodels.EstateViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import pub.devrel.easypermissions.AppSettingsDialog
-import pub.devrel.easypermissions.EasyPermissions
 
 @AndroidEntryPoint
 class EstateDetailViewFragment : Fragment() {
 
-
     private var isFavorite = false
-    private lateinit var estatePhotoRecyclerView: RecyclerView
-    private lateinit var photoAdapter: DetailPhotoListAdapter
+    private lateinit var viewPagerPhotos: ViewPager2
+    private lateinit var photoAdapter: DetailPhotoPagerAdapter
     private var photoList: List<Photo> = emptyList()
     companion object {
         private const val REQUEST_CODE_STORAGE_PERMISSION = 1001
@@ -46,7 +42,7 @@ class EstateDetailViewFragment : Fragment() {
 
     private val estateViewModel: EstateViewModel by viewModels({ requireActivity() })
 
-
+    @SuppressLint("MissingInflatedId")
     @RequiresApi(Build.VERSION_CODES.R)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -56,24 +52,24 @@ class EstateDetailViewFragment : Fragment() {
         setHasOptionsMenu(true)
         (requireActivity() as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        // Initialize ViewPager
+        viewPagerPhotos = view.findViewById(R.id.viewPagerPhotos)
 
-        // Initialize RecyclerView
-        estatePhotoRecyclerView = view.findViewById(R.id.recyclerViewPhotos)
-        estatePhotoRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+
+
 
         // Initialize adapter with an empty list
-        photoAdapter = DetailPhotoListAdapter(photoList)
+        photoAdapter = DetailPhotoPagerAdapter(photoList)
 
         if (checkPermissions()) {
-            estatePhotoRecyclerView.adapter = photoAdapter
+            viewPagerPhotos.adapter = photoAdapter
         }
 
         estateViewModel.getSelectedProperty().observe(viewLifecycleOwner) { property ->
-            // update photolist when property selected changed, update adapter with new list
+            // Update photolist when property selected changed, update adapter with new list
             photoList = property.photos
             Log.d("EstateDetail", "Observed property: ${property.description}, Photos count: ${property.photos.size}")
             photoAdapter.updateData(photoList)
-
         }
 
         return view
@@ -110,7 +106,7 @@ class EstateDetailViewFragment : Fragment() {
 
             if (granted) {
                 // Permissions granted
-                estatePhotoRecyclerView.adapter = photoAdapter
+                viewPagerPhotos.adapter = photoAdapter
             } else {
                 // I'll show a message
             }

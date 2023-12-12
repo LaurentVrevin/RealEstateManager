@@ -1,5 +1,6 @@
 package com.openclassrooms.realestatemanager.ui.fragments
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -30,6 +31,7 @@ class EstateListViewFragment : Fragment(){
 
     private val estateViewModel: EstateViewModel by viewModels({ requireActivity() })
 
+    @SuppressLint("MissingInflatedId")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -40,8 +42,8 @@ class EstateListViewFragment : Fragment(){
         setHasOptionsMenu(true)
         //(requireActivity() as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
         // Initialization recyclerview and adapter
-        estateListRecyclerView = view.findViewById(R.id.estate_list_recyclerview)
-        noPropertyTextView = view.findViewById(R.id.no_property_textview)
+        estateListRecyclerView = view.findViewById(R.id.estate_list_fragment_recyclerview)
+        noPropertyTextView = view.findViewById(R.id.estate_list_fragment_noproperty_textview)
 
         // Define Layout
         estateListRecyclerView.layoutManager = LinearLayoutManager(requireContext())

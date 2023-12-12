@@ -33,7 +33,7 @@ import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
 
 @AndroidEntryPoint
-class EstateDetailViewFragment : Fragment(), EasyPermissions.PermissionCallbacks {
+class EstateDetailViewFragment : Fragment() {
 
 
     private var isFavorite = false
@@ -70,8 +70,9 @@ class EstateDetailViewFragment : Fragment(), EasyPermissions.PermissionCallbacks
         estateViewModel.getSelectedProperty().observe(viewLifecycleOwner) { property ->
             // update photolist when property selected changed, update adapter with new list
             photoList = property.photos
+            Log.d("EstateDetail", "Observed property: ${property.description}, Photos count: ${property.photos.size}")
             photoAdapter.updateData(photoList)
-            Log.d("EstateDetail", "Fragment - Updated data: ${property.photos}")
+
         }
 
         return view
@@ -81,80 +82,38 @@ class EstateDetailViewFragment : Fragment(), EasyPermissions.PermissionCallbacks
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.toolbar_menu_detail, menu)
     }
-    @RequiresApi(Build.VERSION_CODES.R)
     private fun checkPermissions(): Boolean {
-        return if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
-            // Api Version < 33, ask permission with : READ_EXTERNAL_STORAGE
-            if (EasyPermissions.hasPermissions(
-                    requireContext(),
-                    READ_EXTERNAL_STORAGE
-                )
-            ) {
-                true // Permissions granted
-            } else {
-                EasyPermissions.requestPermissions(
-                    this,
-                    getString(R.string.read_external_storage_rationale),
-                    REQUEST_CODE_STORAGE_PERMISSION,
-                    READ_EXTERNAL_STORAGE
-                )
-                false // permissions no granted
-            }
+        val permission = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            Manifest.permission.READ_MEDIA_IMAGES
         } else {
-            // API 33 and up, ask permission with READ_MEDIA_IMAGES
-            if (EasyPermissions.hasPermissions(
-                    requireContext(),
-                    Manifest.permission.READ_MEDIA_IMAGES
+            Manifest.permission.READ_EXTERNAL_STORAGE
+        }
+        val hasPermission = ContextCompat.checkSelfPermission(requireContext(), permission) == PackageManager.PERMISSION_GRANTED
+        Log.d("EstateDetail", "Checking permission for $permission: $hasPermission")
 
-                )
-            ) {
-                true // permissions granted
-            } else {
-                EasyPermissions.requestPermissions(
-                    this,
-                    getString(R.string.read_external_storage_rationale),
-                    REQUEST_CODE_STORAGE_PERMISSION,
-                    Manifest.permission.READ_MEDIA_IMAGES,
-
-                )
-                false // permissions no granted
-            }
+        return if (hasPermission) {
+            true
+        } else {
+            requestPermissions(arrayOf(permission), REQUEST_CODE_STORAGE_PERMISSION)
+            false
         }
     }
     override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
+        requestCode: Int, permissions: Array<out String>, grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
-        // Pass the results to EasyPermissions
-        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
+        if (requestCode == REQUEST_CODE_STORAGE_PERMISSION && grantResults.isNotEmpty()) {
+            val granted = grantResults[0] == PackageManager.PERMISSION_GRANTED
+            Log.d("EstateDetail", "Permission result for ${permissions[0]}: $granted")
 
-        if (requestCode == REQUEST_CODE_STORAGE_PERMISSION) {
-            if (EasyPermissions.hasPermissions(
-                    requireContext(),
-                    Manifest.permission.READ_MEDIA_IMAGES, Manifest.permission.MANAGE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE
-
-                )
-            ) {
-                // Permissions granted, attach adapter to the recyclerview
+            if (granted) {
+                // Permissions granted
                 estatePhotoRecyclerView.adapter = photoAdapter
             } else {
-                // Permissions denied, show error message
+                // I'll show a message
             }
         }
-    }
-    override fun onPermissionsGranted(requestCode: Int, perms: MutableList<String>) {
-        // Permissions granted, you can take necessary actions
-        estatePhotoRecyclerView.adapter = photoAdapter
-    }
-
-    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
-    override fun onPermissionsDenied(requestCode: Int, perms: MutableList<String>) {
-
-            // Request permission again
-            checkPermissions()
     }
 
     private fun toggleFavoriteIcon(item: MenuItem) {

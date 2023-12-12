@@ -25,6 +25,8 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.TextView
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -60,13 +62,10 @@ import java.util.Date
 import java.util.UUID
 
 @AndroidEntryPoint
-class AddEstateActivity : AppCompatActivity(), OnMapReadyCallback,  EasyPermissions.PermissionCallbacks {
-
-
+class AddEstateActivity : AppCompatActivity(), OnMapReadyCallback {
 
     companion object {
         private const val REQUEST_CODE_STORAGE_PERMISSION = 100
-        private const val REQUEST_CODE_PICK_IMAGE = 101
         private const val PICK_IMAGE_REQUEST = 1
     }
     private lateinit var photoList: ArrayList<Photo>
@@ -260,103 +259,71 @@ class AddEstateActivity : AppCompatActivity(), OnMapReadyCallback,  EasyPermissi
     //--- ADD PICTURE FROM GALLERY ---//
 
     private fun openGallery() {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
-            // With SDK <33, ask permissions with READ_EXTERNAL_STORAGE
-            if (EasyPermissions.hasPermissions(
-                    this,
-                    Manifest.permission.READ_EXTERNAL_STORAGE
-                )
-            ) {
-                // Permissions granted, open browse
-                openGalleryInternal()
-            } else {
-                // Asks permission with EasyPermissions
-                EasyPermissions.requestPermissions(
-                    this,
-                    getString(R.string.add_estate_activity_storage_permission),
-                    REQUEST_CODE_STORAGE_PERMISSION,
-                    Manifest.permission.READ_EXTERNAL_STORAGE
-                )
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            // For  >= Android 10
+            val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+                addCategory(Intent.CATEGORY_OPENABLE)
+                type = "image/*"
             }
+            startActivityForResult(intent, PICK_IMAGE_REQUEST)
         } else {
-            // With SDK up to 33, ask permissions with READ_MEDIA_IMAGES
-            if (EasyPermissions.hasPermissions(
-                    this,
-                    Manifest.permission.READ_MEDIA_IMAGES
-                )
-            ) {
-                // Permission granted, open browse
-                openGalleryInternal()
+            // For version <Android 10, check the permission : READ_EXTERNAL_STORAGE
+            if (ContextCompat.checkSelfPermission(this, READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                openGalleryForOlderVersions()
             } else {
-                // Asks permission with EasyPermissions
-                EasyPermissions.requestPermissions(
-                    this,
-                    getString(R.string.add_estate_activity_storage_permission),
-                    REQUEST_CODE_STORAGE_PERMISSION,
-                    Manifest.permission.READ_MEDIA_IMAGES
-                )
+                ActivityCompat.requestPermissions(this, arrayOf(READ_EXTERNAL_STORAGE), REQUEST_CODE_STORAGE_PERMISSION)
             }
         }
     }
 
-    private fun openGalleryInternal() {
-        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT, MediaStore.Images.Media.EXTERNAL_CONTENT_URI).apply {
-            type = "image/jpeg"
+    private fun openGalleryForOlderVersions() {
+        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+            addCategory(Intent.CATEGORY_OPENABLE)
+            type = "image/*"
         }
         startActivityForResult(intent, PICK_IMAGE_REQUEST)
     }
-    override fun onPermissionsGranted(requestCode: Int, perms: MutableList<String>) {
-        if (requestCode == REQUEST_CODE_STORAGE_PERMISSION) {
-            // Permission granted, proceed with opening the gallery
-            openGalleryInternal()
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == REQUEST_CODE_STORAGE_PERMISSION && grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            openGalleryForOlderVersions()
         }
     }
 
-    override fun onPermissionsDenied(requestCode: Int, perms: MutableList<String>) {
-        if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
-            // Display a dialog to the user if some permissions are permanently denied
-            AppSettingsDialog.Builder(this).build().show()
-        } else {
-            // Request permission again
-            openGallery()
-        }
-    }
-
+    @SuppressLint("WrongConstant")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK) {
+            data?.data?.also { uri ->
+                //Flags are used to ask read and writing access to the file
+                val takeFlags: Int = data.flags and (Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
 
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null) {
-            // Retrieve the image URI
-            val selectedImage = data.data
+                // Check and take persitent permissions for Uri
+                contentResolver.takePersistableUriPermission(uri, takeFlags)
 
-            // Show the dialog to ask for the name
-            showAddPhotoDialog(selectedImage)
+                // use : uri
+                showAddPhotoDialog(uri)
+            }
         }
     }
+
 
     @SuppressLint("MissingInflatedId")
     private fun showAddPhotoDialog(imageUri: Uri?) {
-
         val dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_add_photo, null)
-        val editTextPhotoName: EditText =
-            dialogView.findViewById(R.id.dialog_add_photo_editTextPhotoNameEdit)
+        val editTextPhotoName: EditText = dialogView.findViewById(R.id.dialog_add_photo_editTextPhotoNameEdit)
 
         MaterialAlertDialogBuilder(this, R.style.MyAlertDialogStyle)
             .setTitle(R.string.add_estate_activity_dialog_add_title)
             .setView(dialogView)
             .setPositiveButton(R.string.add_estate_activity_dialog_add_add_button) { dialog, _ ->
-                val id = UUID.randomUUID().toString()
                 val photoName = editTextPhotoName.text.toString()
-                if (imageUri != null && photoName.isNotEmpty()) {                   // Load and resize the image with Glide
-
-
-                    // Add the photo with the name to the lis
-                    val photo = Photo(id, imageUri.toString(), photoName)
+                if (imageUri != null && photoName.isNotEmpty()) {
+                    val photo = Photo(UUID.randomUUID().toString(), imageUri.toString(), photoName)
                     photoList.add(photo)
                     addEstatePhotoAdapter.notifyDataSetChanged()
-
                 } else {
-                    // Show an error message if the name is empty
                     showDialog(
                         R.string.add_estate_activity_dialog_add_error_title,
                         R.string.add_estate_activity_dialog_add_error_message
@@ -368,7 +335,6 @@ class AddEstateActivity : AppCompatActivity(), OnMapReadyCallback,  EasyPermissi
                 dialog.dismiss()
             }
             .show()
-
     }
 
     private fun checkIfFieldsFilled(vararg fields: EditText): Boolean {
@@ -462,6 +428,12 @@ class AddEstateActivity : AppCompatActivity(), OnMapReadyCallback,  EasyPermissi
                 .setMessage(getString(messageResId))
                 .setPositiveButton(R.string.add_estate_activity_dialog_add_ok_button, null)
                 .show()
+    }
+    override fun onResume() {
+        super.onResume()
+        if (EasyPermissions.hasPermissions(this, READ_EXTERNAL_STORAGE)) {
+            // La permission est accordée, vous pouvez procéder à l'ouverture de la galerie
+        }
     }
 }
 

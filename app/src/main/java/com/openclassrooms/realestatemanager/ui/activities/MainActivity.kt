@@ -66,10 +66,11 @@ class MainActivity : AppCompatActivity() {
                         supportActionBar?.setDisplayHomeAsUpEnabled(false)
                     }
                 }
-                R.id.nav_loanSimulationFragment -> {
+                R.id.nav_loan_host_fragment -> {
                     if (bottomNavigationView.selectedItemId != R.id.nav_loan_simulator) {
                         bottomNavigationView.selectedItemId = R.id.nav_loan_simulator
                         supportActionBar?.hide()
+                        supportActionBar?.setDisplayHomeAsUpEnabled(false)
 
                     }
                 }
@@ -122,8 +123,8 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
                 R.id.nav_loan_simulator -> {
-                    if (navController.currentDestination?.id != R.id.nav_loanHostFragment) {
-                        navController.navigate(R.id.nav_loanHostFragment)
+                    if (navController.currentDestination?.id != R.id.nav_loan_host_fragment) {
+                        navController.navigate(R.id.nav_loan_host_fragment)
                     }
                 }
 

@@ -16,10 +16,11 @@ class LoanSimulationFragment : Fragment() {
     private lateinit var calculateButton: Button
     private lateinit var incomeEditText: TextInputEditText
     private lateinit var repaymentEditText: TextInputEditText
-    private lateinit var depositEditText: TextInputEditText
     private lateinit var numberYearsSelected: AutoCompleteTextView
     private lateinit var interestRateTextView: TextView
     private lateinit var resultTextView: TextView
+    private lateinit var resultWithInterestTextView: TextView
+
 
     @SuppressLint("MissingInflatedId")
     override fun onCreateView(
@@ -32,10 +33,10 @@ class LoanSimulationFragment : Fragment() {
         calculateButton = view.findViewById(R.id.calculateButton)
         incomeEditText = view.findViewById(R.id.incomeEditText)
         repaymentEditText = view.findViewById(R.id.repaymentEditText)
-        depositEditText = view.findViewById(R.id.depositEditText)
         numberYearsSelected = view.findViewById(R.id.nbr_years_selected_autocomplete)
         interestRateTextView = view.findViewById(R.id.interestRateLayout)
-        resultTextView = view.findViewById(R.id.resultTextView)
+        resultTextView = view.findViewById(R.id.result_textview)
+        resultWithInterestTextView = view.findViewById(R.id.loan_cost_textview)
 
         return view
     }
@@ -57,7 +58,6 @@ class LoanSimulationFragment : Fragment() {
         // Get values entered by the user
         val income = incomeEditText.text.toString().toDoubleOrNull() ?: 0.0
         val repayment = repaymentEditText.text.toString().toDoubleOrNull() ?: 0.0
-        val deposit = depositEditText.text.toString().toDoubleOrNull() ?: 0.0
         val interestRates = listOf(
             Pair(10, 2),
             Pair(15, 2.5),
@@ -65,8 +65,9 @@ class LoanSimulationFragment : Fragment() {
             Pair(25, 3.5)
         )
 
+        val minOfMonthlyRepayment = 0.30
         // Calculate the maximum total amount to borrow
-        val maxPossibleMonthlyRepayment = income * 0.30
+        val maxPossibleMonthlyRepayment = income * minOfMonthlyRepayment
 
         // Check if the desired monthly amount exceeds 30% of the monthly income
         if (repayment > maxPossibleMonthlyRepayment) {
@@ -91,8 +92,13 @@ class LoanSimulationFragment : Fragment() {
             interestRateTextView.text = getString(R.string.fragment_loan_simulation_interest_rate_label) + "$interestRate%"
 
             // Calculate the total amount to pay and set the result text using a formatted string
-            val totalToPay = selectedNumberOfYears * maxYearlyRepayment * (1 + interestRate.toDouble() / 100) + deposit
-            resultTextView.text = getString(R.string.fragment_loan_simulation_result_label) + totalToPay.toString() + getString(R.string.currency_euros)
+            val AmountBorrowed = selectedNumberOfYears * maxYearlyRepayment
+            val totalToPay = selectedNumberOfYears * maxYearlyRepayment * (1 + interestRate.toDouble() / 100)
+
+            // Format the result to display only two decimal places
+            val formattedAmountBorrowed = String.format("%.2f", AmountBorrowed)
+            resultTextView.text = getString(R.string.fragment_loan_simulation_result_label) + formattedAmountBorrowed + getString(R.string.currency_euros)
+            resultWithInterestTextView.text = getString(R.string.fragment_loan_simulation_result_with_interest_label) + totalToPay + getString(R.string.currency_euros)
 
 
         }

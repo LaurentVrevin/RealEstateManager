@@ -71,6 +71,9 @@
     <string name="add_estate_photo_adapter_dialog_delete_yes_button">Yes</string>
     <string name="add_estate_photo_adapter_dialog_delete_no_button">No</string>
 
+    <!-- à revoir -->
+    <string name="fragment_loan_simulation_storage_permission_error">We need permission to access your storage for selecting images.</string>
+
     <!-- Dialog Add Photo -->
     <string name="dialog_add_name_of_picture">Name of picture</string>
 
@@ -96,18 +99,24 @@
     <string name="fragment_loan_simulation_loan_term_hint">Loan Term (Years)</string>
     <string name="fragment_loan_simulation_calculate_button">Calculate Loan Capacity</string>
     <string name="fragment_loan_simulation_result_label">"You can borrow "</string>
-    <string name="fragment_loan_simulation_interest_rate_label">Interest Rate: </string>
+    <string name="fragment_loan_simulation_result_with_interest_label">"Cost with interest "</string>
+    <string name="fragment_loan_simulation_interest_rate_label">Interest Rate : </string>
     <string name="fragment_loan_simulation_loan_capacity_result">This is your result</string>
 
     <!-- Error Messages -->
     <string name="fragment_loan_simulation_monthly_repayment_error">Monthly repayment cannot exceed 30% of monthly income.</string>
-    <string name="fragment_loan_simulation_storage_permission_error">We need permission to access your storage for selecting images.</string>
 
     <!-- Success Message -->
     <string name="fragment_loan_simulation_calculation_success_title">Success</string>
     <string name="fragment_loan_simulation_calculation_success_message">Your loan capacity has been calculated successfully.</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- Fragment Repayment Plan -->
+    <string name="fragment_repayment_plan_property_price_hint">Property Price</string>
+    <string name="fragment_repayment_plan_loan_term_hint">Loan Term (Years)</string>
+    <string name="fragment_repayment_plan_calculate_button">Calculate Repayment</string>
+    <string name="fragment_repayment_plan_invalid_input">Property price and loan term must be greater than 0</string>
+    <string name="fragment_repayment_plan_result_label">Your monthly payments will be : </string>
+    <string name="fragment_repayment_plan_result_with_deposit_label">With your deposit, your monthly payments will be : </string>
 
 
 </resources>

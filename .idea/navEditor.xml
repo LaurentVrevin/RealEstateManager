@@ -8,18 +8,6 @@
             <LayoutPositions>
               <option name="myPositions">
                 <map>
-                  <entry key="loanHostFragment">
-                    <value>
-                      <LayoutPositions>
-                        <option name="myPosition">
-                          <Point>
-                            <option name="x" value="-298" />
-                            <option name="y" value="-255" />
-                          </Point>
-                        </option>
-                      </LayoutPositions>
-                    </value>
-                  </entry>
                   <entry key="nav_detailview_fragment">
                     <value>
                       <LayoutPositions>
@@ -61,8 +49,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="42" />
-                            <option name="y" value="45" />
+                            <option name="x" value="66" />
+                            <option name="y" value="42" />
                           </Point>
                         </option>
                         <option name="myPositions">
@@ -77,13 +65,13 @@
                       </LayoutPositions>
                     </value>
                   </entry>
-                  <entry key="nav_loanSimulationFragment">
+                  <entry key="nav_loan_host_fragment">
                     <value>
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="-130" />
-                            <option name="y" value="-260" />
+                            <option name="x" value="12" />
+                            <option name="y" value="12" />
                           </Point>
                         </option>
                       </LayoutPositions>

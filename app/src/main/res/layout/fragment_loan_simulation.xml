@@ -43,23 +43,7 @@
             android:inputType="numberDecimal" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/depositLayout"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:hint="@string/fragment_loan_simulation_deposit_hint"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/repaymentLayout">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/depositEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="numberDecimal" />
-    </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/loanTerm"
@@ -71,7 +55,7 @@
         android:hint="@string/fragment_loan_simulation_loan_term_hint"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/depositLayout">
+        app:layout_constraintTop_toBottomOf="@+id/repaymentLayout">
 
         <AutoCompleteTextView
             android:id="@+id/nbr_years_selected_autocomplete"
@@ -90,7 +74,7 @@
         android:padding="10dp"
         android:text="@string/fragment_loan_simulation_interest_rate_label"
         android:textColor="@color/colorPrimary"
-        android:textSize="20sp"
+        android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/loanTerm" />
@@ -102,6 +86,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/fragment_loan_simulation_calculate_button"
+        android:textSize="14sp"
         android:paddingTop="10dp"
         android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -109,14 +94,24 @@
         app:layout_constraintTop_toBottomOf="@+id/interestRateLayout" />
 
     <TextView
-        android:id="@+id/resultTextView"
+        android:id="@+id/result_textview"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text=""
-        android:textSize="20sp"
+        android:text="@string/fragment_loan_simulation_result_label"
+        android:textSize="14sp"
         android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/calculateButton" />
 
+    <TextView
+        android:id="@+id/loan_cost_textview"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Votre crédit vous coûtera :  "
+        android:textSize="14sp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/result_textview" />
 </androidx.constraintlayout.widget.ConstraintLayout>

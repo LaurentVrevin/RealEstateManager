@@ -87,11 +87,8 @@ class MainActivity : AppCompatActivity() {
         }
 
 
-        // Get back the list with livedata (property)
-        val propertyListLiveData = estateViewModel.getPropertyList()
-
         // Observe list with livedata about updates
-        propertyListLiveData.observe(this) { propertyList ->
+        estateViewModel.propertyList.observe(this) { propertyList ->
             Log.d("TESTLIVEDATA", "La liste contient : ${propertyList.size} objets")
         }
     }

@@ -36,20 +36,20 @@ class DetailPhotoRecyclerViewAdapter(private var itemPhoto: List<Photo>) :
     }
 
     class PhotoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val imageViewPhoto: ImageView = itemView.findViewById(R.id.item_photo_detail_fragment_imageViewPhoto)
-        private val textViewPhotoName: TextView = itemView.findViewById(R.id.item_photo_detail_fragment_textViewPhotoName)
+        /*private val imageViewPhoto: ImageView = itemView.findViewById(R.id.item_photo_detail_fragment_imageViewPhoto)
+        private val textViewPhotoName: TextView = itemView.findViewById(R.id.item_photo_detail_fragment_textViewPhotoName)*/
 
         fun bind(photo: Photo) {
-            textViewPhotoName.text = photo.photoName
+          //  textViewPhotoName.text = photo.photoName
             if(photo.imageUrl != null){
                 val photoUrl = photo.imageUrl
                 Log.d("EstateDetail", "estate detail adapter :url : $photoUrl")
-                Glide.with(itemView.context)
+                /*Glide.with(itemView.context)
 
                     .load(photoUrl)
                     .placeholder(R.drawable.placeholder_image)
                     .error(R.drawable.error_image)
-                    .into(imageViewPhoto)
+                    .into(imageViewPhoto)*/
             }
         }
     }

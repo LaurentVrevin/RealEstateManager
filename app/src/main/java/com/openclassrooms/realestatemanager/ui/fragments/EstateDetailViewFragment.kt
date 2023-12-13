@@ -56,8 +56,6 @@ class EstateDetailViewFragment : Fragment() {
         viewPagerPhotos = view.findViewById(R.id.viewPagerPhotos)
 
 
-
-
         // Initialize adapter with an empty list
         photoAdapter = DetailPhotoPagerAdapter(photoList)
 
@@ -65,7 +63,7 @@ class EstateDetailViewFragment : Fragment() {
             viewPagerPhotos.adapter = photoAdapter
         }
 
-        estateViewModel.getSelectedProperty().observe(viewLifecycleOwner) { property ->
+        estateViewModel.selectedProperty.observe(viewLifecycleOwner) { property ->
             // Update photolist when property selected changed, update adapter with new list
             photoList = property.photos
             Log.d("EstateDetail", "Observed property: ${property.description}, Photos count: ${property.photos.size}")

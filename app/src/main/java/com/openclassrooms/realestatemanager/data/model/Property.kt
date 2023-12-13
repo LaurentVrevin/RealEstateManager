@@ -1,8 +1,11 @@
 package com.openclassrooms.realestatemanager.data.model
 
-import java.util.Date
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
+@Entity(tableName = "properties")
 data class Property(
+    @PrimaryKey
     val id: String,
     val description: String,
     val typeOfProperty: String,
@@ -24,7 +27,7 @@ data class Property(
     val latitude: Double,
     val longitude: Double,
     val dateAdded: String,
-    val dateSold: Date?,
+    val dateSold: String,
     val agentId: String,
     val isSold: Boolean
 )

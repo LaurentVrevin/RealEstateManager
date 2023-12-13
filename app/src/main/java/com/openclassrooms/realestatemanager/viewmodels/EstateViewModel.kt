@@ -2,40 +2,50 @@ package com.openclassrooms.realestatemanager.viewmodels
 
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.openclassrooms.realestatemanager.data.model.Property
 import com.openclassrooms.realestatemanager.repositories.EstateRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
 @HiltViewModel
-class EstateViewModel @Inject constructor (
-    private val estateRepository: EstateRepository
+class EstateViewModel @Inject constructor (private val estateRepository: EstateRepository
 ) : ViewModel() {
 
-    // Method to add
-    fun addProperty(property: Property) {
-        estateRepository.addProperty(property)
+    // LiveData de la liste des propriétés
+    val propertyList: LiveData<List<Property>> = estateRepository.propertyListDao
+
+    fun addPropertyDao(property: Property) {
+        viewModelScope.launch {
+            estateRepository.addProperty(property)
+        }
     }
 
-    // Method to get back the List
-    fun getPropertyList(): LiveData<List<Property>> {
-        return estateRepository.propertyListLiveData
+    fun updateProperty(property: Property) {
+        viewModelScope.launch {
+            estateRepository.updateProperty(property)
+        }
     }
 
+    private val selectedPropertyId = MutableLiveData<String>()
 
-    private val selectedProperty: MutableLiveData<Property> = MutableLiveData()
-
-    // Méthode pour définir la propriété sélectionnée
-    fun setSelectedProperty(property: Property) {
-        selectedProperty.value = property
+    private val _selectedPropertyId = MutableLiveData<String>()
+    val selectedProperty: LiveData<Property> = MediatorLiveData<Property>().apply {
+        addSource(_selectedPropertyId) { id ->
+            estateRepository.getPropertyById(id).observeForever { property ->
+                this.value = property
+            }
+        }
     }
 
-    // Méthode pour récupérer la propriété sélectionnée
-    fun getSelectedProperty(): LiveData<Property> {
-        return selectedProperty
+    fun setSelectedPropertyId(propertyId: String) {
+        _selectedPropertyId.value = propertyId
     }
+
 
 }

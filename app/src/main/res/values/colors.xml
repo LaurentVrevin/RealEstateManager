@@ -10,6 +10,10 @@
     <color name="gold_light">#FBF9F3</color>
     <color name="gold_light2">#DFD0A4</color>
     <color name="colorPrimary_light">#335C72</color>
+    <color name="light_blue_400">#FF29B6F6</color>
+    <color name="light_blue_600">#FF039BE5</color>
+    <color name="gray_400">#FFBDBDBD</color>
+    <color name="gray_600">#FF757575</color>
 
 
 </resources>

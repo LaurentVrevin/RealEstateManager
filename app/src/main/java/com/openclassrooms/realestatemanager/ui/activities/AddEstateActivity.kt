@@ -2,7 +2,6 @@ package com.openclassrooms.realestatemanager.ui.activities
 
 import android.Manifest
 import android.Manifest.permission.READ_EXTERNAL_STORAGE
-import android.Manifest.permission.READ_MEDIA_IMAGES
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.ContentValues
@@ -22,19 +21,16 @@ import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Button
 import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.TextView
-import androidx.activity.result.PickVisualMediaRequest
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.common.api.Status
@@ -58,7 +54,7 @@ import com.openclassrooms.realestatemanager.helper.PropertyTypeAdapterHelper
 import com.openclassrooms.realestatemanager.ui.adapters.AddEstatePhotoAdapter
 import com.openclassrooms.realestatemanager.viewmodels.EstateViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import pub.devrel.easypermissions.AppSettingsDialog
+import kotlinx.coroutines.launch
 import pub.devrel.easypermissions.EasyPermissions
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -256,8 +252,9 @@ class AddEstateActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.add_estate_toolbar_action_save -> {
-                saveEstate()
-                return true
+                lifecycleScope.launch {
+                    saveEstate()
+                }
             }
 
             android.R.id.home -> {
@@ -451,7 +448,8 @@ class AddEstateActivity : AppCompatActivity(), OnMapReadyCallback {
         if (checkIfAllFieldsFilled()) {
             val newProperty = createPropertyFromInput()
             propertyDataList.add(newProperty)
-            estateViewModel.addProperty(newProperty)
+            //estateViewModel.addProperty(newProperty)
+            estateViewModel.addPropertyDao(newProperty)
             finish()
         }
     }
@@ -498,7 +496,7 @@ class AddEstateActivity : AppCompatActivity(), OnMapReadyCallback {
             selectedLatitude,
             selectedLongitude,
             dateAdded,
-            dateSold,
+            dateSold.toString(),
             agentId,
             isSold
         )

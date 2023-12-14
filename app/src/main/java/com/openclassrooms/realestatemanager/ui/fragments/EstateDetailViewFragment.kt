@@ -54,7 +54,7 @@ class EstateDetailViewFragment : Fragment() {
         (requireActivity() as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         // Initialize ViewPager
-        viewPagerPhotos = view.findViewById(R.id.viewPagerPhotos)
+        viewPagerPhotos = view.findViewById(R.id.estate_detail_fragment_viewpager_photos)
 
 
 

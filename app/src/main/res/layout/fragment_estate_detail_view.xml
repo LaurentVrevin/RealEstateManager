@@ -11,12 +11,10 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-
         <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/viewPagerPhotos"
+            android:id="@+id/estate_detail_fragment_viewpager_photos"
             android:layout_width="match_parent"
             android:layout_height="200dp" />
-
 
         <TextView
             android:id="@+id/estate_detail_fragment_type_textview"

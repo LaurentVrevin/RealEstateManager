@@ -1,8 +1,18 @@
 <resources>
     <string name="app_name">Real Estate Manager</string>
 
+    <!-- CURRENCY -->
     <string name="currency_euros">€</string>
     <string name="currency_dollars">$</string>
+
+    <!-- list of type of property -->
+    <string name="property_type_adapter_helper_villa">Villa</string>
+    <string name="property_type_adapter_helper_estate">Estate</string>
+    <string name="property_type_adapter_helper_manor">Manor</string>
+    <string name="property_type_adapter_helper_apartment">Apartment</string>
+    <string name="property_type_adapter_helper_loft">Loft</string>
+    <string name="property_type_adapter_helper_penthouse">Penthouse</string>
+
 
     <!-- fragment_estate_list_view -->
 

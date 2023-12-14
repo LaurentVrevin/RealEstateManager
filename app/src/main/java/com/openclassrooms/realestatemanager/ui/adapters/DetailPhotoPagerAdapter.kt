@@ -13,6 +13,7 @@ class DetailPhotoPagerAdapter(private var itemPhoto: List<Photo>) :
     RecyclerView.Adapter<DetailPhotoPagerAdapter.PhotoViewHolder>() {
 
     private var photoList: List<Photo> = emptyList()
+    var onItemClick: ((Int) -> Unit)? = null
 
     fun updateData(newPhotoList: List<Photo>) {
         photoList = newPhotoList
@@ -22,7 +23,11 @@ class DetailPhotoPagerAdapter(private var itemPhoto: List<Photo>) :
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotoViewHolder {
         val view =
             LayoutInflater.from(parent.context).inflate(R.layout.item_photo_detail_fragment, parent, false)
-        return PhotoViewHolder(view)
+        return PhotoViewHolder(view).apply {
+            itemView.setOnClickListener {
+                onItemClick?.invoke(adapterPosition)
+            }
+        }
     }
 
     override fun onBindViewHolder(holder: PhotoViewHolder, position: Int) {
@@ -36,7 +41,6 @@ class DetailPhotoPagerAdapter(private var itemPhoto: List<Photo>) :
 
     class PhotoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val imageWithLabel: ImageWithLabel = itemView.findViewById(R.id.imageviewcustom)
-
 
 
         fun bind(photo: Photo) {

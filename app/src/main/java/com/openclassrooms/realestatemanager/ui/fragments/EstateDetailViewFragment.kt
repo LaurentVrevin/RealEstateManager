@@ -34,6 +34,7 @@ class EstateDetailViewFragment : Fragment() {
 
     private var isFavorite = false
     private lateinit var viewPagerPhotos: ViewPager2
+
     private lateinit var photoAdapter: DetailPhotoPagerAdapter
     private var photoList: List<Photo> = emptyList()
     companion object {
@@ -56,11 +57,13 @@ class EstateDetailViewFragment : Fragment() {
         viewPagerPhotos = view.findViewById(R.id.viewPagerPhotos)
 
 
+
         // Initialize adapter with an empty list
         photoAdapter = DetailPhotoPagerAdapter(photoList)
 
         if (checkPermissions()) {
             viewPagerPhotos.adapter = photoAdapter
+
         }
 
         estateViewModel.selectedProperty.observe(viewLifecycleOwner) { property ->
@@ -68,6 +71,10 @@ class EstateDetailViewFragment : Fragment() {
             photoList = property.photos
             Log.d("EstateDetail", "Observed property: ${property.description}, Photos count: ${property.photos.size}")
             photoAdapter.updateData(photoList)
+            photoAdapter.onItemClick= { position ->
+            val dialog = FullScreenPhotoDialogFragment(photoList, position)
+            dialog.show(parentFragmentManager, "FullScreenPhotoDialog")
+        }
         }
 
         return view

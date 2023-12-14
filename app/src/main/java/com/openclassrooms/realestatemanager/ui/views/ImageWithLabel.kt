@@ -37,7 +37,6 @@ class ImageWithLabel @JvmOverloads constructor(
 
         if (photo.imageUrl != null) {
             val photoUrl = photo.imageUrl
-            Log.d("EstateDetail", "estate detail adapter :url : $photoUrl")
             Glide.with(this.context)
                 .load(photoUrl)
                 .placeholder(R.drawable.placeholder_image)

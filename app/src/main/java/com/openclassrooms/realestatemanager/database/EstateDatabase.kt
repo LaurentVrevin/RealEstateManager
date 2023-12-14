@@ -10,5 +10,5 @@ import com.openclassrooms.realestatemanager.data.model.Property
 @TypeConverters(Converters::class)
 abstract class EstateDatabase : RoomDatabase() {
     abstract fun propertyDao(): PropertyDao
-    abstract fun photoDao(): PhotoDao
+
 }

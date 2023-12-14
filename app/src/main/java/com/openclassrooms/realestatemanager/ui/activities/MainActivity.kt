@@ -22,6 +22,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var bottomNavigationView: BottomNavigationView
 
+
     private val estateViewModel: EstateViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {

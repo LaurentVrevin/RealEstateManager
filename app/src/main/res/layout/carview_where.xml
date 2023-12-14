@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:tools="http://schemas.android.com/tools"
+<androidx.cardview.widget.CardView
     android:id="@+id/cardview_where"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -36,12 +36,10 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@+id/txtview_where" />
 
-        <!-- Remplacez til_address_of_property par txt_address_of_property -->
         <TextView
             android:id="@+id/txt_address_of_property"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
             android:hint="@string/add_estate_activity_address_of_property"
             android:padding="5dp"
             android:textColor="@color/colorPrimary"
@@ -49,7 +47,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/autocomplete_fragment" />
 
-        <!-- Remplacez til_postal_code_of_property par txt_postal_code_of_property -->
         <TextView
             android:id="@+id/txt_city_of_property"
             android:layout_width="200dp"
@@ -60,7 +57,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txt_address_of_property" />
 
-        <!-- Remplacez til_country_of_property par txt_country_of_property -->
         <TextView
             android:id="@+id/txt_country_of_property"
             android:layout_width="161dp"

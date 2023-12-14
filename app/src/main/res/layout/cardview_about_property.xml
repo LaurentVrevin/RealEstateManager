@@ -2,7 +2,7 @@
 <androidx.cardview.widget.CardView
     android:id="@+id/cardview_about_property"
     android:layout_width="match_parent"
-    android:layout_height="200dp"
+    android:layout_height="wrap_content"
     app:cardCornerRadius="5dp"
     app:cardElevation="1dp"
     app:cardUseCompatPadding="true"
@@ -29,6 +29,28 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_title_of_property"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:hint="@string/add_estate_activity_title_of_property"
+
+                app:counterEnabled="true"
+                app:counterMaxLength="30"
+                app:layout_constraintStart_toStartOf="@+id/txtview_about_property"
+                app:layout_constraintTop_toBottomOf="@+id/txtview_about_property">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/til_title_of_property_edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:textColor="@color/colorPrimary" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_description"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
@@ -42,7 +64,7 @@
                 app:counterEnabled="true"
                 app:counterMaxLength="250"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtview_about_property">
+                app:layout_constraintTop_toBottomOf="@+id/til_title_of_property">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/til_description_edit"

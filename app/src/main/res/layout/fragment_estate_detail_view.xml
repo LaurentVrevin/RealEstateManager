@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,15 +8,25 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        >
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/estate_detail_fragment_viewpager_photos"
             android:layout_width="match_parent"
             android:layout_height="200dp" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp">
+
+        <!-- TITLE AND PRICE -->
+
         <TextView
-            android:id="@+id/estate_detail_fragment_type_textview"
+            android:id="@+id/estate_detail_fragment_title_textview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="left"
@@ -25,80 +34,92 @@
             android:text="maison"
             android:textSize="24sp"
             android:textStyle="bold"/>
-        <LinearLayout
-            android:layout_width="match_parent"
+
+
+        <!-- CITY LOCATION -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/estate_detail_fragment_cityname_textview"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:padding="10dp"
-                android:text="200 m2"
-                android:textSize="16sp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:padding="10dp"
-                android:text="10 rooms"
-                android:textSize="16sp" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:padding="10dp"
-                android:text="3 bedrooms"
-                android:textSize="16sp" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:padding="10dp"
-                android:text="3 bathrooms"
-                android:textSize="16sp" />
-        </LinearLayout>
-
+            android:padding="10dp"
+            android:text="City"
+            android:textSize="22sp"
+            android:drawableStart="@drawable/baseline_location_on_24"
+            android:drawablePadding="5dp"
+            android:drawableTint="@color/colorPrimary"
+            />
 
         <TextView
             android:id="@+id/estate_detail_fragment_price_textview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="left"
+            android:gravity="right"
             android:padding="10dp"
             android:text="500000€"
             android:textStyle="bold"
-            android:textSize="22sp"
+            android:textSize="30sp"
             android:textColor="@color/gold"/>
 
+    </LinearLayout>
 
-        <TextView
+        <!-- DESCRIPTION -->
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:padding="10dp"
-            android:text="DESCRIPTION"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/estate_detail_fragment_description_title_textview"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:layout_marginTop="20dp"
+                android:padding="10dp"
+                android:text="Description"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/estate_detail_fragment_type_textview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:layout_marginTop="20dp"
+                android:padding="10dp"
+                android:text="Type"
+                android:textSize="16sp"
+                android:textStyle="italic"/>
+
+        </LinearLayout>
+
 
         <TextView
+            android:id="@+id/estate_detail_fragment_description_text_textview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
+            android:gravity="left"
             android:padding="10dp"
             android:text="blablabla"
-            android:textSize="16sp" />
+            android:textSize="14sp" />
+
+        <!-- INFORMATION -->
 
         <TextView
-            android:layout_width="match_parent"
+            android:id="@+id/estate_detail_fragment_information_title_textview"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:gravity="center"
+            android:gravity="left"
+            android:layout_marginTop="20dp"
             android:padding="10dp"
-            android:text="INFORMATIONS"
-            android:textSize="20sp"
+            android:text="Information"
+            android:textSize="14sp"
             android:textStyle="bold" />
 
         <LinearLayout
@@ -108,36 +129,26 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="200dp"
+                android:id="@+id/estate_detail_fragment_surface_textview"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:gravity="right"
-                android:padding="10dp"
-                android:text="type :"
-                android:textSize="16sp" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:gravity="right"
-                android:padding="10dp"
-                android:text="surface :"
-                android:textSize="16sp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="left"
                 android:padding="10dp"
                 android:text="200 m2"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:drawableStart="@drawable/outline_aspect_ratio_24"
+                android:drawablePadding="5dp"
+                android:drawableTint="@color/colorPrimary"/>
+
+            <TextView
+                android:id="@+id/estate_detail_fragment_number_rooms_textview"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="10 rooms"
+                android:textSize="16sp"
+                android:drawableStart="@drawable/outline_home_24"
+                android:drawablePadding="5dp"
+                android:drawableTint="@color/colorPrimary"/>
         </LinearLayout>
 
         <LinearLayout
@@ -147,22 +158,40 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="200dp"
+                android:id="@+id/estate_detail_fragment_number_bedrooms_textview"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:gravity="right"
                 android:padding="10dp"
-                android:text="nombre de pièces :"
+                android:text="3 bedrooms"
                 android:textSize="16sp"
-                />
+                android:drawableStart="@drawable/baseline_bedroom_parent_24"
+                android:drawablePadding="5dp"
+                android:drawableTint="@color/colorPrimary"/>
 
             <TextView
-                android:layout_width="match_parent"
+                android:id="@+id/estate_detail_fragment_number_bathrooms_textview"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:gravity="left"
                 android:padding="10dp"
-                android:text="7"
-                android:textSize="16sp" />
+                android:text="3 bathrooms"
+                android:textSize="16sp"
+                android:drawableStart="@drawable/baseline_bathroom_24"
+                android:drawablePadding="5dp"
+                android:drawableTint="@color/colorPrimary"/>
         </LinearLayout>
+
+        <!-- INTEREST POINT -->
+
+        <TextView
+            android:id="@+id/estate_detail_fragment_interest_title_textview"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:layout_marginTop="20dp"
+            android:padding="10dp"
+            android:text="Interest point"
+            android:textSize="14sp"
+            android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -171,21 +200,116 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="200dp"
+                android:id="@+id/estate_detail_fragment_schools_textview"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="right"
                 android:padding="10dp"
-                android:text="nombre de chambres :"
                 android:textSize="16sp"
-                />
+                android:drawableStart="@drawable/outline_school_24"
+                android:drawablePadding="5dp"
+                android:drawableTint="@color/colorPrimary"/>
 
             <TextView
-                android:layout_width="match_parent"
+                android:id="@+id/estate_detail_fragment_foods_textview"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="left"
                 android:padding="10dp"
-                android:text="3"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:drawableStart="@drawable/outline_food_bank_24"
+                android:drawablePadding="5dp"
+                android:drawableTint="@color/colorPrimary"/>
+
+            <TextView
+                android:id="@+id/estate_detail_fragment_shops_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:textSize="16sp"
+                android:drawableStart="@drawable/outline_shopping_cart_24"
+                android:drawablePadding="5dp"
+                android:drawableTint="@color/colorPrimary"/>
+
+            <TextView
+                android:id="@+id/estate_detail_fragment_buses_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:textSize="16sp"
+                android:drawableStart="@drawable/outline_directions_bus_24"
+                android:drawablePadding="5dp"
+                android:drawableTint="@color/colorPrimary"/>
+            <TextView
+                android:id="@+id/estate_detail_fragment_tramway_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:textSize="16sp"
+                android:drawableStart="@drawable/outline_tram_24"
+                android:drawablePadding="5dp"
+                android:drawableTint="@color/colorPrimary"/>
+
+            <TextView
+                android:id="@+id/estate_detail_fragment_park_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:textSize="16sp"
+                android:drawableStart="@drawable/outline_park_24"
+                android:drawablePadding="5dp"
+                android:drawableTint="@color/colorPrimary"/>
         </LinearLayout>
+
+        <!-- ADDRESS LOCATION -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical"
+            android:paddingStart="10dp"
+            >
+
+        <TextView
+            android:id="@+id/estate_detail_fragment_address_title_textview"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:layout_marginTop="20dp"
+            android:paddingBottom="10dp"
+            android:text="Location"
+            android:textSize="14sp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/estate_detail_fragment_address_of_property"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="5dp"
+            android:text="Address"
+            />
+
+        <TextView
+            android:id="@+id/estate_detail_fragment_city_of_property"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:paddingBottom="5dp"
+            android:text="City"
+            />
+
+        <TextView
+            android:id="@+id/estate_detail_fragment_country_of_property"
+            android:layout_width="161dp"
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
+            android:text="Country"
+            />
+
+        </LinearLayout>
+
+        <fragment
+            android:id="@+id/estate_detail_fragment_map"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="150dp" />
+    </LinearLayout>
     </LinearLayout>
 </ScrollView>

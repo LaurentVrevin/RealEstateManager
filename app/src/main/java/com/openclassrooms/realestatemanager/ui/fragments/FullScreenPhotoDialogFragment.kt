@@ -24,9 +24,6 @@ class FullScreenPhotoDialogFragment(private val photos: List<Photo>, private val
     private lateinit var viewPager: ViewPager2
     private lateinit var adapter: DetailPhotoPagerAdapter
 
-    companion object {
-        private const val REQUEST_CODE_STORAGE_PERMISSION = 1001
-    }
     private val estateViewModel: EstateViewModel by viewModels({ requireActivity() })
 
     override fun onCreateView(
@@ -44,19 +41,13 @@ class FullScreenPhotoDialogFragment(private val photos: List<Photo>, private val
             viewPager.adapter = adapter
             viewPager.currentItem = currentPosition
 
-
         estateViewModel.selectedProperty.observe(viewLifecycleOwner) { property ->
             // Update photolist when property selected changed, update adapter with new list
             photoList = property.photos
-            Log.d(
-                "EstateDetail",
-                "Observed property: ${property.description}, Photos count: ${property.photos.size}"
-            )
             adapter.updateData(photoList)
+
         }
     }
-
-
 
     override fun onStart() {
         super.onStart()

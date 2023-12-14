@@ -75,6 +75,7 @@ class AddEstateActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var photoList: ArrayList<Photo>
     private val propertyDataList = mutableListOf<Property>()
     private lateinit var addEstatePhotoAdapter: AddEstatePhotoAdapter
+    private lateinit var titlePropertyEditText: EditText
     private lateinit var descriptionEditText: EditText
     private lateinit var typeOfPropertyEditText: AutoCompleteTextView
     private lateinit var priceOfPropertyEditText: EditText
@@ -132,6 +133,7 @@ class AddEstateActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private fun initViews() {
+        titlePropertyEditText = findViewById(R.id.til_title_of_property_edit)
         descriptionEditText = findViewById(R.id.til_description_edit)
         typeOfPropertyEditText = findViewById(R.id.til_type_of_property_autocomplete)
         priceOfPropertyEditText = findViewById(R.id.til_price_of_property_edit)
@@ -434,6 +436,7 @@ class AddEstateActivity : AppCompatActivity(), OnMapReadyCallback {
     private fun checkIfAllFieldsFilled(): Boolean {
         // Call previous method
         return checkIfFieldsFilled(
+            titlePropertyEditText,
             descriptionEditText,
             typeOfPropertyEditText,
             priceOfPropertyEditText,
@@ -476,6 +479,7 @@ class AddEstateActivity : AppCompatActivity(), OnMapReadyCallback {
         }*/
         return Property(
             UUID.randomUUID().toString(),
+            titlePropertyEditText.text.toString(),
             descriptionEditText.text.toString(),
             typeOfPropertyEditText.text.toString(),
             priceOfPropertyEditText.text.toString(),

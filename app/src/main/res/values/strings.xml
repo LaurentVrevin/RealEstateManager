@@ -41,6 +41,7 @@
     <string name="add_estate_activity_title">Add Real Estate</string>
     <string name="add_estate_activity_type_property">Type</string>
     <string name="add_estate_activity_price_of_property">Price</string>
+    <string name="add_estate_activity_title_of_property">Title</string>
     <string name="add_estate_activity_number_of_rooms">Rooms</string>
     <string name="add_estate_activity_number_of_bedrooms">Bedrooms</string>
     <string name="add_estate_activity_number_of_bathrooms">Bathrooms</string>

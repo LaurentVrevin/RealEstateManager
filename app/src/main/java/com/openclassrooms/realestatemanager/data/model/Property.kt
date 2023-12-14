@@ -7,6 +7,7 @@ import androidx.room.PrimaryKey
 data class Property(
     @PrimaryKey
     val id: String,
+    val title: String,
     val description: String,
     val typeOfProperty: String,
     val price: String,

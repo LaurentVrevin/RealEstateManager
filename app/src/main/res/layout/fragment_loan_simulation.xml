@@ -1,117 +1,156 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="10dp"
-    android:layout_margin="10dp"
-    android:layout_gravity="center">
+    android:layout_gravity="center"
+    >
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/incomeLayout"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="0dp"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/loan_simulation_cardview_edittext"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/fragment_loan_simulation_income_hint"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="1dp"
+        app:cardUseCompatPadding="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/incomeEditText"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="numberDecimal" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_height="match_parent"
+            android:padding="15dp">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/repaymentLayout"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="0dp"
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/incomeLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/fragment_loan_simulation_income_hint"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/incomeEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/repaymentLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:hint="@string/fragment_loan_simulation_repayment_hint"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/incomeLayout">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/repaymentEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/loanTerm"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:hint="@string/fragment_loan_simulation_loan_term_hint"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/repaymentLayout">
+
+                <AutoCompleteTextView
+                    android:id="@+id/nbr_years_selected_autocomplete"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:importantForAccessibility="yes"
+                    android:inputType="text"
+                    android:textColor="@color/colorPrimary" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/interestRateLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:padding="10dp"
+                android:text="@string/fragment_loan_simulation_interest_rate_label"
+                android:textColor="@color/colorPrimary"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/loanTerm" />
+
+            <Button
+                android:id="@+id/calculateButton"
+                style="@style/LoginButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:paddingTop="10dp"
+                android:text="@string/fragment_loan_simulation_calculate_button"
+                android:textSize="14sp"
+                app:backgroundTint="@color/gold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/interestRateLayout" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/loan_simulation_cardview_result_textview"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:hint="@string/fragment_loan_simulation_repayment_hint"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="1dp"
+        app:cardUseCompatPadding="true"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/incomeLayout">
+        app:layout_constraintTop_toBottomOf="@+id/loan_simulation_cardview_edittext">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/repaymentEditText"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="numberDecimal" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_height="match_parent"
+            android:padding="10dp"
+            android:layout_margin="10dp">
 
+            <TextView
+                android:id="@+id/result_textview"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/fragment_loan_simulation_result_label"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
 
+                />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/loanTerm"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:gravity="center"
-        android:hint="@string/fragment_loan_simulation_loan_term_hint"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/repaymentLayout">
+            <TextView
+                android:id="@+id/loan_cost_textview"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Votre crédit vous coûtera :  "
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/result_textview" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
 
-        <AutoCompleteTextView
-            android:id="@+id/nbr_years_selected_autocomplete"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/colorPrimary"
-            android:importantForAccessibility="yes"
-            android:inputType="text" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <TextView
-        android:id="@+id/interestRateLayout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:padding="10dp"
-        android:text="@string/fragment_loan_simulation_interest_rate_label"
-        android:textColor="@color/colorPrimary"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loanTerm" />
-
-    <Button
-        android:id="@+id/calculateButton"
-        style="@style/LoginButtonStyle"
-        app:backgroundTint="@color/gold"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/fragment_loan_simulation_calculate_button"
-        android:textSize="14sp"
-        android:paddingTop="10dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/interestRateLayout" />
-
-    <TextView
-        android:id="@+id/result_textview"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/fragment_loan_simulation_result_label"
-        android:textSize="14sp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/calculateButton" />
-
-    <TextView
-        android:id="@+id/loan_cost_textview"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Votre crédit vous coûtera :  "
-        android:textSize="14sp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/result_textview" />
 </androidx.constraintlayout.widget.ConstraintLayout>

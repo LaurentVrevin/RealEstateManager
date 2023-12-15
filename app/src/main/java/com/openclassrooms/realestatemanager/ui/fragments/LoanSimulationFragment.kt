@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import com.google.android.material.textfield.TextInputEditText
 import com.openclassrooms.realestatemanager.R
@@ -20,6 +21,7 @@ class LoanSimulationFragment : Fragment() {
     private lateinit var interestRateTextView: TextView
     private lateinit var resultTextView: TextView
     private lateinit var resultWithInterestTextView: TextView
+    private lateinit var loanSimulationCardView: CardView
 
 
     @SuppressLint("MissingInflatedId")
@@ -37,6 +39,9 @@ class LoanSimulationFragment : Fragment() {
         interestRateTextView = view.findViewById(R.id.interestRateLayout)
         resultTextView = view.findViewById(R.id.result_textview)
         resultWithInterestTextView = view.findViewById(R.id.loan_cost_textview)
+        loanSimulationCardView = view.findViewById(R.id.loan_simulation_cardview_result_textview)
+
+        loanSimulationCardView.visibility=View.GONE
 
         return view
     }
@@ -55,6 +60,18 @@ class LoanSimulationFragment : Fragment() {
 
     @SuppressLint("SetTextI18n")
     private fun calculateLoan() {
+
+        val incomeStr = incomeEditText.text.toString()
+        val repaymentStr = repaymentEditText.text.toString()
+        val numberYearsStr = numberYearsSelected.text.toString()
+        // check is any edittext is empty
+        if (incomeStr.isBlank() || repaymentStr.isBlank() || numberYearsStr.isBlank()) {
+            // show message error !
+            Toast.makeText(context, "Veuillez remplir tous les champs.", Toast.LENGTH_SHORT).show()
+            loanSimulationCardView.visibility = View.GONE
+            return
+        }else {
+
         // Get values entered by the user
         val income = incomeEditText.text.toString().toDoubleOrNull() ?: 0.0
         val repayment = repaymentEditText.text.toString().toDoubleOrNull() ?: 0.0
@@ -86,19 +103,31 @@ class LoanSimulationFragment : Fragment() {
             val numberOfYearsSelected = numberYearsSelected.text.toString().toDouble()
             val selectedNumberOfYears = numberOfYearsSelected.toInt()
             // Pass the percentage based on the number of years chosen by pairing in the list
-            val interestRate = interestRates.find { it.first == selectedNumberOfYears }?.second ?: 0.0
+            val interestRate =
+                interestRates.find { it.first == selectedNumberOfYears }?.second ?: 0.0
 
             // Set the interest rate text using a formatted string
-            interestRateTextView.text = getString(R.string.fragment_loan_simulation_interest_rate_label) + "$interestRate%"
+            interestRateTextView.text =
+                getString(R.string.fragment_loan_simulation_interest_rate_label) + "$interestRate%"
 
             // Calculate the total amount to pay and set the result text using a formatted string
             val AmountBorrowed = selectedNumberOfYears * maxYearlyRepayment
-            val totalToPay = selectedNumberOfYears * maxYearlyRepayment * (1 + interestRate.toDouble() / 100)
+            val totalToPay =
+                selectedNumberOfYears * maxYearlyRepayment * (1 + interestRate.toDouble() / 100)
 
             // Format the result to display only two decimal places
             val formattedAmountBorrowed = String.format("%.2f", AmountBorrowed)
-            resultTextView.text = getString(R.string.fragment_loan_simulation_result_label) + formattedAmountBorrowed + getString(R.string.currency_euros)
-            resultWithInterestTextView.text = getString(R.string.fragment_loan_simulation_result_with_interest_label) + totalToPay + getString(R.string.currency_euros)
+            val formattedTotalToPay = String.format("%.2f", totalToPay)
+            resultTextView.text =
+                getString(R.string.fragment_loan_simulation_result_label) + formattedAmountBorrowed + getString(
+                    R.string.currency_euros
+                )
+            resultWithInterestTextView.text =
+                getString(R.string.fragment_loan_simulation_result_with_interest_label) + formattedTotalToPay + getString(
+                    R.string.currency_euros
+                )
+            loanSimulationCardView.visibility = View.VISIBLE
+        }
 
 
         }

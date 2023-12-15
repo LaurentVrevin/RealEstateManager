@@ -20,7 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginStart="10dp"
+        android:layout_marginStart="5dp"
         android:layout_marginEnd="10dp">
 
         <!-- TITLE AND PRICE -->
@@ -30,10 +30,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="left"
-            android:padding="10dp"
-            android:text="maison"
-            android:textSize="24sp"
-            android:textStyle="bold"/>
+            android:paddingLeft="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="Maison"
+            android:fontFamily="@font/myfont"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:textColor="@color/quantum_black_100"/>
 
 
         <!-- CITY LOCATION -->
@@ -47,12 +50,12 @@
             android:id="@+id/estate_detail_fragment_cityname_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="10dp"
             android:text="City"
+            android:textColor="@color/quantum_pink"
             android:textSize="22sp"
             android:drawableStart="@drawable/baseline_location_on_24"
             android:drawablePadding="5dp"
-            android:drawableTint="@color/colorPrimary"
+            android:drawableTint="@color/quantum_pink"
             />
 
         <TextView
@@ -60,7 +63,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="right"
-            android:padding="10dp"
             android:text="500000€"
             android:textStyle="bold"
             android:textSize="30sp"
@@ -81,21 +83,11 @@
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:gravity="left"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="5dp"
                 android:padding="10dp"
                 android:text="Description"
                 android:textSize="14sp"
                 android:textStyle="bold" />
-            <TextView
-                android:id="@+id/estate_detail_fragment_type_textview"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="right"
-                android:layout_marginTop="20dp"
-                android:padding="10dp"
-                android:text="Type"
-                android:textSize="16sp"
-                android:textStyle="italic"/>
 
         </LinearLayout>
 
@@ -121,6 +113,16 @@
             android:text="Information"
             android:textSize="14sp"
             android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/estate_detail_fragment_type_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:padding="10dp"
+            android:text="Type"
+            android:textSize="16sp"
+            android:textStyle="italic"/>
 
         <LinearLayout
             android:layout_width="match_parent"

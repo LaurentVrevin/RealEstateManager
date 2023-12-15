@@ -32,7 +32,7 @@ class LoginActivity : AppCompatActivity() {
 
         val loginButton = findViewById<Button>(R.id.login_button)
 
-        val cardView = findViewById<CardView>(R.id.cardview_informations)
+        val cardView = findViewById<CardView>(R.id.cardview_login)
         val logoImageView = findViewById<ImageView>(R.id.login_logo_imv)
 
         // Load animations for elements

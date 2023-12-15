@@ -212,7 +212,7 @@ class AddEstateActivity : AppCompatActivity(), OnMapReadyCallback {
         googleMap.clear()
         if (propertyLocation != null) {
             googleMap.addMarker(MarkerOptions().position(propertyLocation).title("Property Location"))
-            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(propertyLocation, 10f))
+            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(propertyLocation, 20f))
         }
     }
 

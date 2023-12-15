@@ -14,12 +14,19 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.viewpager2.widget.ViewPager2
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 
 
 import com.openclassrooms.realestatemanager.R
@@ -32,7 +39,8 @@ import com.openclassrooms.realestatemanager.viewmodels.EstateViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class EstateDetailViewFragment : Fragment() {
+class EstateDetailViewFragment : Fragment(), OnMapReadyCallback {
+    // ...
 
     private var isFavorite = false
     private lateinit var viewPagerPhotos: ViewPager2
@@ -56,7 +64,13 @@ class EstateDetailViewFragment : Fragment() {
     private lateinit var busTextView: TextView
     private lateinit var tramTextView: TextView
     private lateinit var parkTextView: TextView
+    private lateinit var addressTextView: TextView
+    private lateinit var addressCityTextView: TextView
+    private lateinit var countryTextView: TextView
     private var photoList: List<Photo> = emptyList()
+
+    private lateinit var mapFragment: SupportMapFragment
+    private var googleMap: GoogleMap? = null
 
     companion object {
         private const val REQUEST_CODE_STORAGE_PERMISSION = 1001
@@ -74,7 +88,7 @@ class EstateDetailViewFragment : Fragment() {
         setHasOptionsMenu(true)
         (requireActivity() as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-
+        initMap()
         return view
     }
 
@@ -109,6 +123,9 @@ class EstateDetailViewFragment : Fragment() {
         busTextView = view.findViewById(R.id.estate_detail_fragment_buses_textview)
         tramTextView = view.findViewById(R.id.estate_detail_fragment_tramway_textview)
         parkTextView = view.findViewById(R.id.estate_detail_fragment_park_textview)
+        addressTextView = view.findViewById(R.id.estate_detail_fragment_address_of_property)
+        addressCityTextView = view.findViewById(R.id.estate_detail_fragment_city_of_property)
+        countryTextView = view.findViewById(R.id.estate_detail_fragment_country_of_property)
 
         // Initialize adapter with an empty list
         photoAdapter = DetailPhotoPagerAdapter(photoList)
@@ -132,6 +149,9 @@ class EstateDetailViewFragment : Fragment() {
             numberRoomsTextView.text = "${property.numberOfRooms} rooms"
             numberBedroomsTextView.text = "${property.numberOfBedrooms} bedrooms"
             numberBathroomsTextView.text = "${property.numberOfBathrooms} bathrooms"
+            addressTextView.text = property.address
+            addressCityTextView.text = property.city
+            countryTextView.text = property.country
 
             if (property.isNearSchools) {
                 schoolTextView.setCompoundDrawablesWithIntrinsicBounds(
@@ -274,21 +294,21 @@ class EstateDetailViewFragment : Fragment() {
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        Log.d("ETAT", "detail fragment onResume")
+    //INIT MAP AND LOCATION ADDRESS
+    private fun initMap() {
+        mapFragment = childFragmentManager.findFragmentById(R.id.estate_detail_fragment_map) as SupportMapFragment
+        mapFragment.getMapAsync(this)
+        }
 
+    override fun onMapReady(map: GoogleMap) {
+        googleMap = map
+        // Appelé lorsque la carte est prête à être utilisée
+        estateViewModel.selectedProperty.observe(viewLifecycleOwner) { property ->
+
+            // Positionner la carte
+            val location = LatLng(property.latitude, property.longitude)
+            googleMap?.addMarker(MarkerOptions().position(location).title(property.title))
+            googleMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 15f))
+        }
     }
-
-    override fun onPause() {
-        super.onPause()
-        Log.d("ETAT", "detail fragment onPause")
-    }
-
-    override fun onStop() {
-        super.onStop()
-        Log.d("ETAT", "detail fragment onStop")
-    }
-
-
 }

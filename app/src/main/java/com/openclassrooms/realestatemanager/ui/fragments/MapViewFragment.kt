@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -15,9 +16,12 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.openclassrooms.realestatemanager.R
+import com.openclassrooms.realestatemanager.data.model.Property
+import com.openclassrooms.realestatemanager.viewmodels.EstateViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -25,6 +29,8 @@ class MapViewFragment : Fragment(), OnMapReadyCallback {
 
     private lateinit var googleMap: GoogleMap
     private lateinit var fusedLocationClient: FusedLocationProviderClient
+
+    private val estateViewModel: EstateViewModel by viewModels({ requireActivity() })
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,27 +41,50 @@ class MapViewFragment : Fragment(), OnMapReadyCallback {
         // Initialize the FusedLocationProviderClient
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
 
-        // Initialize the map fragment asynchronously
-        val mapFragment = childFragmentManager.findFragmentById(R.id.map_position) as? SupportMapFragment
-        if (mapFragment != null) {
-            mapFragment.getMapAsync(this)
-        } else {
-            // Gérer l'erreur ou afficher un message d'avertissement
-        }
+
 
         return view
     }
 
-    override fun onMapReady(gMap: GoogleMap) {
-        googleMap = gMap
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
+        // Initialize the map fragment asynchronously
+        val mapFragment = childFragmentManager.findFragmentById(R.id.map_position) as? SupportMapFragment
+        if (mapFragment != null) {
+            mapFragment.getMapAsync(this)
 
-        googleMap.uiSettings.isZoomControlsEnabled = true
-
-        myPosition()
-
+        } else {
+            // I'll see about error
+        }
 
     }
+
+    override fun onMapReady(gMap: GoogleMap) {
+        googleMap = gMap
+        googleMap.uiSettings.isZoomControlsEnabled = true
+        myPosition()
+        observeProperties()
+    }
+    private fun observeProperties() {
+        estateViewModel.propertyList.observe(viewLifecycleOwner) { properties ->
+            googleMap.clear()
+            properties.forEach { property ->
+                addPropertyMarkers(property)
+            }
+        }
+    }
+
+    private fun addPropertyMarkers(property: Property) {
+        val location = LatLng(property.latitude, property.longitude)
+        val markerOptions = MarkerOptions()
+            .position(location)
+            .title(property.title)
+            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
+        googleMap.addMarker(markerOptions)
+    }
+
+
     private fun myPosition(){
         // Check if permission is granted
         if (ActivityCompat.checkSelfPermission(

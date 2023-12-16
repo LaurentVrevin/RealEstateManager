@@ -28,6 +28,14 @@
         android:name="com.openclassrooms.realestatemanager.ui.fragments.MapViewFragment"
         tools:layout="@layout/fragment_map_view">
 
+        <action
+            android:id="@+id/action_mapViewFragment_to_detailViewFragment"
+            app:destination="@id/nav_detailview_fragment">
+            <argument
+                android:name="propertyId"
+                app:argType="string" />
+        </action>
+
     </fragment>
 
     <fragment

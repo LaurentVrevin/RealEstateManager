@@ -163,7 +163,10 @@ class EstateDetailViewFragment : Fragment(), OnMapReadyCallback {
                 )
                 schoolTextView.compoundDrawableTintList =
                     ContextCompat.getColorStateList(requireContext(), R.color.gold)
+            }else{
+                schoolTextView.compoundDrawableTintList=ContextCompat.getColorStateList(requireContext(), R.color.colorPrimary)
             }
+
             if (property.isNearRestaurants) {
                 foodTextView.setCompoundDrawablesWithIntrinsicBounds(
                     R.drawable.baseline_food_bank_24,
@@ -173,7 +176,10 @@ class EstateDetailViewFragment : Fragment(), OnMapReadyCallback {
                 )
                 foodTextView.compoundDrawableTintList =
                     ContextCompat.getColorStateList(requireContext(), R.color.gold)
+            }else{
+                foodTextView.compoundDrawableTintList=ContextCompat.getColorStateList(requireContext(), R.color.colorPrimary)
             }
+
             if (property.isNearShops) {
                 shopTextView.setCompoundDrawablesWithIntrinsicBounds(
                     R.drawable.baseline_shopping_cart_24,
@@ -183,6 +189,8 @@ class EstateDetailViewFragment : Fragment(), OnMapReadyCallback {
                 )
                 shopTextView.compoundDrawableTintList =
                     ContextCompat.getColorStateList(requireContext(), R.color.gold)
+            }else{
+                shopTextView.compoundDrawableTintList=ContextCompat.getColorStateList(requireContext(), R.color.colorPrimary)
             }
 
             if (property.isNearBuses) {
@@ -194,6 +202,8 @@ class EstateDetailViewFragment : Fragment(), OnMapReadyCallback {
                 )
                 busTextView.compoundDrawableTintList =
                     ContextCompat.getColorStateList(requireContext(), R.color.gold)
+            }else{
+                busTextView.compoundDrawableTintList=ContextCompat.getColorStateList(requireContext(), R.color.colorPrimary)
             }
 
             if (property.isNearTramway) {
@@ -205,6 +215,8 @@ class EstateDetailViewFragment : Fragment(), OnMapReadyCallback {
                 )
                 tramTextView.compoundDrawableTintList =
                     ContextCompat.getColorStateList(requireContext(), R.color.gold)
+            }else{
+                tramTextView.compoundDrawableTintList=ContextCompat.getColorStateList(requireContext(), R.color.colorPrimary)
             }
 
             if (property.isNearPark) {
@@ -216,6 +228,8 @@ class EstateDetailViewFragment : Fragment(), OnMapReadyCallback {
                 )
                 parkTextView.compoundDrawableTintList =
                     ContextCompat.getColorStateList(requireContext(), R.color.gold)
+            }else{
+                parkTextView.compoundDrawableTintList=ContextCompat.getColorStateList(requireContext(), R.color.colorPrimary)
             }
 
 
@@ -223,9 +237,9 @@ class EstateDetailViewFragment : Fragment(), OnMapReadyCallback {
                 val dialog = FullScreenPhotoDialogFragment(photoList, position)
                 dialog.show(parentFragmentManager, "FullScreenPhotoDialog")
             }
+            Log.d("CHECKBOX", "état des checkbox ${property.isNearBuses}, ${property.isNearPark}, ${property.isNearRestaurants}, ${property.isNearSchools}, ${property.isNearTramway}, ${property.isNearShops}")
         }
     }
-
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.toolbar_menu_detail, menu)

@@ -10,6 +10,8 @@ import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -18,6 +20,7 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.data.model.Property
@@ -32,6 +35,8 @@ class MapViewFragment : Fragment(), OnMapReadyCallback {
 
     private val estateViewModel: EstateViewModel by viewModels({ requireActivity() })
 
+    private val markerToPropertyIdMap = HashMap<Marker, String>()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -40,7 +45,6 @@ class MapViewFragment : Fragment(), OnMapReadyCallback {
 
         // Initialize the FusedLocationProviderClient
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
-
 
 
         return view
@@ -53,9 +57,6 @@ class MapViewFragment : Fragment(), OnMapReadyCallback {
         val mapFragment = childFragmentManager.findFragmentById(R.id.map_position) as? SupportMapFragment
         if (mapFragment != null) {
             mapFragment.getMapAsync(this)
-
-        } else {
-            // I'll see about error
         }
 
     }
@@ -65,6 +66,7 @@ class MapViewFragment : Fragment(), OnMapReadyCallback {
         googleMap.uiSettings.isZoomControlsEnabled = true
         myPosition()
         observeProperties()
+        setupMarkerClickListener()
     }
     private fun observeProperties() {
         estateViewModel.propertyList.observe(viewLifecycleOwner) { properties ->
@@ -82,6 +84,27 @@ class MapViewFragment : Fragment(), OnMapReadyCallback {
             .title(property.title)
             .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
         googleMap.addMarker(markerOptions)
+
+        val marker = googleMap.addMarker(markerOptions)
+        marker?.let {
+            markerToPropertyIdMap[it] = property.id // Associer le marqueur à l'ID de la propriété
+        }
+    }
+
+    private fun setupMarkerClickListener() {
+        googleMap.setOnMarkerClickListener { marker ->
+            val propertyId = markerToPropertyIdMap[marker]
+            propertyId?.let {
+                // Naviguer vers le fragment de détail en utilisant l'ID
+                navigateToDetailFragment(it)
+            }
+            true
+        }
+    }
+
+    private fun navigateToDetailFragment(propertyId: String) {
+        estateViewModel.setSelectedPropertyId(propertyId)
+        findNavController().navigate(R.id.action_mapViewFragment_to_detailViewFragment)
     }
 
 

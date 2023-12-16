@@ -18,7 +18,6 @@
     <fragment
         android:id="@+id/nav_detailview_fragment"
         android:name="com.openclassrooms.realestatemanager.ui.fragments.EstateDetailViewFragment"
-        android:label="DETAIL VIEW"
         tools:layout="@layout/fragment_estate_detail_view" />
     <argument
         android:name="selectedItemId"
@@ -27,7 +26,6 @@
     <fragment
         android:id="@+id/nav_mapview_fragment"
         android:name="com.openclassrooms.realestatemanager.ui.fragments.MapViewFragment"
-        android:label="Map View"
         tools:layout="@layout/fragment_map_view">
 
     </fragment>
@@ -35,18 +33,15 @@
     <fragment
         android:id="@+id/nav_favorite_fragment"
         android:name="com.openclassrooms.realestatemanager.ui.fragments.FavoriteFragment"
-        android:label="FAVORITE"
         tools:layout="@layout/fragment_favorite" />
 
     <fragment
         android:id="@+id/nav_home_fragment"
         android:name="com.openclassrooms.realestatemanager.ui.fragments.HomeFragment"
-        android:label="HOME"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/nav_loan_host_fragment"
         android:name="com.openclassrooms.realestatemanager.ui.fragments.LoanHostFragment"
-        android:label="Loan Host"
         tools:layout="@layout/fragment_loan_host" />
 </navigation>

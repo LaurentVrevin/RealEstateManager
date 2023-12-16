@@ -48,14 +48,14 @@ class EstateListAdapter(private val itemList: List<Property>) : RecyclerView.Ada
     }
 
     class EstateViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val typeNameTextView: TextView = itemView.findViewById(R.id.item_estate_typename_textview)
+        private val titleNameTextView: TextView = itemView.findViewById(R.id.item_estate_titlename_textview)
         private val cityNameTextView: TextView = itemView.findViewById(R.id.item_estate_cityname_textview)
         private val priceTextView: TextView = itemView.findViewById(R.id.item_estate_price_textview)
         private val photoImageView: ImageView = itemView.findViewById(R.id.item_estate_photo_imageview)
 
         // link data from property to view
         fun bind(property: Property) {
-            typeNameTextView.text = property.typeOfProperty
+            titleNameTextView.text = property.title
             cityNameTextView.text = property.city
             priceTextView.text = property.price
 

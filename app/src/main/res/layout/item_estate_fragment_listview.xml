@@ -29,7 +29,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/item_estate_typename_textview"
+            android:id="@+id/item_estate_titlename_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -50,7 +50,7 @@
             android:textSize="30sp"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@+id/item_estate_photo_imageview"
-            app:layout_constraintTop_toBottomOf="@+id/item_estate_typename_textview" />
+            app:layout_constraintTop_toBottomOf="@+id/item_estate_titlename_textview" />
         <TextView
             android:id="@+id/item_estate_currency_textview"
             android:layout_width="wrap_content"

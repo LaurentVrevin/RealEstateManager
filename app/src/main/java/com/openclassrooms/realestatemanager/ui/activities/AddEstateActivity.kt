@@ -55,7 +55,6 @@ import com.openclassrooms.realestatemanager.ui.adapters.AddEstatePhotoAdapter
 import com.openclassrooms.realestatemanager.viewmodels.EstateViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import pub.devrel.easypermissions.EasyPermissions
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.Arrays
@@ -73,7 +72,6 @@ class AddEstateActivity : AppCompatActivity(), OnMapReadyCallback {
         private val REQUEST_IMAGE_CAPTURE = 2
     }
     private lateinit var photoList: ArrayList<Photo>
-    private val propertyDataList = mutableListOf<Property>()
     private lateinit var addEstatePhotoAdapter: AddEstatePhotoAdapter
     private lateinit var titlePropertyEditText: EditText
     private lateinit var descriptionEditText: EditText
@@ -101,6 +99,9 @@ class AddEstateActivity : AppCompatActivity(), OnMapReadyCallback {
     private var selectedLatitude: Double = 0.0
     private var selectedLongitude: Double = 0.0
 
+    private var currentPropertyId: String? = null
+    private var id: String? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -117,16 +118,24 @@ class AddEstateActivity : AppCompatActivity(), OnMapReadyCallback {
         takeFromCameraButton.setOnClickListener{
             openCamera()
         }
-
         setupActionBar()
         initViews()
         setupAutoComplete()
         initRecyclerView()
         initMap()
         PropertyTypeAdapterHelper.createAdapter(this, typeOfPropertyEditText)
+
+        // update currentPropertyId with intent from key PROPERTY_ID
+        val currentPropertyId = intent.getStringExtra("PROPERTY_ID")
+        // if currentPropertyId is not null so, load data, and id = currentPropertyId, or else id = random id
+        if (currentPropertyId != null) {
+            loadPropertyData(currentPropertyId)
+            id = currentPropertyId
+        }else{
+            id = UUID.randomUUID().toString()
+
+        }
     }
-
-
 
     private fun setupActionBar() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -212,7 +221,7 @@ class AddEstateActivity : AppCompatActivity(), OnMapReadyCallback {
         googleMap.clear()
         if (propertyLocation != null) {
             googleMap.addMarker(MarkerOptions().position(propertyLocation).title("Property Location"))
-            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(propertyLocation, 20f))
+            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(propertyLocation, 15f))
         }
     }
 
@@ -449,10 +458,16 @@ class AddEstateActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private fun saveEstate() {
         if (checkIfAllFieldsFilled()) {
-            val newProperty = createPropertyFromInput()
-            propertyDataList.add(newProperty)
-            //estateViewModel.addProperty(newProperty)
-            estateViewModel.addPropertyDao(newProperty)
+            val property = createPropertyFromInput()
+
+            if (id == currentPropertyId){
+                estateViewModel.updateProperty(property)
+                Log.d("CHECKID", "update. Id : ${property.id}")
+            }
+            else{
+                estateViewModel.addPropertyDao(property)
+                Log.d("CHECKID", "add, via l'intent. Id : ${property.id}")
+            }
             finish()
         }
     }
@@ -477,8 +492,12 @@ class AddEstateActivity : AppCompatActivity(), OnMapReadyCallback {
                 agentId = /* id of agent */
                 isSold = true
         }*/
+
+
+
+
         return Property(
-            UUID.randomUUID().toString(),
+            id.toString(),
             titlePropertyEditText.text.toString(),
             descriptionEditText.text.toString(),
             typeOfPropertyEditText.text.toString(),
@@ -514,10 +533,47 @@ class AddEstateActivity : AppCompatActivity(), OnMapReadyCallback {
                 .setPositiveButton(R.string.add_estate_activity_dialog_add_ok_button, null)
                 .show()
     }
-    override fun onResume() {
-        super.onResume()
-        if (EasyPermissions.hasPermissions(this, READ_EXTERNAL_STORAGE)) {
-            // La permission est accordée, vous pouvez procéder à l'ouverture de la galerie
+
+
+    private fun loadPropertyData(propertyId: String) {
+        // Load data of property from viewmodel
+        estateViewModel.setSelectedPropertyId(propertyId)
+        estateViewModel.selectedProperty.observe(this) { property ->
+
+            // Update EditText
+            titlePropertyEditText.setText(property.title)
+            descriptionEditText.setText(property.description)
+            typeOfPropertyEditText.setText(property.typeOfProperty)
+            priceOfPropertyEditText.setText(property.price)
+            surfaceOfPropertyEditText.setText(property.surface)
+            numberOfRoomsEditText.setText(property.numberOfRooms)
+            numberOfBedroomsEditText.setText(property.numberOfBedrooms)
+            numberOfBathroomsEditText.setText(property.numberOfBathrooms)
+            addressOfPropertyTxt.text = property.address
+            cityOfPropertyTxt.text = property.city
+            countryOfPropertyTxt.text = property.country
+
+            // Update address and map
+            addressOfPropertyTxt.text = property.address
+            cityOfPropertyTxt.text = property.city
+            countryOfPropertyTxt.text = property.country
+            selectedLatitude = property.latitude
+            selectedLongitude = property.longitude
+            updateMapWithLocation()
+            showAddressFields()
+
+            // Update photos
+            photoList.clear()
+            photoList.addAll(property.photos)
+            addEstatePhotoAdapter.notifyDataSetChanged()
+
+            // Update Checkbox
+            checkboxSchools.isChecked = property.isNearSchools
+            checkboxRestaurants.isChecked = property.isNearRestaurants
+            checkboxShops.isChecked = property.isNearShops
+            checkboxBuses.isChecked = property.isNearBuses
+            checkboxTramway.isChecked = property.isNearTramway
+            checkboxPark.isChecked = property.isNearPark
         }
     }
 }

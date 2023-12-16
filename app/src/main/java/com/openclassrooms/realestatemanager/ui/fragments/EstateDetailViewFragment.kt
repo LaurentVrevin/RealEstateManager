@@ -3,6 +3,7 @@ package com.openclassrooms.realestatemanager.ui.fragments
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -32,6 +33,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.data.model.Photo
 import com.openclassrooms.realestatemanager.data.model.Property
+import com.openclassrooms.realestatemanager.ui.activities.AddEstateActivity
 import com.openclassrooms.realestatemanager.ui.adapters.DetailPhotoPagerAdapter
 
 
@@ -40,12 +42,11 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class EstateDetailViewFragment : Fragment(), OnMapReadyCallback {
-    // ...
+
 
     private var isFavorite = false
     private lateinit var viewPagerPhotos: ViewPager2
     private lateinit var photoAdapter: DetailPhotoPagerAdapter
-
     private lateinit var titleTextView: TextView
     private lateinit var cityTextView: TextView
     private lateinit var priceTextView: TextView
@@ -288,6 +289,13 @@ class EstateDetailViewFragment : Fragment(), OnMapReadyCallback {
                 toggleFavoriteIcon(item)
                 return true
             }
+            R.id.editIcon -> {
+                val intent = Intent(activity, AddEstateActivity::class.java)
+                intent.putExtra("PROPERTY_ID", estateViewModel.selectedProperty.value?.id)
+                startActivity(intent)
+                return true
+                return true
+            }
 
 
             else -> return super.onOptionsItemSelected(item)
@@ -302,10 +310,10 @@ class EstateDetailViewFragment : Fragment(), OnMapReadyCallback {
 
     override fun onMapReady(map: GoogleMap) {
         googleMap = map
-        // Appelé lorsque la carte est prête à être utilisée
+        // called when map is ready to use
         estateViewModel.selectedProperty.observe(viewLifecycleOwner) { property ->
 
-            // Positionner la carte
+            // Position on map
             val location = LatLng(property.latitude, property.longitude)
             googleMap?.addMarker(MarkerOptions().position(location).title(property.title))
             googleMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 15f))

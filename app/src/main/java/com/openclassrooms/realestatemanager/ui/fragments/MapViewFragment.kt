@@ -75,7 +75,7 @@ class MapViewFragment : Fragment(), OnMapReadyCallback {
                     googleMap.addMarker(MarkerOptions().position(latLng).title("My Location"))
 
                     // Move the camera to the user's location with a zoom level of 15
-                    googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 25f))
+                    googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10f))
                 }
             }
         } else {

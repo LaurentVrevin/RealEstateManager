@@ -37,7 +37,6 @@
         <activity
             android:name=".ui.activities.AddEstateActivity"
             android:exported="true"
-            android:label="@string/add_estate_activity_title"
             android:theme="@style/AppTheme.WithActionBar" />
         <activity
             android:name=".ui.activities.LoginActivity"

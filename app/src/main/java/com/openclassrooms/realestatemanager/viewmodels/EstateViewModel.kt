@@ -48,4 +48,5 @@ class EstateViewModel @Inject constructor (private val estateRepository: EstateR
     }
 
 
+
 }

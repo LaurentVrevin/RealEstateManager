@@ -5,6 +5,7 @@ import android.net.wifi.WifiManager
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.Date
+import java.util.Locale
 
 /**
  * Created by Philippe on 21/02/2018.
@@ -43,6 +44,11 @@ object Utils {
             val dateFormat: DateFormat = SimpleDateFormat("dd/MM/yyyy")
             return dateFormat.format(Date())
         }
+    fun formatCustomDate(date: Date): String {
+        val dateFormat: DateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        return dateFormat.format(date)
+    }
+
     /**
      * Vérification de la connexion réseau
      * NOTE : NE PAS SUPPRIMER, A MONTRER DURANT LA SOUTENANCE

@@ -5,6 +5,7 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.health.connect.datatypes.units.Length
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -14,12 +15,16 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -31,6 +36,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 
 
 import com.openclassrooms.realestatemanager.R
+import com.openclassrooms.realestatemanager.Utils
 import com.openclassrooms.realestatemanager.data.model.Photo
 import com.openclassrooms.realestatemanager.data.model.Property
 import com.openclassrooms.realestatemanager.ui.activities.AddEstateActivity
@@ -45,9 +51,12 @@ class EstateDetailViewFragment : Fragment(), OnMapReadyCallback {
 
 
     private var isFavorite = false
+    private var propertyIsSold: Boolean = false
+    private var propertyDateSold:String=""
     private lateinit var viewPagerPhotos: ViewPager2
     private lateinit var photoAdapter: DetailPhotoPagerAdapter
     private lateinit var titleTextView: TextView
+    private lateinit var isSoldTextView: TextView
     private lateinit var cityTextView: TextView
     private lateinit var priceTextView: TextView
     private lateinit var descriptionTitleTextView: TextView
@@ -101,6 +110,7 @@ class EstateDetailViewFragment : Fragment(), OnMapReadyCallback {
         // Initialize ViewPager
         viewPagerPhotos = view.findViewById(R.id.estate_detail_fragment_viewpager_photos)
         titleTextView = view.findViewById(R.id.estate_detail_fragment_title_textview)
+        isSoldTextView = view.findViewById(R.id.estate_detail_fragment_is_sold_textview)
         cityTextView = view.findViewById(R.id.estate_detail_fragment_cityname_textview)
         priceTextView = view.findViewById(R.id.estate_detail_fragment_price_textview)
         descriptionTitleTextView =
@@ -153,6 +163,18 @@ class EstateDetailViewFragment : Fragment(), OnMapReadyCallback {
             addressTextView.text = property.address
             addressCityTextView.text = property.city
             countryTextView.text = property.country
+            // Check if the property is sold
+            propertyIsSold = property.isSold
+            propertyDateSold = property.dateSold
+
+            //VISIBILITY FOR PROPERTY TO SELL OR SOLD
+            if (propertyIsSold){
+                isSoldTextView.visibility= VISIBLE
+                isSoldTextView.text=getString(R.string.estate_detail_fragment_is_sold_textview)+ propertyDateSold
+            }else{
+                isSoldTextView.visibility= GONE
+            }
+
 
             if (property.isNearSchools) {
                 schoolTextView.setCompoundDrawablesWithIntrinsicBounds(
@@ -239,6 +261,7 @@ class EstateDetailViewFragment : Fragment(), OnMapReadyCallback {
             }
             Log.d("CHECKBOX", "état des checkbox ${property.isNearBuses}, ${property.isNearPark}, ${property.isNearRestaurants}, ${property.isNearSchools}, ${property.isNearTramway}, ${property.isNearShops}")
         }
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -293,10 +316,13 @@ class EstateDetailViewFragment : Fragment(), OnMapReadyCallback {
 
             item.setIcon(R.drawable.baseline_favorite_24)
             isFavorite = true
+
+
         }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
         when (item.itemId) {
             R.id.FavoriteIcon -> {
                 // setup the click for favorite
@@ -304,10 +330,15 @@ class EstateDetailViewFragment : Fragment(), OnMapReadyCallback {
                 return true
             }
             R.id.editIcon -> {
-                val intent = Intent(activity, AddEstateActivity::class.java)
-                intent.putExtra("PROPERTY_ID", estateViewModel.selectedProperty.value?.id)
-                startActivity(intent)
-                return true
+                if(propertyIsSold){
+                    Toast.makeText(requireContext(), "You cant edit this property because she's sold, sorry", Toast.LENGTH_SHORT).show()
+
+                } else {
+                    val intent = Intent(activity, AddEstateActivity::class.java)
+                    intent.putExtra("PROPERTY_ID", estateViewModel.selectedProperty.value?.id)
+                    startActivity(intent)
+
+                }
                 return true
             }
 

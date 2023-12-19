@@ -84,38 +84,13 @@ class EstateListViewFragment : Fragment(){
         return view
     }
 
-
-
-
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.toolbar_menu_list, menu)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-    }
 
     private fun setViewVisibility(view: View, visibility: Int) {
         view.visibility = visibility
     }
-
-
-    override fun onResume() {
-        super.onResume()
-        Log.d("ETAT", "list fragment onResume")
-
-    }
-
-    override fun onPause() {
-        super.onPause()
-        Log.d("ETAT", "list fragment onPause")
-    }
-
-    override fun onStop() {
-        super.onStop()
-        Log.d("ETAT", "list fragment onStop")
-    }
-
 
 }

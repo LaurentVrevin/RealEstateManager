@@ -12,6 +12,9 @@
         android:orientation="vertical"
         android:gravity="center_horizontal">
 
+
+        <include layout="@layout/cardview_is_sold" />
+
         <include layout="@layout/cardview_about_property" />
 
         <include layout="@layout/cardview_informations" />

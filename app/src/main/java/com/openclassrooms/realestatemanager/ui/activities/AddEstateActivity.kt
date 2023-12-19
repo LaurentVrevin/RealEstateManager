@@ -4,6 +4,7 @@ import android.Manifest
 import android.Manifest.permission.READ_EXTERNAL_STORAGE
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.DatePickerDialog
 import android.content.ContentValues
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -23,11 +24,15 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.AutoCompleteTextView
 import android.widget.Button
+import android.widget.DatePicker
 import android.widget.EditText
 import android.widget.FrameLayout
+import android.widget.Switch
 import android.widget.TextView
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
@@ -58,6 +63,7 @@ import kotlinx.coroutines.launch
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.Arrays
+import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 import java.util.UUID
@@ -93,6 +99,10 @@ class AddEstateActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var checkboxTramway: MaterialCheckBox
     private lateinit var checkboxPark: MaterialCheckBox
 
+    private lateinit var cardviewIsSold: CardView
+    @SuppressLint("UseSwitchCompatOrMaterialCode")
+    private lateinit var isSoldSwitch: Switch
+
     private val estateViewModel: EstateViewModel by viewModels()
     private val placeFields = Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG)
     private lateinit var googleMap: GoogleMap
@@ -101,6 +111,13 @@ class AddEstateActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private var currentPropertyId: String? = null
     private var id: String? = null
+
+    //if property is not sold, dateSold & agentId can be null for the moment
+    var dateSold: String = ""
+    var addPropertyDate: String = ""
+    var agentId: String = ""
+    var isSold = false
+    var isFavorite = false
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -131,9 +148,23 @@ class AddEstateActivity : AppCompatActivity(), OnMapReadyCallback {
         if (currentPropertyId != null) {
             loadPropertyData(currentPropertyId)
             id = currentPropertyId
+            cardviewIsSold.visibility = View.VISIBLE
         }else{
             id = UUID.randomUUID().toString()
+            cardviewIsSold.visibility = View.GONE
+        }
+        isSoldSwitch.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                // Le Switch est activé, ouvre le DatePickerDialog
+                Log.d("TOKNOW", "Switch activé : $isSold et $dateSold")
+                openDatePickerDialog()
+            } else {
 
+                // Le Switch est désactivé, définis isSold sur false et dateSold sur null
+                isSold = false
+                dateSold = ""
+                Log.d("TOKNOW", "Switch désactivité : $isSold et $dateSold")
+            }
         }
     }
 
@@ -154,6 +185,8 @@ class AddEstateActivity : AppCompatActivity(), OnMapReadyCallback {
         cityOfPropertyTxt = findViewById(R.id.txt_city_of_property)
         countryOfPropertyTxt = findViewById(R.id.txt_country_of_property)
         mapContainer = findViewById(R.id.add_estate_mapContainer)
+        cardviewIsSold= findViewById(R.id.cardview_is_sold)
+
 
         //CHECKBOX
         checkboxSchools = findViewById(R.id.checkbox_schools)
@@ -162,12 +195,46 @@ class AddEstateActivity : AppCompatActivity(), OnMapReadyCallback {
         checkboxBuses = findViewById(R.id.checkbox_buses)
         checkboxTramway = findViewById(R.id.checkbox_tramway)
         checkboxPark = findViewById(R.id.checkbox_park)
+        isSoldSwitch = findViewById(R.id.is_sold_switch)
 
         //VISIBILITY OF ELEMENTS
         addressOfPropertyTxt.visibility = View.GONE
         cityOfPropertyTxt.visibility = View.GONE
         countryOfPropertyTxt.visibility = View.GONE
         mapContainer.visibility = View.GONE
+        cardviewIsSold.visibility = View.GONE
+    }
+    private fun openDatePickerDialog() {
+        val dialogView = LayoutInflater.from(this).inflate(R.layout.date_picker_custom, null)
+        val datePicker = dialogView.findViewById<DatePicker>(R.id.date_picker)
+
+        val calendar = Calendar.getInstance()
+
+
+        // Use datePicker for selected date
+        datePicker.init(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)) { _, year, month, day ->
+            val selectedDate = Calendar.getInstance()
+            selectedDate.set(year, month, day)
+            dateSold = Utils.formatCustomDate(selectedDate.time)
+            isSold = true
+            Log.d("TOKNOW", "la date  $dateSold")
+        }
+
+        val datePickerDialog = AlertDialog.Builder(this)
+            .setTitle(getString(R.string.date_picker_custom_select_date))
+            .setView(dialogView)
+            .setPositiveButton(R.string.date_picker_custom_yes) { _, _ ->
+                //The date has been selected
+            }
+            .setNegativeButton(R.string.date_picker_custom_no) { dialog, _ ->
+                // If user cancel selection, define switch "off"
+                isSoldSwitch.isChecked = false
+                Log.d("TOKNOW", "s'il annule la sélection : $isSold et $dateSold")
+                dialog.dismiss()
+            }
+            .create()
+
+        datePickerDialog.show()
     }
 
     private fun setupAutoComplete() {
@@ -479,22 +546,15 @@ class AddEstateActivity : AppCompatActivity(), OnMapReadyCallback {
         val isBusesNearby = checkboxBuses.isChecked
         val isTramwayNearby = checkboxTramway.isChecked
         val isParkNearby = checkboxPark.isChecked
-        val dateAdded = Utils.formattedTodayDate
 
-        //if property is not sold, dateSold & agentId can be null for the moment
-        var dateSold: Date? = null
-        var agentId: String = ""
-        var isSold = false
-
-        // If sold, update these :
-       /* if (/* property is sold so */) {
-            dateSold = /* get the date of sell */
-                agentId = /* id of agent */
-                isSold = true
-        }*/
-
-
-
+        val dateAdded: String
+        if (currentPropertyId == null) {
+            // If new property, dateAdded = new date (of the day)
+            dateAdded = Utils.formatCustomDate(Date())
+        } else {
+            // If update of property, dateAdded = Date of creation of property
+            dateAdded = addPropertyDate
+        }
 
         return Property(
             id.toString(),
@@ -519,9 +579,10 @@ class AddEstateActivity : AppCompatActivity(), OnMapReadyCallback {
             selectedLatitude,
             selectedLongitude,
             dateAdded,
-            dateSold.toString(),
+            dateSold,
             agentId,
-            isSold
+            isSold,
+            isFavorite
         )
     }
 
@@ -536,6 +597,7 @@ class AddEstateActivity : AppCompatActivity(), OnMapReadyCallback {
 
 
     private fun loadPropertyData(propertyId: String) {
+
         // Load data of property from viewmodel
         estateViewModel.setSelectedPropertyId(propertyId)
         estateViewModel.selectedProperty.observe(this) { property ->
@@ -574,6 +636,9 @@ class AddEstateActivity : AppCompatActivity(), OnMapReadyCallback {
             checkboxBuses.isChecked = property.isNearBuses
             checkboxTramway.isChecked = property.isNearTramway
             checkboxPark.isChecked = property.isNearPark
+            isSoldSwitch.isChecked = property.isSold
+            addPropertyDate = property.dateAdded
+            dateSold = property.dateSold
         }
     }
 }

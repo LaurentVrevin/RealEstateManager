@@ -24,4 +24,8 @@ class EstateRepository @Inject constructor(private val propertyDao: PropertyDao)
     fun getPropertyById(propertyId: String): LiveData<Property> {
         return propertyDao.getPropertyById(propertyId)
     }
+
+    /*suspend fun updateFavoriteStatus(propertyId: String, isFavorite: Boolean) {
+        propertyDao.updateFavoriteStatus(propertyId, isFavorite)
+    }*/
 }

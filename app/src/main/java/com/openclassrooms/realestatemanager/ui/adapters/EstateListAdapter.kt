@@ -1,8 +1,11 @@
 package com.openclassrooms.realestatemanager.ui.adapters
 
+import android.opengl.Visibility
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
@@ -52,12 +55,19 @@ class EstateListAdapter(private val itemList: List<Property>) : RecyclerView.Ada
         private val cityNameTextView: TextView = itemView.findViewById(R.id.item_estate_cityname_textview)
         private val priceTextView: TextView = itemView.findViewById(R.id.item_estate_price_textview)
         private val photoImageView: ImageView = itemView.findViewById(R.id.item_estate_photo_imageview)
+        private val isSoldTextView: TextView = itemView.findViewById(R.id.item_estate_is_sold_textview)
 
         // link data from property to view
         fun bind(property: Property) {
             titleNameTextView.text = property.title
             cityNameTextView.text = property.city
             priceTextView.text = property.price
+            val isSold = property.isSold
+            if(isSold){
+                isSoldTextView.visibility=VISIBLE
+            }else{
+                isSoldTextView.visibility= GONE
+            }
 
             if (property.photos.isNotEmpty()) {
                 val photoUrl = property.photos[0].imageUrl

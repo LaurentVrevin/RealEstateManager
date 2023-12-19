@@ -15,15 +15,32 @@
 
 
     <!-- fragment_estate_list_view -->
+    <string name="estate_list_view_text">No Property for the moment</string>
+    <string name="item_estate_fragment_listview_title_textview">TYPE</string>
+    <string name="item_estate_fragment_listview_cityname_textview">CITY</string>
+    <string name="item_estate_fragment_listview_price_textview">1000</string>
+    <string name="item_estate_fragment_listview_currency_textview">$</string>
+    <string name="item_estate_fragment_listview_issold_textview">S O L D ! </string>
 
     <!-- fragment_estate_detail_view -->
+    <string name="estate_detail_fragment_title_textview">House</string>
+    <string name="estate_detail_fragment_is_sold_textview">"The property was sold on "</string>
+    <string name="estate_detail_fragment_cityname_textview">City</string>
+    <string name="estate_detail_fragment_price_textview">500000</string>
+    <string name="estate_detail_fragment_description_title_textview">Description</string>
+    <string name="estate_detail_fragment_description_text_textview">blablabla</string>
+    <string name="estate_detail_fragment_information_title_textview">Informations</string>
+    <string name="estate_detail_fragment_type_textview">Type</string>
+    <string name="estate_detail_fragment_surface_textview">200 m2</string>
+    <string name="estate_detail_fragment_number_rooms_textview">10 rooms</string>
+    <string name="estate_detail_fragment_number_bedrooms_textview">3 bedrooms</string>
+    <string name="estate_detail_fragment_number_bathrooms_textview">3 bathrooms</string>
+    <string name="estate_detail_fragment_interest_title_textview">Interest point</string>
+    <string name="estate_detail_fragment_address_title_textview">Location</string>
+    <string name="estate_detail_fragment_address_of_property">Address</string>
+    <string name="estate_detail_fragment_city_of_property">City</string>
+    <string name="estate_detail_fragment_country_of_property">Country</string>
 
-    <string name="estate_list_view_text">No Property for the moment</string>
-    <string name="estate_detail_view_text"> DESCRIPTION FRAGMENT</string>
-    <string name="item_estate_typename_textview">TYPE</string>
-    <string name="item_estate_cityname_textview">CITY</string>
-    <string name="item_estate_price_textview">1000</string>
-    <string name="item_estate_currency_textview">$</string>
 
     <!-- drawer menu -->
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -128,8 +145,11 @@
     <string name="fragment_repayment_plan_invalid_input">Property price and loan term must be greater than 0</string>
     <string name="fragment_repayment_plan_result_label">Your monthly payments will be : </string>
     <string name="fragment_repayment_plan_result_with_deposit_label">With your deposit, your monthly payments will be : </string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- DATE PICKER DIALOG -->
+    <string name="date_picker_custom_select_date">Select a date</string>
+    <string name="date_picker_custom_yes">Yes</string>
+    <string name="date_picker_custom_no">No</string>
 
 
 </resources>

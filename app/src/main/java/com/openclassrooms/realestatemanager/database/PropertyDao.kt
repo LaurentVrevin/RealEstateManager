@@ -22,4 +22,7 @@ interface PropertyDao {
 
     @Update
     suspend fun updateProperty(property: Property)
+
+    /*@Query("UPDATE properties SET isFavorite = :isFavorite WHERE id = :propertyId")
+    suspend fun updateFavoriteStatus(propertyId: String, isFavorite: Boolean)*/
 }

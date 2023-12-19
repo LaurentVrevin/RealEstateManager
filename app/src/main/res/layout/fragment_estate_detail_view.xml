@@ -32,11 +32,25 @@
             android:gravity="left"
             android:paddingLeft="10dp"
             android:layout_marginBottom="10dp"
-            android:text="Maison"
-            android:fontFamily="@font/myfont"
+            android:text="@string/estate_detail_fragment_title_textview"
+            android:fontFamily="@font/ralewayregularfont"
             android:textSize="30sp"
             android:textStyle="bold"
             android:textColor="@color/quantum_black_100"/>
+
+        <TextView
+            android:id="@+id/estate_detail_fragment_is_sold_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:paddingLeft="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="@string/estate_detail_fragment_is_sold_textview"
+            android:fontFamily="@font/ralewayregularfont"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/red"
+            />
 
 
         <!-- CITY LOCATION -->
@@ -50,7 +64,7 @@
             android:id="@+id/estate_detail_fragment_cityname_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="City"
+            android:text="@string/estate_detail_fragment_cityname_textview"
             android:textColor="@color/quantum_pink"
             android:textSize="22sp"
             android:drawableStart="@drawable/baseline_location_on_24"
@@ -63,10 +77,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="right"
-            android:text="500000€"
-            android:textStyle="bold"
+            android:text="@string/estate_detail_fragment_price_textview"
+            android:textColor="@color/gold"
             android:textSize="30sp"
-            android:textColor="@color/gold"/>
+            android:textStyle="bold" />
 
     </LinearLayout>
 
@@ -85,7 +99,7 @@
                 android:gravity="left"
                 android:layout_marginTop="5dp"
                 android:padding="10dp"
-                android:text="Description"
+                android:text="@string/estate_detail_fragment_description_title_textview"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
@@ -98,7 +112,7 @@
             android:layout_height="wrap_content"
             android:gravity="left"
             android:padding="10dp"
-            android:text="blablabla"
+            android:text="@string/estate_detail_fragment_description_text_textview"
             android:textSize="14sp" />
 
         <!-- INFORMATION -->
@@ -110,7 +124,7 @@
             android:gravity="left"
             android:layout_marginTop="20dp"
             android:padding="10dp"
-            android:text="Information"
+            android:text="@string/estate_detail_fragment_information_title_textview"
             android:textSize="14sp"
             android:textStyle="bold" />
 
@@ -120,7 +134,7 @@
             android:layout_height="wrap_content"
             android:gravity="left"
             android:padding="10dp"
-            android:text="Type"
+            android:text="@string/estate_detail_fragment_type_textview"
             android:textSize="16sp"
             android:textStyle="italic"/>
 
@@ -135,7 +149,7 @@
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
-                android:text="200 m2"
+                android:text="@string/estate_detail_fragment_surface_textview"
                 android:textSize="16sp"
                 android:drawableStart="@drawable/outline_aspect_ratio_24"
                 android:drawablePadding="5dp"
@@ -146,7 +160,7 @@
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
-                android:text="10 rooms"
+                android:text="@string/estate_detail_fragment_number_rooms_textview"
                 android:textSize="16sp"
                 android:drawableStart="@drawable/outline_home_24"
                 android:drawablePadding="5dp"
@@ -164,7 +178,7 @@
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
-                android:text="3 bedrooms"
+                android:text="@string/estate_detail_fragment_number_bedrooms_textview"
                 android:textSize="16sp"
                 android:drawableStart="@drawable/baseline_bedroom_parent_24"
                 android:drawablePadding="5dp"
@@ -175,7 +189,7 @@
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
-                android:text="3 bathrooms"
+                android:text="@string/estate_detail_fragment_number_bathrooms_textview"
                 android:textSize="16sp"
                 android:drawableStart="@drawable/baseline_bathroom_24"
                 android:drawablePadding="5dp"
@@ -191,7 +205,7 @@
             android:gravity="left"
             android:layout_marginTop="20dp"
             android:padding="10dp"
-            android:text="Interest point"
+            android:text="@string/estate_detail_fragment_interest_title_textview"
             android:textSize="14sp"
             android:textStyle="bold" />
 
@@ -277,7 +291,7 @@
             android:gravity="left"
             android:layout_marginTop="20dp"
             android:paddingBottom="10dp"
-            android:text="Location"
+            android:text="@string/estate_detail_fragment_address_title_textview"
             android:textSize="14sp"
             android:textStyle="bold"/>
 
@@ -286,7 +300,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingBottom="5dp"
-            android:text="Address"
+            android:text="@string/estate_detail_fragment_address_of_property"
             />
 
         <TextView
@@ -294,7 +308,7 @@
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:paddingBottom="5dp"
-            android:text="City"
+            android:text="@string/estate_detail_fragment_city_of_property"
             />
 
         <TextView
@@ -302,7 +316,7 @@
             android:layout_width="161dp"
             android:layout_height="wrap_content"
             android:paddingBottom="10dp"
-            android:text="Country"
+            android:text="@string/estate_detail_fragment_country_of_property"
             />
 
         </LinearLayout>

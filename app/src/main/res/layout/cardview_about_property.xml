@@ -37,7 +37,7 @@
                 android:hint="@string/add_estate_activity_title_of_property"
 
                 app:counterEnabled="true"
-                app:counterMaxLength="30"
+                app:counterMaxLength="20"
                 app:layout_constraintStart_toStartOf="@+id/txtview_about_property"
                 app:layout_constraintTop_toBottomOf="@+id/txtview_about_property">
 

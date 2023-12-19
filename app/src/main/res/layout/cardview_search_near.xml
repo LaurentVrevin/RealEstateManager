@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cardview_search_near"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="5dp"
+    app:cardElevation="1dp"
+    app:cardUseCompatPadding="false"
+    app:layout_constraintStart_toStartOf="parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/cardview_search_near_label_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:text="Near"
+            android:textColor="@color/gold"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/cardview_search_near_schools_checkbox"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="@string/add_estate_activity_checkbox_schools"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardview_search_near_label_textview">
+
+        </com.google.android.material.checkbox.MaterialCheckBox>
+
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/cardview_search_near_restaurants_checkbox"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="@string/add_estate_activity_checkbox_restaurants"
+            app:layout_constraintEnd_toStartOf="@+id/cardview_search_near_shops_checkbox"
+            app:layout_constraintStart_toEndOf="@+id/cardview_search_near_schools_checkbox"
+            app:layout_constraintTop_toBottomOf="@+id/cardview_search_near_label_textview">
+
+        </com.google.android.material.checkbox.MaterialCheckBox>
+
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/cardview_search_near_shops_checkbox"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="@string/add_estate_activity_checkbox_shops"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardview_search_near_label_textview">
+
+        </com.google.android.material.checkbox.MaterialCheckBox>
+
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/cardview_search_near_buses_checkbox"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="@string/add_estate_activity_checkbox_buses"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardview_search_near_schools_checkbox">
+
+        </com.google.android.material.checkbox.MaterialCheckBox>
+
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/cardview_search_near_tramway_checkbox"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="@string/add_estate_activity_checkbox_tramway"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/cardview_search_near_park_checkbox"
+            app:layout_constraintStart_toEndOf="@+id/cardview_search_near_buses_checkbox"
+            app:layout_constraintTop_toBottomOf="@+id/cardview_search_near_restaurants_checkbox">
+
+        </com.google.android.material.checkbox.MaterialCheckBox>
+
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/cardview_search_near_park_checkbox"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="@string/add_estate_activity_checkbox_park"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardview_search_near_shops_checkbox"
+            tools:ignore="MissingConstraints">
+
+        </com.google.android.material.checkbox.MaterialCheckBox>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

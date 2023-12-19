@@ -19,7 +19,7 @@
 
         <include layout="@layout/cardview_informations" />
 
-        <include layout="@layout/carview_near"/>
+        <include layout="@layout/cardview_near"/>
 
         <include layout="@layout/carview_where" />
 

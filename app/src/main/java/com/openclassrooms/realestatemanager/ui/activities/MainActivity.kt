@@ -1,23 +1,30 @@
 package com.openclassrooms.realestatemanager.ui.activities
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.openclassrooms.realestatemanager.R
+import com.openclassrooms.realestatemanager.ui.fragments.EstateListViewFragment
+import com.openclassrooms.realestatemanager.ui.fragments.PropertySearchDialogFragment
 import com.openclassrooms.realestatemanager.viewmodels.EstateViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), EstateListViewFragment.OnSearchButtonClickListener {
 
 
     private lateinit var bottomNavigationView: BottomNavigationView
@@ -25,6 +32,7 @@ class MainActivity : AppCompatActivity() {
 
     private val estateViewModel: EstateViewModel by viewModels()
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -87,12 +95,12 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-
         // Observe list with livedata about updates
         estateViewModel.propertyList.observe(this) { propertyList ->
             Log.d("TESTLIVEDATA", "La liste contient : ${propertyList.size} objets")
         }
     }
+
 
 
     //HANDLES THE BACKWARD OF FRAGMENTS
@@ -151,7 +159,7 @@ class MainActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-
-
+    override fun onSearchButtonClick() {
+    }
 
 }

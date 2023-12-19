@@ -187,7 +187,6 @@ class AddEstateActivity : AppCompatActivity(), OnMapReadyCallback {
         mapContainer = findViewById(R.id.add_estate_mapContainer)
         cardviewIsSold= findViewById(R.id.cardview_is_sold)
 
-
         //CHECKBOX
         checkboxSchools = findViewById(R.id.checkbox_schools)
         checkboxRestaurants = findViewById(R.id.checkbox_restaurants)

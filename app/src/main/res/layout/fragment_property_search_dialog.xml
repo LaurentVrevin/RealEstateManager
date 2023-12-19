@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="6dp"
+        android:layout_gravity="center"
+        android:gravity="center">
+
+        <include layout="@layout/cardview_search_where"/>
+        <include layout="@layout/cardview_search_type"/>
+        <include layout="@layout/cardview_search_surface"/>
+        <include layout="@layout/cardview_search_price"/>
+        <include layout="@layout/cardview_search_near"/>
+        <include layout="@layout/cardview_search_issold"/>
+        <Button
+            android:id="@+id/fragment_property_search_dialog_search_button"
+            style="@style/LoginButtonStyle"
+            app:backgroundTint="@color/gold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Rechercher"
+            android:layout_marginTop="5dp"
+            android:paddingTop="5dp"/>
+    </LinearLayout>
+</ScrollView>

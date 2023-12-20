@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.openclassrooms.realestatemanager.data.model.Property
+import com.openclassrooms.realestatemanager.data.model.SearchCriteria
 import com.openclassrooms.realestatemanager.repositories.EstateRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -19,6 +20,8 @@ class EstateViewModel @Inject constructor (private val estateRepository: EstateR
 
     // LiveData de la liste des propriétés
     val propertyList: LiveData<List<Property>> = estateRepository.propertyListDao
+    // LiveData pour stocker les résultats de recherche
+    val searchResults = MutableLiveData<List<Property>?>()
 
     fun addPropertyDao(property: Property) {
         viewModelScope.launch {
@@ -47,7 +50,11 @@ class EstateViewModel @Inject constructor (private val estateRepository: EstateR
         _selectedPropertyId.value = propertyId
     }
 
-
-
+    fun performSearch(criteria: SearchCriteria) {
+        viewModelScope.launch {
+            val results = estateRepository.searchProperties(criteria)
+            results.observeForever { searchResults.postValue(it) }
+        }
+    }
 
 }

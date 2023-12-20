@@ -49,6 +49,14 @@ object Utils {
         return dateFormat.format(date)
     }
 
+    fun formatPrice(price: Double): String {
+        return if (price % 1.0 == 0.0) {
+            String.format("%.0f", price) // no double if number is an integer
+        } else {
+            price.toString() // with double if must be
+        }
+    }
+
     /**
      * Vérification de la connexion réseau
      * NOTE : NE PAS SUPPRIMER, A MONTRER DURANT LA SOUTENANCE

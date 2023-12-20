@@ -32,6 +32,7 @@ import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SwitchCompat
 import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -155,15 +156,13 @@ class AddEstateActivity : AppCompatActivity(), OnMapReadyCallback {
         }
         isSoldSwitch.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
-                // Le Switch est activé, ouvre le DatePickerDialog
-                Log.d("TOKNOW", "Switch activé : $isSold et $dateSold")
+                // Switch is enable, show datepicker
                 openDatePickerDialog()
             } else {
 
-                // Le Switch est désactivé, définis isSold sur false et dateSold sur null
+                // switch is disable
                 isSold = false
                 dateSold = ""
-                Log.d("TOKNOW", "Switch désactivité : $isSold et $dateSold")
             }
         }
     }
@@ -203,11 +202,14 @@ class AddEstateActivity : AppCompatActivity(), OnMapReadyCallback {
         mapContainer.visibility = View.GONE
         cardviewIsSold.visibility = View.GONE
     }
+
     private fun openDatePickerDialog() {
         val dialogView = LayoutInflater.from(this).inflate(R.layout.date_picker_custom, null)
         val datePicker = dialogView.findViewById<DatePicker>(R.id.date_picker)
 
         val calendar = Calendar.getInstance()
+        // lock days after today
+        datePicker.maxDate = calendar.timeInMillis
 
 
         // Use datePicker for selected date
@@ -216,7 +218,6 @@ class AddEstateActivity : AppCompatActivity(), OnMapReadyCallback {
             selectedDate.set(year, month, day)
             dateSold = Utils.formatCustomDate(selectedDate.time)
             isSold = true
-            Log.d("TOKNOW", "la date  $dateSold")
         }
 
         val datePickerDialog = AlertDialog.Builder(this)
@@ -228,7 +229,6 @@ class AddEstateActivity : AppCompatActivity(), OnMapReadyCallback {
             .setNegativeButton(R.string.date_picker_custom_no) { dialog, _ ->
                 // If user cancel selection, define switch "off"
                 isSoldSwitch.isChecked = false
-                Log.d("TOKNOW", "s'il annule la sélection : $isSold et $dateSold")
                 dialog.dismiss()
             }
             .create()
@@ -528,16 +528,19 @@ class AddEstateActivity : AppCompatActivity(), OnMapReadyCallback {
 
             if (id == currentPropertyId){
                 estateViewModel.updateProperty(property)
-                Log.d("CHECKID", "update. Id : ${property.id}")
             }
             else{
                 estateViewModel.addPropertyDao(property)
-                Log.d("CHECKID", "add, via l'intent. Id : ${property.id}")
             }
             finish()
         }
     }
     private fun createPropertyFromInput(): Property {
+
+        val price = priceOfPropertyEditText.text.toString().toDoubleOrNull() ?: 0.0
+        val surface = surfaceOfPropertyEditText.text.toString().toDoubleOrNull() ?: 0.0
+
+
 
         val isSchoolsNearby = checkboxSchools.isChecked
         val isRestaurantsNearby = checkboxRestaurants.isChecked
@@ -560,8 +563,8 @@ class AddEstateActivity : AppCompatActivity(), OnMapReadyCallback {
             titlePropertyEditText.text.toString(),
             descriptionEditText.text.toString(),
             typeOfPropertyEditText.text.toString(),
-            priceOfPropertyEditText.text.toString(),
-            surfaceOfPropertyEditText.text.toString(),
+            price,
+            surface,
             numberOfRoomsEditText.text.toString(),
             numberOfBedroomsEditText.text.toString(),
             numberOfBathroomsEditText.text.toString(),
@@ -605,8 +608,8 @@ class AddEstateActivity : AppCompatActivity(), OnMapReadyCallback {
             titlePropertyEditText.setText(property.title)
             descriptionEditText.setText(property.description)
             typeOfPropertyEditText.setText(property.typeOfProperty)
-            priceOfPropertyEditText.setText(property.price)
-            surfaceOfPropertyEditText.setText(property.surface)
+            priceOfPropertyEditText.setText(Utils.formatPrice(property.price))
+            surfaceOfPropertyEditText.setText(Utils.formatPrice(property.surface))
             numberOfRoomsEditText.setText(property.numberOfRooms)
             numberOfBedroomsEditText.setText(property.numberOfBedrooms)
             numberOfBathroomsEditText.setText(property.numberOfBathrooms)

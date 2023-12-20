@@ -12,6 +12,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.openclassrooms.realestatemanager.R
+import com.openclassrooms.realestatemanager.Utils
 import com.openclassrooms.realestatemanager.data.model.Property
 
 
@@ -61,7 +62,7 @@ class EstateListAdapter(private val itemList: List<Property>) : RecyclerView.Ada
         fun bind(property: Property) {
             titleNameTextView.text = property.title
             cityNameTextView.text = property.city
-            priceTextView.text = property.price
+            priceTextView.text = Utils.formatPrice(property.price)
             val isSold = property.isSold
             if(isSold){
                 isSoldTextView.visibility=VISIBLE

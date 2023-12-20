@@ -49,7 +49,8 @@
             android:fontFamily="@font/ralewayregularfont"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:textColor="@color/red"
+            android:textColor="@color/white"
+            android:background="@color/red"
             />
 
 

@@ -10,6 +10,7 @@ import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -45,8 +46,6 @@ class EstateListViewFragment : Fragment(){
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_estate_list_view, container, false)
-
-
         setHasOptionsMenu(true)
         //(requireActivity() as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
         // Initialization recyclerview and adapter
@@ -79,8 +78,6 @@ class EstateListViewFragment : Fragment(){
                 // update adapter with new list
                 propertyList = propertyListLiveData
                 estateListAdapter.updateData(propertyList)
-
-
             }
         }
 
@@ -100,6 +97,16 @@ class EstateListViewFragment : Fragment(){
             val dialog = PropertySearchDialogFragment()
             dialog.show(parentFragmentManager, "PropertySearchDialogFragment")
         }
+
+        // Observer les résultats de recherche
+        estateViewModel.searchResults.observe(viewLifecycleOwner) { results ->
+            if (!results.isNullOrEmpty()) {
+                estateListAdapter.updateData(results)
+                Log.d("SHOWDATAFROMSEARCH", "this is data from search : $results")
+
+            }
+        }
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -118,6 +125,11 @@ class EstateListViewFragment : Fragment(){
         super.onAttach(context)
         callback = context as? OnSearchButtonClickListener
             ?: throw ClassCastException("$context must implement OnSearchButtonClickListener")
+    }
+
+    override fun onResume() {
+        super.onResume()
+
     }
 
 }

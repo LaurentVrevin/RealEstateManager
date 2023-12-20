@@ -1,11 +1,14 @@
 package com.openclassrooms.realestatemanager.database
 
+import android.database.Cursor
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.RawQuery
 import androidx.room.Update
+import androidx.sqlite.db.SupportSQLiteQuery
 import com.openclassrooms.realestatemanager.data.model.Property
 
 @Dao
@@ -23,6 +26,9 @@ interface PropertyDao {
     @Update
     suspend fun updateProperty(property: Property)
 
-    /*@Query("UPDATE properties SET isFavorite = :isFavorite WHERE id = :propertyId")
-    suspend fun updateFavoriteStatus(propertyId: String, isFavorite: Boolean)*/
+    @RawQuery(observedEntities = [Property::class])
+    fun searchProperties(query: SupportSQLiteQuery): LiveData<List<Property>>
+
+
+
 }

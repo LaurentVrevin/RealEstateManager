@@ -153,10 +153,11 @@ class EstateDetailViewFragment : Fragment(), OnMapReadyCallback {
             // Update informations of property
             titleTextView.text = property.title
             cityTextView.text = property.city
-            priceTextView.text = "${property.price}€"  //
+
             descriptionTextView.text = property.description
             typeTextView.text = property.typeOfProperty
-            surfaceTextView.text = "${property.surface} m2"
+            surfaceTextView.text =  Utils.formatPrice(property.surface) +"m2"
+            priceTextView.text = Utils.formatPrice(property.price)+"€"
             numberRoomsTextView.text = "${property.numberOfRooms} rooms"
             numberBedroomsTextView.text = "${property.numberOfBedrooms} bedrooms"
             numberBathroomsTextView.text = "${property.numberOfBathrooms} bathrooms"

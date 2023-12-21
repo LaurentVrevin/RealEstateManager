@@ -29,6 +29,7 @@ import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.Switch
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -125,7 +126,6 @@ class AddEstateActivity : AppCompatActivity(), OnMapReadyCallback {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_estate_add)
 
-        Log.d("addEstateCycle", "AddEstateActivity - onCreate")
 
         val takeFromGalleryButton: Button = findViewById(R.id.take_from_gallery_button)
         val takeFromCameraButton: Button = findViewById(R.id.take_photography_button)
@@ -528,10 +528,13 @@ class AddEstateActivity : AppCompatActivity(), OnMapReadyCallback {
 
             if (id == currentPropertyId){
                 estateViewModel.updateProperty(property)
+                Toast.makeText(this, getString(R.string.add_estate_toast_update_property), Toast.LENGTH_LONG).show()
             }
             else{
                 estateViewModel.addPropertyDao(property)
+                Toast.makeText(this, getString(R.string.add_estate_toast_add_property), Toast.LENGTH_LONG).show()
             }
+
             finish()
         }
     }

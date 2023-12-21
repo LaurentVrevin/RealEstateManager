@@ -26,6 +26,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
+        <provider
+            android:name=".provider.EstateContentProvider"
+            android:authorities="com.openclassrooms.realestatemanager.provider"
+            android:exported="false" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

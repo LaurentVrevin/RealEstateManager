@@ -29,6 +29,10 @@ interface PropertyDao {
     @RawQuery(observedEntities = [Property::class])
     fun searchProperties(query: SupportSQLiteQuery): LiveData<List<Property>>
 
+    @Query("SELECT * FROM properties")
+    fun selectAllPropertiesCursor(): Cursor
 
+    @Query("SELECT * FROM properties WHERE id = :id")
+    fun selectPropertyByIdCursor(id: Long): Cursor
 
 }

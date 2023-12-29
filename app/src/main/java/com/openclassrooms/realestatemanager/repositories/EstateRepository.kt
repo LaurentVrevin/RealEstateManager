@@ -28,6 +28,8 @@ class EstateRepository @Inject constructor(private val propertyDao: PropertyDao)
         return propertyDao.getPropertyById(propertyId)
     }
 
+
+
     fun searchProperties(criteria: SearchCriteria): LiveData<List<Property>> {
         val queryStringBuilder = StringBuilder("SELECT * FROM properties")
         val args = mutableListOf<Any>()

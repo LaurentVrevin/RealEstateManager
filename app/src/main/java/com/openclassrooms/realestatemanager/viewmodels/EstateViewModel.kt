@@ -6,6 +6,7 @@ import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.openclassrooms.realestatemanager.Utils
 import com.openclassrooms.realestatemanager.data.model.Property
 import com.openclassrooms.realestatemanager.data.model.SearchCriteria
 import com.openclassrooms.realestatemanager.repositories.EstateRepository
@@ -18,10 +19,11 @@ import javax.inject.Inject
 class EstateViewModel @Inject constructor (private val estateRepository: EstateRepository
 ) : ViewModel() {
 
-    // LiveData de la liste des propriétés
+    // LiveData list of property
     val propertyList: LiveData<List<Property>> = estateRepository.propertyListDao
-    // LiveData pour stocker les résultats de recherche
+    // LiveData to stock data from research
     val searchResults = MutableLiveData<List<Property>?>()
+    var isInEuro: Boolean = false
 
     fun addPropertyDao(property: Property) {
         viewModelScope.launch {
@@ -35,7 +37,6 @@ class EstateViewModel @Inject constructor (private val estateRepository: EstateR
         }
     }
 
-    private val selectedPropertyId = MutableLiveData<String>()
 
     private val _selectedPropertyId = MutableLiveData<String>()
     val selectedProperty: LiveData<Property> = MediatorLiveData<Property>().apply {
@@ -45,6 +46,7 @@ class EstateViewModel @Inject constructor (private val estateRepository: EstateR
             }
         }
     }
+
 
     fun setSelectedPropertyId(propertyId: String) {
         _selectedPropertyId.value = propertyId

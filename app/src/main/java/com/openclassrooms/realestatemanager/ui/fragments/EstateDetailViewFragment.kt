@@ -5,7 +5,6 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.health.connect.datatypes.units.Length
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -18,13 +17,11 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
-import android.widget.FrameLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -38,7 +35,6 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.Utils
 import com.openclassrooms.realestatemanager.data.model.Photo
-import com.openclassrooms.realestatemanager.data.model.Property
 import com.openclassrooms.realestatemanager.ui.activities.AddEstateActivity
 import com.openclassrooms.realestatemanager.ui.adapters.DetailPhotoPagerAdapter
 
@@ -83,6 +79,8 @@ class EstateDetailViewFragment : Fragment(), OnMapReadyCallback {
     private var googleMap: GoogleMap? = null
 
     companion object {
+
+
         private const val REQUEST_CODE_STORAGE_PERMISSION = 1001
     }
 
@@ -95,10 +93,19 @@ class EstateDetailViewFragment : Fragment(), OnMapReadyCallback {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_estate_detail_view, container, false)
 
-        setHasOptionsMenu(true)
-        (requireActivity() as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        val isTablet: Boolean by lazy {
+            resources.getBoolean(R.bool.isTablet)
+        }
+        if (isTablet){
+            setHasOptionsMenu(true)
+            (requireActivity() as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
+        }else{
 
-        initMap()
+            setHasOptionsMenu(true)
+            (requireActivity() as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        }
+
+
         return view
     }
 
@@ -108,6 +115,8 @@ class EstateDetailViewFragment : Fragment(), OnMapReadyCallback {
         super.onViewCreated(view, savedInstanceState)
 
         // Initialize ViewPager
+
+
         viewPagerPhotos = view.findViewById(R.id.estate_detail_fragment_viewpager_photos)
         titleTextView = view.findViewById(R.id.estate_detail_fragment_title_textview)
         isSoldTextView = view.findViewById(R.id.estate_detail_fragment_is_sold_textview)
@@ -138,13 +147,23 @@ class EstateDetailViewFragment : Fragment(), OnMapReadyCallback {
         addressCityTextView = view.findViewById(R.id.estate_detail_fragment_city_of_property)
         countryTextView = view.findViewById(R.id.estate_detail_fragment_country_of_property)
 
+
         // Initialize adapter with an empty list
         photoAdapter = DetailPhotoPagerAdapter(photoList)
 
         if (checkPermissions()) {
             viewPagerPhotos.adapter = photoAdapter
         }
+        initDataFromViewModel()
 
+
+        initMap()
+
+    }
+
+    @SuppressLint("UseCompatTextViewDrawableApis")
+    @RequiresApi(Build.VERSION_CODES.M)
+    private fun initDataFromViewModel() {
         estateViewModel.selectedProperty.observe(viewLifecycleOwner) { property ->
             // Update photolist when property selected changed, update adapter with new list
             photoList = property.photos
@@ -262,7 +281,6 @@ class EstateDetailViewFragment : Fragment(), OnMapReadyCallback {
             }
             Log.d("CHECKBOX", "état des checkbox ${property.isNearBuses}, ${property.isNearPark}, ${property.isNearRestaurants}, ${property.isNearSchools}, ${property.isNearTramway}, ${property.isNearShops}")
         }
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -307,15 +325,15 @@ class EstateDetailViewFragment : Fragment(), OnMapReadyCallback {
         }
     }
 
-    private fun toggleFavoriteIcon(item: MenuItem) {
+    private fun toggleCurrency(item: MenuItem) {
         //If is favorite so delete favorite, or do favorite
         if (isFavorite) {
 
-            item.setIcon(R.drawable.baseline_favorite_border_24)
+            item.setIcon(R.drawable.baseline_euro_24)
             isFavorite = false
         } else {
 
-            item.setIcon(R.drawable.baseline_favorite_24)
+            item.setIcon(R.drawable.baseline_dollar_24)
             isFavorite = true
 
 
@@ -325,9 +343,9 @@ class EstateDetailViewFragment : Fragment(), OnMapReadyCallback {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         when (item.itemId) {
-            R.id.FavoriteIcon -> {
+            R.id.CurrencyIcon -> {
                 // setup the click for favorite
-                toggleFavoriteIcon(item)
+                toggleCurrency(item)
                 return true
             }
             R.id.editIcon -> {
@@ -364,5 +382,25 @@ class EstateDetailViewFragment : Fragment(), OnMapReadyCallback {
             googleMap?.addMarker(MarkerOptions().position(location).title(property.title))
             googleMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 15f))
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        initMap()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.d("CYLEFRAGMENT", "onpause")
+    }
+
+    override fun onStart() {
+        super.onStart()
+        Log.d("CYLEFRAGMENT", "onstart")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d("CYLEFRAGMENT", "ondestroy")
     }
 }

@@ -152,10 +152,8 @@
     <string name="fragment_repayment_plan_invalid_input">Property price and loan term must be greater than 0</string>
     <string name="fragment_repayment_plan_result_label">Your monthly payments will be : </string>
     <string name="fragment_repayment_plan_result_with_deposit_label">With your deposit, your monthly payments will be : </string>
-
-
-
-
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>

@@ -36,7 +36,6 @@ class EstateListViewFragment : Fragment(){
     private var callback: OnSearchButtonClickListener? = null
 
 
-
     private val estateViewModel: EstateViewModel by viewModels({ requireActivity() })
 
     @SuppressLint("MissingInflatedId")
@@ -80,16 +79,25 @@ class EstateListViewFragment : Fragment(){
                 estateListAdapter.updateData(propertyList)
             }
         }
+        val isTablet: Boolean by lazy {
+            resources.getBoolean(R.bool.isTablet)
+        }
 
-        // Add a OnClickListener for elements in the recyclerview
         estateListAdapter.setOnItemClickListener { selectedItem ->
             estateViewModel.setSelectedPropertyId(selectedItem.id)
-            // go to the detail fragment
-            findNavController().navigate(R.id.action_estateListViewFragment_to_estateDetailViewFragment)
+            if (isTablet) {
+                // Nothing to change
+            } else {
+                // Use navigation controller with action
+                findNavController().navigate(R.id.action_estateListViewFragment_to_estateDetailViewFragment)
+            }
         }
 
         return view
     }
+
+
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -98,7 +106,7 @@ class EstateListViewFragment : Fragment(){
             dialog.show(parentFragmentManager, "PropertySearchDialogFragment")
         }
 
-        // Observer les résultats de recherche
+        // Observe result from research
         estateViewModel.searchResults.observe(viewLifecycleOwner) { results ->
             if (!results.isNullOrEmpty()) {
                 estateListAdapter.updateData(results)
@@ -108,7 +116,6 @@ class EstateListViewFragment : Fragment(){
         }
 
     }
-
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.toolbar_menu_list, menu)
     }

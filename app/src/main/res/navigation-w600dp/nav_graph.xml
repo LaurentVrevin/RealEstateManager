@@ -3,22 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/nav_listview_fragment">
+    app:startDestination="@id/nav_tablet_home_fragment">
 
     <fragment
-        android:id="@+id/nav_listview_fragment"
-        android:name="com.openclassrooms.realestatemanager.ui.fragments.EstateListViewFragment"
+        android:id="@+id/nav_tablet_home_fragment"
+        android:name="com.openclassrooms.realestatemanager.ui.fragments.TabletHomeFragment"
         android:label="@string/app_name"
-        tools:layout="@layout/fragment_estate_list_view" >
-        <action
-            android:id="@+id/action_estateListViewFragment_to_estateDetailViewFragment"
-            app:destination="@id/nav_detailview_fragment" />
+        tools:layout="@layout/tablet_home_fragment" >
     </fragment>
+    <action
+        android:id="@+id/action_estateListViewFragment_to_estateDetailViewFragment"
+        app:destination="@id/nav_detailview_fragment" />
 
-    <fragment
-        android:id="@+id/nav_detailview_fragment"
-        android:name="com.openclassrooms.realestatemanager.ui.fragments.EstateDetailViewFragment"
-        tools:layout="@layout/fragment_estate_detail_view" />
     <argument
         android:name="selectedItemId"
         app:argType="integer" />
@@ -30,7 +26,7 @@
 
         <action
             android:id="@+id/action_mapViewFragment_to_detailViewFragment"
-            app:destination="@id/nav_detailview_fragment">
+            app:destination="@id/nav_tablet_home_fragment">
             <argument
                 android:name="propertyId"
                 app:argType="string" />
@@ -39,8 +35,19 @@
     </fragment>
 
 
+
     <fragment
         android:id="@+id/nav_loan_host_fragment"
         android:name="com.openclassrooms.realestatemanager.ui.fragments.LoanHostFragment"
         tools:layout="@layout/fragment_loan_host" />
+    <fragment
+        android:id="@+id/estateDetailViewFragment"
+        android:name="com.openclassrooms.realestatemanager.ui.fragments.EstateDetailViewFragment"
+        android:label="fragment_estate_detail_view"
+        tools:layout="@layout/fragment_estate_detail_view" />
+    <fragment
+        android:id="@+id/estateListViewFragment"
+        android:name="com.openclassrooms.realestatemanager.ui.fragments.EstateListViewFragment"
+        android:label="fragment_estate_list_view"
+        tools:layout="@layout/fragment_estate_list_view" />
 </navigation>

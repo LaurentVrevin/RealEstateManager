@@ -73,7 +73,7 @@ class PropertySearchDialogFragment : DialogFragment() {
     }
     private fun setupSearchButtonListener() {
         searchButton.setOnClickListener {
-            // Logique pour le bouton de recherche
+
             performSearch()
         }
 
@@ -99,6 +99,7 @@ class PropertySearchDialogFragment : DialogFragment() {
         //param this for livedata with viewmodel to create SQL query
         estateViewModel.performSearch(criteria)
         dismiss()
+
     }
 
 

@@ -62,7 +62,6 @@ class EstateContentProvider :ContentProvider() {
     }
 
     //I dont need to manage because provider need only reading
-
     override fun getType(uri: Uri): String? {
         TODO("Not yet implemented")
     }
@@ -83,7 +82,6 @@ class EstateContentProvider :ContentProvider() {
     ): Int {
         TODO("Not yet implemented")
     }
-
 
     @dagger.hilt.EntryPoint
     @dagger.hilt.InstallIn(dagger.hilt.components.SingletonComponent::class)

@@ -4,7 +4,6 @@ import android.Manifest
 import android.Manifest.permission.READ_EXTERNAL_STORAGE
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.app.DatePickerDialog
 import android.content.ContentValues
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -33,7 +32,6 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.SwitchCompat
 import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -348,7 +346,7 @@ class AddEstateActivity : AppCompatActivity(), OnMapReadyCallback {
             // Permission not granted, ask to the user
             ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CAMERA), REQUEST_CAMERA_PERMISSION)
         } else {
-            // Permission already granted, onpen camera
+            // Permission already granted, open camera
             launchCamera()
         }
     }
@@ -540,7 +538,11 @@ class AddEstateActivity : AppCompatActivity(), OnMapReadyCallback {
     }
     private fun createPropertyFromInput(): Property {
 
-        val price = priceOfPropertyEditText.text.toString().toDoubleOrNull() ?: 0.0
+        val dollarsPrice = priceOfPropertyEditText.text.toString().toDoubleOrNull() ?: 0.0
+        val eurosPrice = Utils.convertDollarToEuro(dollarsPrice)
+
+
+        Log.d("SEECURRENCY", eurosPrice.toString())
         val surface = surfaceOfPropertyEditText.text.toString().toDoubleOrNull() ?: 0.0
 
 
@@ -566,7 +568,8 @@ class AddEstateActivity : AppCompatActivity(), OnMapReadyCallback {
             titlePropertyEditText.text.toString(),
             descriptionEditText.text.toString(),
             typeOfPropertyEditText.text.toString(),
-            price,
+            dollarsPrice,
+            eurosPrice,
             surface,
             numberOfRoomsEditText.text.toString(),
             numberOfBedroomsEditText.text.toString(),
@@ -611,7 +614,7 @@ class AddEstateActivity : AppCompatActivity(), OnMapReadyCallback {
             titlePropertyEditText.setText(property.title)
             descriptionEditText.setText(property.description)
             typeOfPropertyEditText.setText(property.typeOfProperty)
-            priceOfPropertyEditText.setText(Utils.formatPrice(property.price))
+            priceOfPropertyEditText.setText(Utils.formatPrice(property.dollarsPrice))
             surfaceOfPropertyEditText.setText(Utils.formatPrice(property.surface))
             numberOfRoomsEditText.setText(property.numberOfRooms)
             numberOfBedroomsEditText.setText(property.numberOfBedrooms)

@@ -14,10 +14,9 @@ import androidx.appcompat.widget.Toolbar
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupActionBarWithNavController
-import com.google.android.gms.common.util.DeviceProperties.isTablet
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.openclassrooms.realestatemanager.R
-import com.openclassrooms.realestatemanager.ui.fragments.EstateDetailViewFragment
+import com.openclassrooms.realestatemanager.data.model.Property
 import com.openclassrooms.realestatemanager.ui.fragments.EstateListViewFragment
 import com.openclassrooms.realestatemanager.viewmodels.EstateViewModel
 
@@ -26,6 +25,9 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity(), EstateListViewFragment.OnSearchButtonClickListener {
+
+    private var isCurrencyEuros = false
+    private lateinit var propertyListDataMainActivity:List<Property>
 
     private lateinit var navController: NavController
     private lateinit var navHostFragment: NavHostFragment
@@ -42,18 +44,21 @@ class MainActivity : AppCompatActivity(), EstateListViewFragment.OnSearchButtonC
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+
         setContentView(R.layout.activity_main)
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
 
-
+        propertyListDataMainActivity = emptyList()
+        estateViewModel.propertyList.observe(this) { propertyListLiveData ->
+        propertyListDataMainActivity = propertyListLiveData
+        }
         if (isTablet) {
-            // Charger EstateListViewFragment
-
-            // Charger EstateListViewFragment et EstateDetailViewFragment côte à côte
-            // pour le moment ça marche, ça reconnait bien le mode tablette
-//            navController.navigate(R.id.nav_tablet_home_fragment)
-            Log.d("ISTABLET", "on est en mode tablette")
+            if(propertyListDataMainActivity.isEmpty()){
+                Log.d("ISTABLET", "on est en mode tablette, la liste est vide")
+            }else{
+                Log.d("ISTABLET", "on est en mode tablette, la liste est $propertyListDataMainActivity")
+            }
         } else {
             // Configuration standard pour smartphone
             Log.d("ISTABLET", "on est en mode smartphone")
@@ -71,38 +76,54 @@ class MainActivity : AppCompatActivity(), EstateListViewFragment.OnSearchButtonC
         // Add listener for destination changes
         navController.addOnDestinationChangedListener { _, destination, _ ->
             // Update the selected item in BottomNavigationView based on the current destination
-            when (destination.id) {
-                R.id.nav_listview_fragment -> {
-                    if (bottomNavigationView.selectedItemId != R.id.nav_listview) {
+            if (isTablet) {
+                // Logic for tablet
+                when (destination.id) {
+                    R.id.nav_tablet_home_fragment -> {
+                        // Handle tablet home fragment specific logic
                         bottomNavigationView.selectedItemId = R.id.nav_listview
                         supportActionBar?.show()
                         supportActionBar?.setDisplayHomeAsUpEnabled(false)
                     }
-                }
-                R.id.nav_tablet_home_fragment -> {
-                    if (bottomNavigationView.selectedItemId != R.id.nav_listview) {
-                        bottomNavigationView.selectedItemId = R.id.nav_listview
-                        supportActionBar?.show()
-                        supportActionBar?.setDisplayHomeAsUpEnabled(false)
+                    R.id.nav_mapview_fragment -> {
+                        if (bottomNavigationView.selectedItemId != R.id.nav_mapview) {
+                            bottomNavigationView.selectedItemId = R.id.nav_mapview
+                            supportActionBar?.show()
+                            supportActionBar?.setDisplayHomeAsUpEnabled(false)
+                        }
+                    }
+                    R.id.nav_loan_host_fragment -> {
+                        if (bottomNavigationView.selectedItemId != R.id.nav_loan_simulator) {
+                            bottomNavigationView.selectedItemId = R.id.nav_loan_simulator
+                            supportActionBar?.hide()
+                            supportActionBar?.setDisplayHomeAsUpEnabled(false)
+                        }
                     }
                 }
-                R.id.nav_mapview_fragment -> {
-                    if (bottomNavigationView.selectedItemId != R.id.nav_mapview) {
-                        bottomNavigationView.selectedItemId = R.id.nav_mapview
-                        supportActionBar?.show()
-                        supportActionBar?.setDisplayHomeAsUpEnabled(false)
-
+            } else {
+                // Logic for smartphone
+                when (destination.id) {
+                    R.id.nav_listview_fragment -> {
+                        if (bottomNavigationView.selectedItemId != R.id.nav_listview) {
+                            bottomNavigationView.selectedItemId = R.id.nav_listview
+                            supportActionBar?.show()
+                            supportActionBar?.setDisplayHomeAsUpEnabled(false)
+                        }
                     }
-                }
-
-                R.id.nav_loan_host_fragment -> {
-                    if (bottomNavigationView.selectedItemId != R.id.nav_loan_simulator) {
-                        bottomNavigationView.selectedItemId = R.id.nav_loan_simulator
-                        supportActionBar?.hide()
-                        supportActionBar?.setDisplayHomeAsUpEnabled(false)
-
+                    R.id.nav_mapview_fragment -> {
+                        if (bottomNavigationView.selectedItemId != R.id.nav_mapview) {
+                            bottomNavigationView.selectedItemId = R.id.nav_mapview
+                            supportActionBar?.show()
+                            supportActionBar?.setDisplayHomeAsUpEnabled(false)
+                        }
                     }
-
+                    R.id.nav_loan_host_fragment -> {
+                        if (bottomNavigationView.selectedItemId != R.id.nav_loan_simulator) {
+                            bottomNavigationView.selectedItemId = R.id.nav_loan_simulator
+                            supportActionBar?.hide()
+                            supportActionBar?.setDisplayHomeAsUpEnabled(false)
+                        }
+                    }
                 }
             }
         }
@@ -150,6 +171,11 @@ class MainActivity : AppCompatActivity(), EstateListViewFragment.OnSearchButtonC
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
+            R.id.CurrencyIcon -> {
+                // setup the click for favorite
+                toggleCurrency(item)
+                return true
+            }
             R.id.addIcon -> {
                 // Open AddEstateActivity
                 val intent = Intent(this, AddEstateActivity::class.java)
@@ -159,6 +185,19 @@ class MainActivity : AppCompatActivity(), EstateListViewFragment.OnSearchButtonC
 
         }
         return super.onOptionsItemSelected(item)
+    }
+    private fun toggleCurrency(item: MenuItem) {
+        //If is favorite so delete favorite, or do favorite
+        if (isCurrencyEuros) {
+            item.setIcon(R.drawable.baseline_euro_24)
+            isCurrencyEuros = false
+        } else {
+
+            item.setIcon(R.drawable.baseline_dollar_24)
+            isCurrencyEuros = true
+
+
+        }
     }
 
     override fun onSearchButtonClick() {

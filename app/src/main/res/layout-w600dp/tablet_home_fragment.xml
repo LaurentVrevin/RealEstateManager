@@ -11,6 +11,15 @@
     android:orientation="horizontal"
     tools:ignore="MissingDefaultResource">
 
+    <TextView
+        android:id="@+id/tablet_home_fragment_noproperty_textview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="@string/estate_list_view_text"
+        android:layout_gravity="center"
+        />
+
     <FrameLayout
         android:id="@+id/listview_fragment_container"
         android:layout_width="0dp"

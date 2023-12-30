@@ -2,11 +2,16 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-        <item
+    <item
+        android:id="@+id/CurrencyIcon"
+        android:icon="@drawable/baseline_euro_24"
+        android:title="edit"
+        app:showAsAction="ifRoom" />
+    <item
         android:id="@+id/addIcon"
         android:icon="@drawable/baseline_add_24"
-        app:showAsAction="ifRoom"
-        android:title="add" />
+        android:title="add"
+        app:showAsAction="ifRoom" />
 
 
 </menu>

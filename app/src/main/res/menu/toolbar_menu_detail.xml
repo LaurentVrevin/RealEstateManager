@@ -3,11 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
         <item
-            android:id="@+id/CurrencyIcon"
-            android:icon="@drawable/baseline_euro_24"
-            app:showAsAction="ifRoom"
-            android:title="edit" />
-        <item
             android:id="@+id/editIcon"
             android:icon="@drawable/baseline_mode_24"
             app:showAsAction="ifRoom"

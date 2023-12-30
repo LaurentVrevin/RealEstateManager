@@ -3,6 +3,7 @@ package com.openclassrooms.realestatemanager.ui.fragments
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -30,11 +31,19 @@ import kotlinx.coroutines.launch
 
 class MapViewFragment : Fragment(), OnMapReadyCallback {
 
+
+    private val isTablet: Boolean by lazy {
+        resources.getBoolean(R.bool.isTablet)
+    }
+    private var isTabletLatitude:Double =49.182863
+    private var isTabletLongitude:Double = -0.370679
+
+    companion object {
+        const val REQUEST_LOCATION_PERMISSION = 1
+    }
     private lateinit var googleMap: GoogleMap
     private lateinit var fusedLocationClient: FusedLocationProviderClient
-
     private val estateViewModel: EstateViewModel by viewModels({ requireActivity() })
-
     private val markerToPropertyIdMap = HashMap<Marker, String>()
 
     override fun onCreateView(
@@ -45,7 +54,6 @@ class MapViewFragment : Fragment(), OnMapReadyCallback {
 
         // Initialize the FusedLocationProviderClient
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
-
 
         return view
     }
@@ -87,7 +95,7 @@ class MapViewFragment : Fragment(), OnMapReadyCallback {
 
         val marker = googleMap.addMarker(markerOptions)
         marker?.let {
-            markerToPropertyIdMap[it] = property.id // Associer le marqueur à l'ID de la propriété
+            markerToPropertyIdMap[it] = property.id // link marker to id of property
         }
     }
 
@@ -95,7 +103,7 @@ class MapViewFragment : Fragment(), OnMapReadyCallback {
         googleMap.setOnMarkerClickListener { marker ->
             val propertyId = markerToPropertyIdMap[marker]
             propertyId?.let {
-                // Naviguer vers le fragment de détail en utilisant l'ID
+                // navigate to the fragment
                 navigateToDetailFragment(it)
             }
             true
@@ -105,6 +113,10 @@ class MapViewFragment : Fragment(), OnMapReadyCallback {
     private fun navigateToDetailFragment(propertyId: String) {
         estateViewModel.setSelectedPropertyId(propertyId)
         findNavController().navigate(R.id.action_mapViewFragment_to_detailViewFragment)
+    }
+
+    private fun displayUserPosition() {
+
     }
 
 
@@ -118,16 +130,27 @@ class MapViewFragment : Fragment(), OnMapReadyCallback {
             // Enable the location layer. Request the last known location of the device.
             googleMap.isMyLocationEnabled = true
 
-            // Get the last known location and move the camera there
-            fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
-                if (location != null) {
-                    val latLng = LatLng(location.latitude, location.longitude)
 
-                    // Add a marker at the user's location
-                    googleMap.addMarker(MarkerOptions().position(latLng).title("My Location"))
+            if(isTablet){
+                val latLng = LatLng(isTabletLatitude, isTabletLongitude)
+                // Add a marker at the user's location
+                googleMap.addMarker(MarkerOptions().position(latLng).title("My Location"))
 
-                    // Move the camera to the user's location with a zoom level of 15
-                    googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10f))
+                // Move the camera to the user's location with a zoom level of 15
+                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10f))
+            }else {
+                // Get the last known location and move the camera there
+                fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
+                    if (location != null) {
+                        val latLng = LatLng(location.latitude, location.longitude)
+                        Log.d("POSITION", "${latLng.latitude} et ${latLng.longitude}")
+
+                        // Add a marker at the user's location
+                        googleMap.addMarker(MarkerOptions().position(latLng).title("My Location"))
+
+                        // Move the camera to the user's location with a zoom level of 15
+                        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10f))
+                    }
                 }
             }
         } else {
@@ -140,8 +163,18 @@ class MapViewFragment : Fragment(), OnMapReadyCallback {
         }
     }
 
-    companion object {
-        const val REQUEST_LOCATION_PERMISSION = 1
+
+    private fun checkLocationPermissionAndDisplayPosition() {
+        if (ActivityCompat.checkSelfPermission(requireContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            displayUserPosition()
+        } else {
+            requestLocationPermission()
+        }
+    }
+
+
+    private fun requestLocationPermission() {
+        ActivityCompat.requestPermissions(requireActivity(), arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION), REQUEST_LOCATION_PERMISSION)
     }
 
     override fun onResume() {

@@ -46,6 +46,10 @@ class EstateListViewFragment : Fragment(){
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_estate_list_view, container, false)
         setHasOptionsMenu(true)
+
+        val isTablet: Boolean by lazy {
+            resources.getBoolean(R.bool.isTablet)
+        }
         //(requireActivity() as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
         // Initialization recyclerview and adapter
         estateListRecyclerView = view.findViewById(R.id.estate_list_fragment_recyclerview)
@@ -65,6 +69,7 @@ class EstateListViewFragment : Fragment(){
         // Observe livedata
         estateViewModel.propertyList.observe(viewLifecycleOwner) { propertyListLiveData ->
             Log.d("listphotofragment", "EstateListViewFragment - Property List LiveData: $propertyListLiveData")
+
             if (propertyListLiveData.isEmpty()) {
                 // ANY PROPERTY ?
                 setViewVisibility(estateListRecyclerView, View.GONE)
@@ -79,17 +84,16 @@ class EstateListViewFragment : Fragment(){
                 estateListAdapter.updateData(propertyList)
             }
         }
-        val isTablet: Boolean by lazy {
-            resources.getBoolean(R.bool.isTablet)
-        }
+
 
         estateListAdapter.setOnItemClickListener { selectedItem ->
             estateViewModel.setSelectedPropertyId(selectedItem.id)
             if (isTablet) {
-                // Nothing to change
+                Log.d("CHECKTABLET", "mode tablette")
             } else {
                 // Use navigation controller with action
                 findNavController().navigate(R.id.action_estateListViewFragment_to_estateDetailViewFragment)
+                Log.d("CHECKTABLET", "mode smartphone")
             }
         }
 

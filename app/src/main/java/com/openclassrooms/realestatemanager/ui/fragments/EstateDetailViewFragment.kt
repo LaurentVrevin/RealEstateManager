@@ -23,6 +23,8 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -83,6 +85,7 @@ class EstateDetailViewFragment : Fragment(), OnMapReadyCallback {
 
         private const val REQUEST_CODE_STORAGE_PERMISSION = 1001
     }
+    private var isViewCreated = false
 
     private val estateViewModel: EstateViewModel by viewModels({ requireActivity() })
 
@@ -104,6 +107,7 @@ class EstateDetailViewFragment : Fragment(), OnMapReadyCallback {
             setHasOptionsMenu(true)
             (requireActivity() as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
         }
+        initDataFromViewModel()
 
 
         return view
@@ -115,6 +119,7 @@ class EstateDetailViewFragment : Fragment(), OnMapReadyCallback {
         super.onViewCreated(view, savedInstanceState)
 
         // Initialize ViewPager
+        isViewCreated = true
 
 
         viewPagerPhotos = view.findViewById(R.id.estate_detail_fragment_viewpager_photos)
@@ -176,7 +181,7 @@ class EstateDetailViewFragment : Fragment(), OnMapReadyCallback {
             descriptionTextView.text = property.description
             typeTextView.text = property.typeOfProperty
             surfaceTextView.text =  Utils.formatPrice(property.surface) +"m2"
-            priceTextView.text = Utils.formatPrice(property.price)+"€"
+            priceTextView.text = Utils.formatPrice(property.dollarsPrice)+"€"
             numberRoomsTextView.text = "${property.numberOfRooms} rooms"
             numberBedroomsTextView.text = "${property.numberOfBedrooms} bedrooms"
             numberBathroomsTextView.text = "${property.numberOfBathrooms} bathrooms"
@@ -325,29 +330,12 @@ class EstateDetailViewFragment : Fragment(), OnMapReadyCallback {
         }
     }
 
-    private fun toggleCurrency(item: MenuItem) {
-        //If is favorite so delete favorite, or do favorite
-        if (isFavorite) {
 
-            item.setIcon(R.drawable.baseline_euro_24)
-            isFavorite = false
-        } else {
-
-            item.setIcon(R.drawable.baseline_dollar_24)
-            isFavorite = true
-
-
-        }
-    }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         when (item.itemId) {
-            R.id.CurrencyIcon -> {
-                // setup the click for favorite
-                toggleCurrency(item)
-                return true
-            }
+
             R.id.editIcon -> {
                 if(propertyIsSold){
                     Toast.makeText(requireContext(), "You cant edit this property because she's sold, sorry", Toast.LENGTH_SHORT).show()
@@ -375,17 +363,21 @@ class EstateDetailViewFragment : Fragment(), OnMapReadyCallback {
     override fun onMapReady(map: GoogleMap) {
         googleMap = map
         // called when map is ready to use
-        estateViewModel.selectedProperty.observe(viewLifecycleOwner) { property ->
 
-            // Position on map
-            val location = LatLng(property.latitude, property.longitude)
-            googleMap?.addMarker(MarkerOptions().position(location).title(property.title))
-            googleMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 15f))
+        if (isViewCreated) { //Check if view is on
+            estateViewModel.selectedProperty.observe(viewLifecycleOwner) { property ->
+                // Position on map
+                val location = LatLng(property.latitude, property.longitude)
+                googleMap?.addMarker(MarkerOptions().position(location).title(property.title))
+                googleMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 15f))
+            }
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onResume() {
         super.onResume()
+        initDataFromViewModel()
         initMap()
     }
 
@@ -402,5 +394,6 @@ class EstateDetailViewFragment : Fragment(), OnMapReadyCallback {
     override fun onDestroy() {
         super.onDestroy()
         Log.d("CYLEFRAGMENT", "ondestroy")
+        isViewCreated = false
     }
 }

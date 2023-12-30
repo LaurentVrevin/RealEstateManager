@@ -1,6 +1,5 @@
 package com.openclassrooms.realestatemanager.ui.adapters
 
-import android.opengl.Visibility
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -62,7 +61,7 @@ class EstateListAdapter(private val itemList: List<Property>) : RecyclerView.Ada
         fun bind(property: Property) {
             titleNameTextView.text = property.title
             cityNameTextView.text = property.city
-            priceTextView.text = Utils.formatPrice(property.price)
+            priceTextView.text = Utils.formatPrice(property.eurosPrice)
             val isSold = property.isSold
             if(isSold){
                 isSoldTextView.visibility=VISIBLE

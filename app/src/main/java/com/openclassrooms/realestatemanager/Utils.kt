@@ -17,8 +17,8 @@ object Utils {
      * @param dollars
      * @return
      */
-    fun convertDollarToEuro(dollars: Int): Int {
-        return Math.round(dollars * 0.812).toInt()
+    fun convertDollarToEuro(dollars: Double): Double {
+        return Math.round(dollars * 0.812).toDouble()
     }
 
     //I can do like this, but result is not really the same.

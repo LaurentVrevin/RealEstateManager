@@ -12,6 +12,7 @@ import com.openclassrooms.realestatemanager.data.model.SearchCriteria
 import com.openclassrooms.realestatemanager.repositories.EstateRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import java.util.Currency
 import javax.inject.Inject
 
 
@@ -21,9 +22,11 @@ class EstateViewModel @Inject constructor (private val estateRepository: EstateR
 
     // LiveData list of property
     val propertyList: LiveData<List<Property>> = estateRepository.propertyListDao
+    private val _currentCurrency = MutableLiveData(Currency.USD)
+    val currentCurrency: LiveData<Currency> = _currentCurrency
     // LiveData to stock data from research
     val searchResults = MutableLiveData<List<Property>?>()
-    var isInEuro: Boolean = false
+
 
     fun addPropertyDao(property: Property) {
         viewModelScope.launch {
@@ -57,6 +60,18 @@ class EstateViewModel @Inject constructor (private val estateRepository: EstateR
             val results = estateRepository.searchProperties(criteria)
             results.observeForever { searchResults.postValue(it) }
         }
+    }
+
+    //Function to change currency
+    fun toggleCurrency() {
+        if (_currentCurrency.value == Currency.USD) {
+            _currentCurrency.value = Currency.EUR
+        } else {
+            _currentCurrency.value = Currency.USD
+        }
+    }
+    enum class Currency {
+        USD, EUR
     }
 
 }

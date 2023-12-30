@@ -117,7 +117,7 @@ class AddEstateActivity : AppCompatActivity(), OnMapReadyCallback {
     var addPropertyDate: String = ""
     var agentId: String = ""
     var isSold = false
-    var isFavorite = false
+    var isToUpate = false
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -147,10 +147,12 @@ class AddEstateActivity : AppCompatActivity(), OnMapReadyCallback {
         if (currentPropertyId != null) {
             loadPropertyData(currentPropertyId)
             id = currentPropertyId
+            isToUpate=true
             cardviewIsSold.visibility = View.VISIBLE
         }else{
             id = UUID.randomUUID().toString()
             cardviewIsSold.visibility = View.GONE
+            isToUpate=false
         }
         isSoldSwitch.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
@@ -524,11 +526,10 @@ class AddEstateActivity : AppCompatActivity(), OnMapReadyCallback {
         if (checkIfAllFieldsFilled()) {
             val property = createPropertyFromInput()
 
-            if (id == currentPropertyId){
+            if (isToUpate){
                 estateViewModel.updateProperty(property)
                 Toast.makeText(this, getString(R.string.add_estate_toast_update_property), Toast.LENGTH_LONG).show()
-            }
-            else{
+            }else{
                 estateViewModel.addPropertyDao(property)
                 Toast.makeText(this, getString(R.string.add_estate_toast_add_property), Toast.LENGTH_LONG).show()
             }
@@ -540,9 +541,6 @@ class AddEstateActivity : AppCompatActivity(), OnMapReadyCallback {
 
         val dollarsPrice = priceOfPropertyEditText.text.toString().toDoubleOrNull() ?: 0.0
         val eurosPrice = Utils.convertDollarToEuro(dollarsPrice)
-
-
-        Log.d("SEECURRENCY", eurosPrice.toString())
         val surface = surfaceOfPropertyEditText.text.toString().toDoubleOrNull() ?: 0.0
 
 
@@ -589,8 +587,8 @@ class AddEstateActivity : AppCompatActivity(), OnMapReadyCallback {
             dateAdded,
             dateSold,
             agentId,
-            isSold,
-            isFavorite
+            isSold
+
         )
     }
 

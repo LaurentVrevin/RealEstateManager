@@ -15,18 +15,20 @@ import com.openclassrooms.realestatemanager.Utils
 import com.openclassrooms.realestatemanager.data.model.Property
 
 
-class EstateListAdapter(private val itemList: List<Property>) : RecyclerView.Adapter<EstateListAdapter.EstateViewHolder>() {
+class EstateListAdapter(private val itemList: List<Property>, isCurrencyEuro:Boolean) : RecyclerView.Adapter<EstateListAdapter.EstateViewHolder>() {
 
     private var propertyList: List<Property> = emptyList()
     private var onItemClickListener: ((Property) -> Unit)? = null
+    private var isCurrencyEuro:Boolean=false
 
     fun setOnItemClickListener(listener: (Property) -> Unit) {
         onItemClickListener = listener
     }
 
     //update data to the adapter
-    fun updateData(newPropertyList: List<Property>) {
+    fun updateData(newPropertyList: List<Property>, isCurrencyEuro: Boolean) {
         propertyList = newPropertyList
+        this.isCurrencyEuro=isCurrencyEuro
         notifyDataSetChanged()
     }
 
@@ -38,7 +40,8 @@ class EstateListAdapter(private val itemList: List<Property>) : RecyclerView.Ada
 
     override fun onBindViewHolder(holder: EstateViewHolder, position: Int) {
         val currentItem = propertyList[position]
-        holder.bind(currentItem)
+        isCurrencyEuro
+        holder.bind(currentItem, isCurrencyEuro)
 
         // add a click listener
         holder.itemView.setOnClickListener {
@@ -58,10 +61,16 @@ class EstateListAdapter(private val itemList: List<Property>) : RecyclerView.Ada
         private val isSoldTextView: TextView = itemView.findViewById(R.id.item_estate_is_sold_textview)
 
         // link data from property to view
-        fun bind(property: Property) {
+        fun bind(property: Property, isCurrencyEuro: Boolean) {
             titleNameTextView.text = property.title
             cityNameTextView.text = property.city
-            priceTextView.text = Utils.formatPrice(property.eurosPrice)
+
+            if(isCurrencyEuro){
+                priceTextView.text = Utils.formatPrice(property.eurosPrice)+"€"
+            }else{
+                priceTextView.text=Utils.formatPrice(property.dollarsPrice)+"$"
+            }
+
             val isSold = property.isSold
             if(isSold){
                 isSoldTextView.visibility=VISIBLE
@@ -71,7 +80,6 @@ class EstateListAdapter(private val itemList: List<Property>) : RecyclerView.Ada
 
             if (property.photos.isNotEmpty()) {
                 val photoUrl = property.photos[0].imageUrl
-                Log.d("EstateDetail", "estate list adapter :url : $photoUrl")
                 // Load image with glide
                 Glide.with(itemView.context)
                     .load(photoUrl)

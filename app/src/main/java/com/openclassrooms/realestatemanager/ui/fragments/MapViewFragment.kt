@@ -3,6 +3,7 @@ package com.openclassrooms.realestatemanager.ui.fragments
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +15,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 
 import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationCallback
+import com.google.android.gms.location.LocationRequest
+import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -35,7 +39,7 @@ class MapViewFragment : Fragment(), OnMapReadyCallback {
     private val isTablet: Boolean by lazy {
         resources.getBoolean(R.bool.isTablet)
     }
-    private var isTabletLatitude:Double =49.182863
+    private var isTabletLatitude:Double = 49.182863
     private var isTabletLongitude:Double = -0.370679
 
     companion object {
@@ -63,9 +67,7 @@ class MapViewFragment : Fragment(), OnMapReadyCallback {
 
         // Initialize the map fragment asynchronously
         val mapFragment = childFragmentManager.findFragmentById(R.id.map_position) as? SupportMapFragment
-        if (mapFragment != null) {
-            mapFragment.getMapAsync(this)
-        }
+        mapFragment?.getMapAsync(this)
 
     }
 
@@ -115,9 +117,7 @@ class MapViewFragment : Fragment(), OnMapReadyCallback {
         findNavController().navigate(R.id.action_mapViewFragment_to_detailViewFragment)
     }
 
-    private fun displayUserPosition() {
 
-    }
 
 
     private fun myPosition(){
@@ -161,20 +161,6 @@ class MapViewFragment : Fragment(), OnMapReadyCallback {
                 REQUEST_LOCATION_PERMISSION
             )
         }
-    }
-
-
-    private fun checkLocationPermissionAndDisplayPosition() {
-        if (ActivityCompat.checkSelfPermission(requireContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            displayUserPosition()
-        } else {
-            requestLocationPermission()
-        }
-    }
-
-
-    private fun requestLocationPermission() {
-        ActivityCompat.requestPermissions(requireActivity(), arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION), REQUEST_LOCATION_PERMISSION)
     }
 
     override fun onResume() {

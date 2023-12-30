@@ -40,6 +40,7 @@
     <string name="estate_detail_fragment_address_of_property">Address</string>
     <string name="estate_detail_fragment_city_of_property">City</string>
     <string name="estate_detail_fragment_country_of_property">Country</string>
+    <string name="estate_detail_fragment_no_permission_to_photos_from_device">You have not authorized access to the photos</string>
 
     <!-- drawer menu -->
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -108,7 +109,7 @@
     <string name="dialog_edit_photo_name_new_name_of_picture">New name of picture</string>
 
     <string name="add_estate_toast_add_property">"You've added a new property with succes"</string>
-    <string name="add_estate_toast_update_property">"You've updated a new property with succes"</string>
+    <string name="add_estate_toast_update_property">"You've updated a property with succes"</string>
 
     <!-- DATE PICKER DIALOG -->
     <string name="date_picker_custom_select_date">Select a date</string>
@@ -154,6 +155,7 @@
     <string name="fragment_repayment_plan_result_with_deposit_label">With your deposit, your monthly payments will be : </string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
 
 
 </resources>

@@ -23,8 +23,6 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -48,7 +46,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class EstateDetailViewFragment : Fragment(), OnMapReadyCallback {
 
 
-    private var isFavorite = false
+    private var isCurrencyEuros = false
     private var propertyIsSold: Boolean = false
     private var propertyDateSold:String=""
     private lateinit var viewPagerPhotos: ViewPager2
@@ -107,7 +105,6 @@ class EstateDetailViewFragment : Fragment(), OnMapReadyCallback {
             setHasOptionsMenu(true)
             (requireActivity() as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
         }
-        initDataFromViewModel()
 
 
         return view
@@ -160,8 +157,6 @@ class EstateDetailViewFragment : Fragment(), OnMapReadyCallback {
             viewPagerPhotos.adapter = photoAdapter
         }
         initDataFromViewModel()
-
-
         initMap()
 
     }
@@ -169,127 +164,154 @@ class EstateDetailViewFragment : Fragment(), OnMapReadyCallback {
     @SuppressLint("UseCompatTextViewDrawableApis")
     @RequiresApi(Build.VERSION_CODES.M)
     private fun initDataFromViewModel() {
-        estateViewModel.selectedProperty.observe(viewLifecycleOwner) { property ->
-            // Update photolist when property selected changed, update adapter with new list
-            photoList = property.photos
-            photoAdapter.updateData(photoList)
+        estateViewModel.currentCurrency.observe(viewLifecycleOwner) { currency ->
+            val isCurrencyEuro = currency == EstateViewModel.Currency.EUR
 
-            // Update informations of property
-            titleTextView.text = property.title
-            cityTextView.text = property.city
+            estateViewModel.selectedProperty.observe(viewLifecycleOwner) { property ->
+                // Update photolist when property selected changed, update adapter with new list
+                photoList = property.photos
+                photoAdapter.updateData(photoList)
 
-            descriptionTextView.text = property.description
-            typeTextView.text = property.typeOfProperty
-            surfaceTextView.text =  Utils.formatPrice(property.surface) +"m2"
-            priceTextView.text = Utils.formatPrice(property.dollarsPrice)+"€"
-            numberRoomsTextView.text = "${property.numberOfRooms} rooms"
-            numberBedroomsTextView.text = "${property.numberOfBedrooms} bedrooms"
-            numberBathroomsTextView.text = "${property.numberOfBathrooms} bathrooms"
-            addressTextView.text = property.address
-            addressCityTextView.text = property.city
-            countryTextView.text = property.country
-            // Check if the property is sold
-            propertyIsSold = property.isSold
-            propertyDateSold = property.dateSold
+                // Update informations of property
+                titleTextView.text = property.title
+                cityTextView.text = property.city
 
-            //VISIBILITY FOR PROPERTY TO SELL OR SOLD
-            if (propertyIsSold){
-                isSoldTextView.visibility= VISIBLE
-                isSoldTextView.text=getString(R.string.estate_detail_fragment_is_sold_textview)+ propertyDateSold
-            }else{
-                isSoldTextView.visibility= GONE
-            }
+                descriptionTextView.text = property.description
+                typeTextView.text = property.typeOfProperty
+                surfaceTextView.text = Utils.formatPrice(property.surface) + "m2"
+                val displayedPrice = if (isCurrencyEuro) {
+                    property.eurosPrice
+                } else {
+                    property.dollarsPrice
+                }
+                priceTextView.text = Utils.formatPrice(displayedPrice) + if (isCurrencyEuro) "€" else "$"
+                numberRoomsTextView.text = "${property.numberOfRooms} rooms"
+                numberBedroomsTextView.text = "${property.numberOfBedrooms} bedrooms"
+                numberBathroomsTextView.text = "${property.numberOfBathrooms} bathrooms"
+                addressTextView.text = property.address
+                addressCityTextView.text = property.city
+                countryTextView.text = property.country
+                // Check if the property is sold
+                propertyIsSold = property.isSold
+                propertyDateSold = property.dateSold
+
+                //VISIBILITY FOR PROPERTY TO SELL OR SOLD
+                if (propertyIsSold) {
+                    isSoldTextView.visibility = VISIBLE
+                    isSoldTextView.text =
+                        getString(R.string.estate_detail_fragment_is_sold_textview) + propertyDateSold
+                } else {
+                    isSoldTextView.visibility = GONE
+                }
 
 
-            if (property.isNearSchools) {
-                schoolTextView.setCompoundDrawablesWithIntrinsicBounds(
-                    R.drawable.baseline_school_24,
-                    0,
-                    0,
-                    0
+                if (property.isNearSchools) {
+                    schoolTextView.setCompoundDrawablesWithIntrinsicBounds(
+                        R.drawable.baseline_school_24,
+                        0,
+                        0,
+                        0
+                    )
+                    schoolTextView.compoundDrawableTintList =
+                        ContextCompat.getColorStateList(requireContext(), R.color.gold)
+                } else {
+                    schoolTextView.compoundDrawableTintList =
+                        ContextCompat.getColorStateList(requireContext(), R.color.colorPrimary)
+                }
+
+                if (property.isNearRestaurants) {
+                    foodTextView.setCompoundDrawablesWithIntrinsicBounds(
+                        R.drawable.baseline_food_bank_24,
+                        0,
+                        0,
+                        0
+                    )
+                    foodTextView.compoundDrawableTintList =
+                        ContextCompat.getColorStateList(requireContext(), R.color.gold)
+                } else {
+                    foodTextView.compoundDrawableTintList =
+                        ContextCompat.getColorStateList(requireContext(), R.color.colorPrimary)
+                }
+
+                if (property.isNearShops) {
+                    shopTextView.setCompoundDrawablesWithIntrinsicBounds(
+                        R.drawable.baseline_shopping_cart_24,
+                        0,
+                        0,
+                        0
+                    )
+                    shopTextView.compoundDrawableTintList =
+                        ContextCompat.getColorStateList(requireContext(), R.color.gold)
+                } else {
+                    shopTextView.compoundDrawableTintList =
+                        ContextCompat.getColorStateList(requireContext(), R.color.colorPrimary)
+                }
+
+                if (property.isNearBuses) {
+                    busTextView.setCompoundDrawablesWithIntrinsicBounds(
+                        R.drawable.baseline_directions_bus_24,
+                        0,
+                        0,
+                        0
+                    )
+                    busTextView.compoundDrawableTintList =
+                        ContextCompat.getColorStateList(requireContext(), R.color.gold)
+                } else {
+                    busTextView.compoundDrawableTintList =
+                        ContextCompat.getColorStateList(requireContext(), R.color.colorPrimary)
+                }
+
+                if (property.isNearTramway) {
+                    tramTextView.setCompoundDrawablesWithIntrinsicBounds(
+                        R.drawable.baseline_tram_24,
+                        0,
+                        0,
+                        0
+                    )
+                    tramTextView.compoundDrawableTintList =
+                        ContextCompat.getColorStateList(requireContext(), R.color.gold)
+                } else {
+                    tramTextView.compoundDrawableTintList =
+                        ContextCompat.getColorStateList(requireContext(), R.color.colorPrimary)
+                }
+
+                if (property.isNearPark) {
+                    parkTextView.setCompoundDrawablesWithIntrinsicBounds(
+                        R.drawable.baseline_park_24,
+                        0,
+                        0,
+                        0
+                    )
+                    parkTextView.compoundDrawableTintList =
+                        ContextCompat.getColorStateList(requireContext(), R.color.gold)
+                } else {
+                    parkTextView.compoundDrawableTintList =
+                        ContextCompat.getColorStateList(requireContext(), R.color.colorPrimary)
+                }
+
+
+                photoAdapter.onItemClick = { position ->
+                    val dialog = FullScreenPhotoDialogFragment(photoList, position)
+                    dialog.show(parentFragmentManager, "FullScreenPhotoDialog")
+                }
+                Log.d(
+                    "CHECKBOX",
+                    "état des checkbox ${property.isNearBuses}, ${property.isNearPark}, ${property.isNearRestaurants}, ${property.isNearSchools}, ${property.isNearTramway}, ${property.isNearShops}"
                 )
-                schoolTextView.compoundDrawableTintList =
-                    ContextCompat.getColorStateList(requireContext(), R.color.gold)
-            }else{
-                schoolTextView.compoundDrawableTintList=ContextCompat.getColorStateList(requireContext(), R.color.colorPrimary)
             }
-
-            if (property.isNearRestaurants) {
-                foodTextView.setCompoundDrawablesWithIntrinsicBounds(
-                    R.drawable.baseline_food_bank_24,
-                    0,
-                    0,
-                    0
-                )
-                foodTextView.compoundDrawableTintList =
-                    ContextCompat.getColorStateList(requireContext(), R.color.gold)
-            }else{
-                foodTextView.compoundDrawableTintList=ContextCompat.getColorStateList(requireContext(), R.color.colorPrimary)
-            }
-
-            if (property.isNearShops) {
-                shopTextView.setCompoundDrawablesWithIntrinsicBounds(
-                    R.drawable.baseline_shopping_cart_24,
-                    0,
-                    0,
-                    0
-                )
-                shopTextView.compoundDrawableTintList =
-                    ContextCompat.getColorStateList(requireContext(), R.color.gold)
-            }else{
-                shopTextView.compoundDrawableTintList=ContextCompat.getColorStateList(requireContext(), R.color.colorPrimary)
-            }
-
-            if (property.isNearBuses) {
-                busTextView.setCompoundDrawablesWithIntrinsicBounds(
-                    R.drawable.baseline_directions_bus_24,
-                    0,
-                    0,
-                    0
-                )
-                busTextView.compoundDrawableTintList =
-                    ContextCompat.getColorStateList(requireContext(), R.color.gold)
-            }else{
-                busTextView.compoundDrawableTintList=ContextCompat.getColorStateList(requireContext(), R.color.colorPrimary)
-            }
-
-            if (property.isNearTramway) {
-                tramTextView.setCompoundDrawablesWithIntrinsicBounds(
-                    R.drawable.baseline_tram_24,
-                    0,
-                    0,
-                    0
-                )
-                tramTextView.compoundDrawableTintList =
-                    ContextCompat.getColorStateList(requireContext(), R.color.gold)
-            }else{
-                tramTextView.compoundDrawableTintList=ContextCompat.getColorStateList(requireContext(), R.color.colorPrimary)
-            }
-
-            if (property.isNearPark) {
-                parkTextView.setCompoundDrawablesWithIntrinsicBounds(
-                    R.drawable.baseline_park_24,
-                    0,
-                    0,
-                    0
-                )
-                parkTextView.compoundDrawableTintList =
-                    ContextCompat.getColorStateList(requireContext(), R.color.gold)
-            }else{
-                parkTextView.compoundDrawableTintList=ContextCompat.getColorStateList(requireContext(), R.color.colorPrimary)
-            }
-
-
-            photoAdapter.onItemClick = { position ->
-                val dialog = FullScreenPhotoDialogFragment(photoList, position)
-                dialog.show(parentFragmentManager, "FullScreenPhotoDialog")
-            }
-            Log.d("CHECKBOX", "état des checkbox ${property.isNearBuses}, ${property.isNearPark}, ${property.isNearRestaurants}, ${property.isNearSchools}, ${property.isNearTramway}, ${property.isNearShops}")
         }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.toolbar_menu_detail, menu)
+        // Vérifier si la liste des propriétés est vide
+        updateEditIconVisibility(menu)
+    }
+    private fun updateEditIconVisibility(menu: Menu) {
+        estateViewModel.propertyList.observe(viewLifecycleOwner) { properties ->
+            val editMenuItem = menu.findItem(R.id.editIcon)
+            editMenuItem.isVisible = properties.isNotEmpty()
+        }
     }
 
     private fun checkPermissions(): Boolean {
@@ -326,6 +348,7 @@ class EstateDetailViewFragment : Fragment(), OnMapReadyCallback {
                 viewPagerPhotos.adapter = photoAdapter
             } else {
                 // I'll show a message
+                Toast.makeText(requireContext(), getString(R.string.estate_detail_fragment_no_permission_to_photos_from_device), Toast.LENGTH_LONG).show()
             }
         }
     }

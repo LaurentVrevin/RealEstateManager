@@ -26,8 +26,6 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity(), EstateListViewFragment.OnSearchButtonClickListener {
 
-    private var isCurrencyEuros = false
-    private lateinit var propertyListDataMainActivity:List<Property>
 
     private lateinit var navController: NavController
     private lateinit var navHostFragment: NavHostFragment
@@ -40,25 +38,19 @@ class MainActivity : AppCompatActivity(), EstateListViewFragment.OnSearchButtonC
         resources.getBoolean(R.bool.isTablet)
     }
 
+
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
 
         setContentView(R.layout.activity_main)
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
 
-        propertyListDataMainActivity = emptyList()
-        estateViewModel.propertyList.observe(this) { propertyListLiveData ->
-        propertyListDataMainActivity = propertyListLiveData
-        }
         if (isTablet) {
-            if(propertyListDataMainActivity.isEmpty()){
-                Log.d("ISTABLET", "on est en mode tablette, la liste est vide")
-            }else{
-                Log.d("ISTABLET", "on est en mode tablette, la liste est $propertyListDataMainActivity")
-            }
+            Log.d("ISTABLET", "on est en mode tablette")
+
+
         } else {
             // Configuration standard pour smartphone
             Log.d("ISTABLET", "on est en mode smartphone")
@@ -69,7 +61,6 @@ class MainActivity : AppCompatActivity(), EstateListViewFragment.OnSearchButtonC
         bottomNavigationView = findViewById(R.id.bottom_nav_view)
         navController = navHostFragment.navController
         setupActionBarWithNavController(navController)
-
 
         configureBottomView(navController)
 
@@ -172,8 +163,11 @@ class MainActivity : AppCompatActivity(), EstateListViewFragment.OnSearchButtonC
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.CurrencyIcon -> {
+                estateViewModel.toggleCurrency()
+                // Changez l'icône en conséquence
+                item.setIcon(if (estateViewModel.currentCurrency.value == EstateViewModel.Currency.USD) R.drawable.baseline_euro_24 else R.drawable.baseline_dollar_24)
                 // setup the click for favorite
-                toggleCurrency(item)
+                //toggleCurrency(item)
                 return true
             }
             R.id.addIcon -> {
@@ -186,21 +180,27 @@ class MainActivity : AppCompatActivity(), EstateListViewFragment.OnSearchButtonC
         }
         return super.onOptionsItemSelected(item)
     }
-    private fun toggleCurrency(item: MenuItem) {
-        //If is favorite so delete favorite, or do favorite
-        if (isCurrencyEuros) {
-            item.setIcon(R.drawable.baseline_euro_24)
-            isCurrencyEuros = false
-        } else {
-
-            item.setIcon(R.drawable.baseline_dollar_24)
-            isCurrencyEuros = true
-
-
-        }
-    }
 
     override fun onSearchButtonClick() {
+    }
+
+    override fun onStart() {
+        super.onStart()
+        Log.d("CYCLEDEVIE", "on start")
+    }
+    override fun onResume() {
+        super.onResume()
+        Log.d("CYCLEDEVIE", "on resume")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.d("CYCLEDEVIE", "on pause")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d("CYCLEDEVIE", "on destroy")
     }
 
 }

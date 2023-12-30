@@ -49,11 +49,11 @@ class TabletHomeFragment : Fragment() {
             if (properties.isNotEmpty()) {
                 textviewNoProperty.visibility=GONE
                 estateViewModel.setSelectedPropertyId(properties.first().id)
-                Log.d("NOPROPERTYTABLETTE", "voici la liste : $properties")
+
             }
             else{
                 textviewNoProperty.visibility= VISIBLE
-                Log.d("NOPROPERTYTABLETTE", "pas de propriété dans la liste $properties")
+
 
             }
         }

@@ -52,18 +52,6 @@
             app:layout_constraintStart_toEndOf="@+id/item_estate_photo_imageview"
             app:layout_constraintTop_toBottomOf="@+id/item_estate_titlename_textview" />
 
-        <TextView
-            android:id="@+id/item_estate_currency_textview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="@string/item_estate_fragment_listview_currency_textview"
-            android:textColor="@color/gold"
-            android:textSize="30sp"
-            android:textStyle="bold"
-
-            app:layout_constraintStart_toEndOf="@+id/item_estate_photo_imageview"
-            app:layout_constraintTop_toBottomOf="@+id/item_estate_cityname_textview" />
 
         <TextView
             android:id="@+id/item_estate_price_textview"
@@ -74,7 +62,7 @@
             android:textColor="@color/gold"
             android:textSize="30sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@+id/item_estate_currency_textview"
+            app:layout_constraintStart_toStartOf="@+id/item_estate_cityname_textview"
             app:layout_constraintTop_toBottomOf="@+id/item_estate_cityname_textview" />
 
         <TextView
@@ -87,7 +75,7 @@
             android:textStyle="bold"
 
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/item_estate_currency_textview"
+            app:layout_constraintStart_toStartOf="@+id/item_estate_cityname_textview"
             app:layout_constraintTop_toBottomOf="@+id/item_estate_price_textview" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

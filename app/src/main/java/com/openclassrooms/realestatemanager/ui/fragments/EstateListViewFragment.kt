@@ -10,8 +10,6 @@ import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -20,7 +18,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.data.model.Property
-import com.openclassrooms.realestatemanager.ui.activities.MainActivity
 import com.openclassrooms.realestatemanager.ui.adapters.EstateListAdapter
 import com.openclassrooms.realestatemanager.viewmodels.EstateViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -34,6 +31,7 @@ class EstateListViewFragment : Fragment(){
     private lateinit var propertyList: List<Property>
     private lateinit var searchFab:FloatingActionButton
     private var callback: OnSearchButtonClickListener? = null
+    private var isCurrencyEuro:Boolean=false
 
 
     private val estateViewModel: EstateViewModel by viewModels({ requireActivity() })
@@ -62,13 +60,12 @@ class EstateListViewFragment : Fragment(){
         // Initialize an empty property list
         propertyList = emptyList()
         // Initialize adapter with an empty list
-        estateListAdapter = EstateListAdapter(propertyList)
+        estateListAdapter = EstateListAdapter(propertyList, isCurrencyEuro)
         // Attach adapter
         estateListRecyclerView.adapter = estateListAdapter
 
         // Observe livedata
         estateViewModel.propertyList.observe(viewLifecycleOwner) { propertyListLiveData ->
-            Log.d("listphotofragment", "EstateListViewFragment - Property List LiveData: $propertyListLiveData")
 
             if (propertyListLiveData.isEmpty()) {
                 // ANY PROPERTY ?
@@ -78,22 +75,25 @@ class EstateListViewFragment : Fragment(){
                 // Properties ok in the list
                 setViewVisibility(estateListRecyclerView, View.VISIBLE)
                 setViewVisibility(noPropertyTextView, View.GONE)
+                estateViewModel.currentCurrency.observe(viewLifecycleOwner) { currency ->
+                    val isCurrencyEuro = currency == EstateViewModel.Currency.EUR
+                    propertyList = propertyListLiveData
+                    estateListAdapter.updateData(propertyList, isCurrencyEuro)
+                }
 
-                // update adapter with new list
-                propertyList = propertyListLiveData
-                estateListAdapter.updateData(propertyList)
             }
         }
+
 
 
         estateListAdapter.setOnItemClickListener { selectedItem ->
             estateViewModel.setSelectedPropertyId(selectedItem.id)
             if (isTablet) {
-                Log.d("CHECKTABLET", "mode tablette")
+                //nothing to do
             } else {
                 // Use navigation controller with action
                 findNavController().navigate(R.id.action_estateListViewFragment_to_estateDetailViewFragment)
-                Log.d("CHECKTABLET", "mode smartphone")
+
             }
         }
 
@@ -113,8 +113,8 @@ class EstateListViewFragment : Fragment(){
         // Observe result from research
         estateViewModel.searchResults.observe(viewLifecycleOwner) { results ->
             if (!results.isNullOrEmpty()) {
-                estateListAdapter.updateData(results)
-                Log.d("SHOWDATAFROMSEARCH", "this is data from search : $results")
+                estateListAdapter.updateData(results, isCurrencyEuro)
+
 
             }
         }
@@ -122,6 +122,14 @@ class EstateListViewFragment : Fragment(){
     }
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.toolbar_menu_list, menu)
+        updateCurrencyIconVisibility(menu)
+        }
+
+    private fun updateCurrencyIconVisibility(menu: Menu) {
+        estateViewModel.propertyList.observe(viewLifecycleOwner) { properties ->
+            val currencyMenuItem = menu.findItem(R.id.CurrencyIcon)
+            currencyMenuItem.isVisible = properties.isNotEmpty()
+        }
     }
 
 

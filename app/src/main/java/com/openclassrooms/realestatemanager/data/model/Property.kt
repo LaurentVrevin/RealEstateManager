@@ -31,6 +31,5 @@ data class Property(
     val dateAdded: String,
     val dateSold: String,
     val agentId: String,
-    val isSold: Boolean,
-    val isFavorite: Boolean
+    val isSold: Boolean
 )

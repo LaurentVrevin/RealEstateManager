@@ -1,7 +1,12 @@
 package com.openclassrooms.realestatemanager
 
+import android.app.usage.NetworkStatsManager
 import android.content.Context
+import android.net.ConnectivityManager
+import android.net.Network
+import android.net.NetworkCapabilities
 import android.net.wifi.WifiManager
+import android.os.Build
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -66,5 +71,24 @@ object Utils {
     fun isInternetAvailable(context: Context): Boolean {
         val wifi = context.getSystemService(Context.WIFI_SERVICE) as WifiManager
         return wifi.isWifiEnabled
+    }
+    fun isNetworkAvailable(context: Context): Boolean {
+        //get a instance of ConnectivityManager from context
+        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        //check if version api 23 or more
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            val network = connectivityManager.activeNetwork ?: return false //if no capacity, return false
+            val capabilities = connectivityManager.getNetworkCapabilities(network) ?: return false
+            //check is network have capabilities of transport for : wifi, phone or ethernet
+            return capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) ||
+                    capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) ||
+                    capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)
+        } else {
+            // For previous version to Android M (API 23)
+            val activeNetworkInfo = connectivityManager.activeNetworkInfo
+
+            //check if network is connected
+            return activeNetworkInfo != null && activeNetworkInfo.isConnected
+        }
     }
 }

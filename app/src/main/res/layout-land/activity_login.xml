@@ -30,16 +30,16 @@
             >
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/til_price_of_property"
+                android:id="@+id/username_edittext_label"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:paddingBottom="10dp"
-                android:hint="@string/login_activity_email">
+                android:hint="@string/login_activity_username">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/til_price_of_property_edit"
+                    android:id="@+id/username_edittext_edit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textEmailAddress" />

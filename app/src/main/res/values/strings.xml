@@ -49,7 +49,7 @@
     <!-- Login activity -->
     <string name="title_activity_login">Real Estate Manager</string>
     <string name="login_title_real_estate_manager_textview">Real Estate Manager</string>
-    <string name="login_activity_email">Email</string>
+    <string name="login_activity_username">Username</string>
     <string name="login_activity_password">Password</string>
     <string name="login_activity_login_button">Log in</string>
     <string name="login_activity_signup">No account ? Sign up here !</string>

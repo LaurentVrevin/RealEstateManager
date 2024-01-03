@@ -8,9 +8,9 @@ class UtilsTest {
     @Test
     fun convertDollarToEuro_isCorrect() {
         val dollars = 100.0
-        val expectedEuros = 81.0 // résultat attendu de la conversion
+        val expectedEuros = 81.0
         val result = Utils.convertDollarToEuro(dollars)
-        val delta = 0.01// tolérance pour les imprécisions des calculs à virgule flottante
+        val delta = 0.01
 
         assertEquals(expectedEuros, result, delta)
     }
@@ -18,9 +18,9 @@ class UtilsTest {
     @Test
     fun convertEuroToDollar_isCorrect() {
         val euros = 100
-        val expectedDollars = 123.0 // résultat attendu de la conversion
+        val expectedDollars = 123.0
         val result = Utils.convertEuroToDollar(euros)
-        val delta = 0.01 // tolérance pour les imprécisions des calculs à virgule flottante
+        val delta = 0.01
 
         assertEquals(expectedDollars, result.toDouble(), delta)
     }

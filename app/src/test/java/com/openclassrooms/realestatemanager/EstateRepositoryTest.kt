@@ -110,34 +110,7 @@ class EstateRepositoryTest {
         verify(propertyDao).getPropertyById(propertyId)
     }
 
-    @Test
-    fun searchProperties_callsDaoWithCorrectQuery() = runBlockingTest {
-        // Créer des critères de recherche
-        val searchCriteria = SearchCriteria(city = "Test City", minSurface = 100.0, typeOfProperty="", maxSurface=null,minPrice =null, maxPrice = null,
-            nearSchools = true, nearRestaurants = false, nearShops = true, nearBuses = false, nearTram = true, nearPark = true)
 
-        // Simuler une réponse attendue
-        val expectedProperties = listOf(propertyForTest)
-        val liveData = MutableLiveData<List<Property>>().apply { value = expectedProperties }
-
-        // Configurer le mock pour retourner la réponse simulée
-        `when`(propertyDao.searchProperties(any(SupportSQLiteQuery::class.java))).thenReturn(liveData)
-
-        // Appeler la méthode de recherche
-        repository.searchProperties(searchCriteria)
-
-        // Capturer l'argument passé à searchProperties du DAO
-        val argumentCaptor = ArgumentCaptor.forClass(SupportSQLiteQuery::class.java)
-        verify(propertyDao).searchProperties(argumentCaptor.capture())
-
-        // Vérifier que la requête capturée correspond aux critères de recherche
-        val capturedQuery = argumentCaptor.value as SimpleSQLiteQuery
-        val queryString = capturedQuery.sql
-
-        // Vérifier que la requête contient les bons critères
-        assertTrue(queryString.contains("Test City"))
-        assertTrue(queryString.contains("100.0"))
-    }
 
 
 

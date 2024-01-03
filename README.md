@@ -8,7 +8,7 @@ RealEstateManager is an Android application tailored for real estate professiona
 - **Detailed Information:** Each property listing includes comprehensive details such as photos, descriptions, and location.
 - **Map Integration:** Properties are displayed on a map for easy location identification.
 - **Loan Simulator:** A built-in loan simulator helps users calculate mortgage or loan payments.
-- **Notifications:** Timely reminders and notifications about property updates.
+- **Notifications:** Notifications about property updates.
 
 ## 🛠️ Tech Stack
 

@@ -12,13 +12,13 @@ import com.google.android.material.textfield.TextInputEditText
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.helper.LoanSimulatorAdapterHelper
 
-class LoanSimulationFragment : Fragment() {
+class LoanMaxSimulatorFragment : Fragment() {
 
     private lateinit var calculateButton: Button
     private lateinit var incomeEditText: TextInputEditText
     private lateinit var repaymentEditText: TextInputEditText
     private lateinit var numberYearsSelected: AutoCompleteTextView
-    private lateinit var interestRateTextView: TextView
+    private lateinit var interestRateEditText: EditText
     private lateinit var resultTextView: TextView
     private lateinit var resultWithInterestTextView: TextView
     private lateinit var loanSimulationCardView: CardView
@@ -36,7 +36,7 @@ class LoanSimulationFragment : Fragment() {
         incomeEditText = view.findViewById(R.id.incomeEditText)
         repaymentEditText = view.findViewById(R.id.repaymentEditText)
         numberYearsSelected = view.findViewById(R.id.nbr_years_selected_autocomplete)
-        interestRateTextView = view.findViewById(R.id.interestRateLayout)
+        interestRateEditText = view.findViewById(R.id.interestRateEditText)
         resultTextView = view.findViewById(R.id.result_textview)
         resultWithInterestTextView = view.findViewById(R.id.loan_cost_textview)
         loanSimulationCardView = view.findViewById(R.id.loan_simulation_cardview_result_textview)
@@ -75,12 +75,8 @@ class LoanSimulationFragment : Fragment() {
         // Get values entered by the user
         val income = incomeEditText.text.toString().toDoubleOrNull() ?: 0.0
         val repayment = repaymentEditText.text.toString().toDoubleOrNull() ?: 0.0
-        val interestRates = listOf(
-            Pair(10, 2),
-            Pair(15, 2.5),
-            Pair(20, 3),
-            Pair(25, 3.5)
-        )
+        val interestRate = interestRateEditText.text.toString().toDoubleOrNull() ?: 0.0
+
 
         val minOfMonthlyRepayment = 0.30
         // Calculate the maximum total amount to borrow
@@ -102,21 +98,14 @@ class LoanSimulationFragment : Fragment() {
             // Get the number of years chosen by the user
             val numberOfYearsSelected = numberYearsSelected.text.toString().toDouble()
             val selectedNumberOfYears = numberOfYearsSelected.toInt()
-            // Pass the percentage based on the number of years chosen by pairing in the list
-            val interestRate =
-                interestRates.find { it.first == selectedNumberOfYears }?.second ?: 0.0
-
-            // Set the interest rate text using a formatted string
-            interestRateTextView.text =
-                getString(R.string.fragment_loan_simulation_interest_rate_label) + "$interestRate%"
 
             // Calculate the total amount to pay and set the result text using a formatted string
-            val AmountBorrowed = selectedNumberOfYears * maxYearlyRepayment
+            val amountBorrowed = selectedNumberOfYears * maxYearlyRepayment
             val totalToPay =
-                selectedNumberOfYears * maxYearlyRepayment * (1 + interestRate.toDouble() / 100)
+                selectedNumberOfYears * maxYearlyRepayment * (1 + interestRate / 100)
 
             // Format the result to display only two decimal places
-            val formattedAmountBorrowed = String.format("%.2f", AmountBorrowed)
+            val formattedAmountBorrowed = String.format("%.2f", amountBorrowed)
             val formattedTotalToPay = String.format("%.2f", totalToPay)
             resultTextView.text =
                 getString(R.string.fragment_loan_simulation_result_label) + formattedAmountBorrowed + getString(
@@ -128,8 +117,6 @@ class LoanSimulationFragment : Fragment() {
                 )
             loanSimulationCardView.visibility = View.VISIBLE
         }
-
-
         }
     }
 

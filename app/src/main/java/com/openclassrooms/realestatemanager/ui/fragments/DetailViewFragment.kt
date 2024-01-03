@@ -43,7 +43,7 @@ import com.openclassrooms.realestatemanager.viewmodels.EstateViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class EstateDetailViewFragment : Fragment(), OnMapReadyCallback {
+class DetailViewFragment : Fragment(), OnMapReadyCallback {
 
 
     private var isCurrencyEuros = false

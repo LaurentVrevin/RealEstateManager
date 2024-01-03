@@ -42,12 +42,12 @@
         tools:layout="@layout/fragment_loan_host" />
     <fragment
         android:id="@+id/estateDetailViewFragment"
-        android:name="com.openclassrooms.realestatemanager.ui.fragments.EstateDetailViewFragment"
+        android:name="com.openclassrooms.realestatemanager.ui.fragments.DetailViewFragment"
         android:label="fragment_estate_detail_view"
         tools:layout="@layout/fragment_estate_detail_view" />
     <fragment
         android:id="@+id/estateListViewFragment"
-        android:name="com.openclassrooms.realestatemanager.ui.fragments.EstateListViewFragment"
+        android:name="com.openclassrooms.realestatemanager.ui.fragments.ListViewFragment"
         android:label="fragment_estate_list_view"
         tools:layout="@layout/fragment_estate_list_view" />
 </navigation>

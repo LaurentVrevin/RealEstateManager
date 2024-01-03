@@ -3,7 +3,6 @@ package com.openclassrooms.realestatemanager.ui.fragments
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -23,7 +22,7 @@ import com.openclassrooms.realestatemanager.viewmodels.EstateViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class EstateListViewFragment : Fragment(){
+class ListViewFragment : Fragment(){
 
     private lateinit var estateListRecyclerView: RecyclerView
     private lateinit var noPropertyTextView: TextView

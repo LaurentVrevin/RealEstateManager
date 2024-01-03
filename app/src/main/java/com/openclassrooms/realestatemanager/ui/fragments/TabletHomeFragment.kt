@@ -2,7 +2,6 @@ package com.openclassrooms.realestatemanager.ui.fragments
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -31,8 +30,8 @@ class TabletHomeFragment : Fragment() {
         textviewNoProperty.visibility=GONE
 
         // load fragments of list and detail
-        val listFragment = EstateListViewFragment()
-        val detailFragment = EstateDetailViewFragment()
+        val listFragment = ListViewFragment()
+        val detailFragment = DetailViewFragment()
         childFragmentManager.beginTransaction()
             .replace(R.id.listview_fragment_container, listFragment)
             .replace(R.id.detail_fragment_container, detailFragment)

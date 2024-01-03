@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/gold_light"
-    tools:context=".ui.fragments.EstateListViewFragment">
+    tools:context=".ui.fragments.ListViewFragment">
 
     <TextView
         android:id="@+id/estate_list_fragment_noproperty_textview"

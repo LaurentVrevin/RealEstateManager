@@ -2,7 +2,6 @@ package com.openclassrooms.realestatemanager.ui.fragments
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -18,7 +17,7 @@ import com.google.android.material.textfield.TextInputLayout
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.helper.LoanSimulatorAdapterHelper
 
-class RepaymentPlanFragment : Fragment() {
+class LoanMonthlySimulatorFragment : Fragment() {
 
     private lateinit var propertyPriceLayout: TextInputLayout
     private lateinit var propertyPriceEditText: TextInputEditText

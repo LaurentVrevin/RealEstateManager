@@ -16,15 +16,14 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.openclassrooms.realestatemanager.R
-import com.openclassrooms.realestatemanager.data.model.Property
-import com.openclassrooms.realestatemanager.ui.fragments.EstateListViewFragment
+import com.openclassrooms.realestatemanager.ui.fragments.ListViewFragment
 import com.openclassrooms.realestatemanager.viewmodels.EstateViewModel
 
 import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity(), EstateListViewFragment.OnSearchButtonClickListener {
+class MainActivity : AppCompatActivity(), ListViewFragment.OnSearchButtonClickListener {
 
 
     private lateinit var navController: NavController

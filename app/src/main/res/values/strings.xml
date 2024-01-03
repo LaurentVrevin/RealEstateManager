@@ -132,6 +132,7 @@
     <string name="fragment_loan_simulation_title">Loan Simulation</string>
     <string name="fragment_loan_simulation_income_hint">Monthly Net Income</string>
     <string name="fragment_loan_simulation_repayment_hint">Desired Monthly Repayment</string>
+    <string name="fragment_loan_simulation_interest_rate">Interest rate %</string>
     <string name="fragment_loan_simulation_deposit_hint">Initial Deposit</string>
     <string name="fragment_loan_simulation_loan_term_hint">Loan Term (Years)</string>
     <string name="fragment_loan_simulation_calculate_button">Calculate Loan Capacity</string>

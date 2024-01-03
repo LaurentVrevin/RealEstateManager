@@ -80,18 +80,25 @@
                     android:textColor="@color/colorPrimary" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <TextView
-                android:id="@+id/interestRateLayout"
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/interestRateLabel"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:padding="10dp"
-                android:text="@string/fragment_loan_simulation_interest_rate_label"
-                android:textColor="@color/colorPrimary"
-                android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/loanTerm" />
+                app:layout_constraintTop_toBottomOf="@+id/loanTerm" >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/interestRateEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/fragment_loan_simulation_interest_rate"
+                    android:inputType="numberDecimal"/>
+            </com.google.android.material.textfield.TextInputLayout>
 
             <Button
                 android:id="@+id/calculateButton"
@@ -105,7 +112,7 @@
                 app:backgroundTint="@color/gold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/interestRateLayout" />
+                app:layout_constraintTop_toBottomOf="@+id/interestRateLabel" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 

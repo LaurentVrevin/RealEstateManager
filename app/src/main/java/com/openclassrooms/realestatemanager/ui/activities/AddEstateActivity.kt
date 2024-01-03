@@ -51,10 +51,13 @@ import com.google.android.libraries.places.widget.listener.PlaceSelectionListene
 import com.google.android.material.checkbox.MaterialCheckBox
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.Utils
 import com.openclassrooms.realestatemanager.data.model.Property
 import com.openclassrooms.realestatemanager.data.model.Photo
+import com.openclassrooms.realestatemanager.helper.AgentAdapterHelper
 import com.openclassrooms.realestatemanager.helper.PropertyTypeAdapterHelper
 import com.openclassrooms.realestatemanager.ui.adapters.AddEstatePhotoAdapter
 import com.openclassrooms.realestatemanager.viewmodels.EstateViewModel
@@ -82,6 +85,8 @@ class AddEstateActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var titlePropertyEditText: EditText
     private lateinit var descriptionEditText: EditText
     private lateinit var typeOfPropertyEditText: AutoCompleteTextView
+    private lateinit var agentNameEditText: TextInputLayout
+    private lateinit var agentNameAutocomplete: AutoCompleteTextView
     private lateinit var priceOfPropertyEditText: EditText
     private lateinit var surfaceOfPropertyEditText: EditText
     private lateinit var numberOfRoomsEditText: EditText
@@ -140,6 +145,7 @@ class AddEstateActivity : AppCompatActivity(), OnMapReadyCallback {
         initRecyclerView()
         initMap()
         PropertyTypeAdapterHelper.createAdapter(this, typeOfPropertyEditText)
+        AgentAdapterHelper.createAdapter(this, agentNameAutocomplete )
 
         // update currentPropertyId with intent from key PROPERTY_ID
         val currentPropertyId = intent.getStringExtra("PROPERTY_ID")
@@ -149,6 +155,7 @@ class AddEstateActivity : AppCompatActivity(), OnMapReadyCallback {
             id = currentPropertyId
             isToUpate=true
             cardviewIsSold.visibility = View.VISIBLE
+            agentNameEditText.visibility = View.GONE
         }else{
             id = UUID.randomUUID().toString()
             cardviewIsSold.visibility = View.GONE
@@ -157,12 +164,14 @@ class AddEstateActivity : AppCompatActivity(), OnMapReadyCallback {
         isSoldSwitch.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 // Switch is enable, show datepicker
+                agentNameEditText.visibility = View.VISIBLE
                 openDatePickerDialog()
             } else {
-
                 // switch is disable
+                agentNameEditText.visibility = View.GONE
                 isSold = false
                 dateSold = ""
+                agentNameAutocomplete.setText("")
             }
         }
     }
@@ -175,6 +184,8 @@ class AddEstateActivity : AppCompatActivity(), OnMapReadyCallback {
         titlePropertyEditText = findViewById(R.id.til_title_of_property_edit)
         descriptionEditText = findViewById(R.id.til_description_edit)
         typeOfPropertyEditText = findViewById(R.id.til_type_of_property_autocomplete)
+        agentNameEditText = findViewById(R.id.agent_name_edittext_label)
+        agentNameAutocomplete = findViewById(R.id.agent_name_edittext_autocomplete)
         priceOfPropertyEditText = findViewById(R.id.til_price_of_property_edit)
         surfaceOfPropertyEditText = findViewById(R.id.til_surface_of_property_edit)
         numberOfRoomsEditText = findViewById(R.id.til_number_of_rooms_edit)
@@ -509,8 +520,9 @@ class AddEstateActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private fun checkIfAllFieldsFilled(): Boolean {
-        // Call previous method
-        return checkIfFieldsFilled(
+        // Vérifie d'abord les champs principaux
+        // Check in first main fields
+        val areMainFieldsFilled = checkIfFieldsFilled(
             titlePropertyEditText,
             descriptionEditText,
             typeOfPropertyEditText,
@@ -518,8 +530,26 @@ class AddEstateActivity : AppCompatActivity(), OnMapReadyCallback {
             surfaceOfPropertyEditText,
             numberOfRoomsEditText,
             numberOfBedroomsEditText,
-            numberOfBathroomsEditText,
+            numberOfBathroomsEditText
         )
+
+        // Si un des champs principaux n'est pas rempli, retourne faux
+        if (!areMainFieldsFilled) {
+            return false
+        }
+
+        // Vérifie le champ de l'agent si la propriété est marquée comme vendue
+        //check field about agent if property is sold
+        if (isSold && agentNameAutocomplete.text.toString().isEmpty()) {
+            showDialog(
+                R.string.add_estate_activity_dialog_save_error_title,
+                R.string.add_estate_activity_dialog_agent_error_message
+            )
+            return false
+        }
+
+        // Tous les champs requis sont remplis
+        return true
     }
 
     private fun saveEstate() {
@@ -542,6 +572,7 @@ class AddEstateActivity : AppCompatActivity(), OnMapReadyCallback {
         val dollarsPrice = priceOfPropertyEditText.text.toString().toDoubleOrNull() ?: 0.0
         val eurosPrice = Utils.convertDollarToEuro(dollarsPrice)
         val surface = surfaceOfPropertyEditText.text.toString().toDoubleOrNull() ?: 0.0
+        val selectedAgent = agentNameAutocomplete.text.toString()
 
 
 
@@ -586,7 +617,7 @@ class AddEstateActivity : AppCompatActivity(), OnMapReadyCallback {
             selectedLongitude,
             dateAdded,
             dateSold,
-            agentId,
+            selectedAgent,
             isSold
 
         )

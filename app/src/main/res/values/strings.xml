@@ -57,8 +57,9 @@
     <!-- Add Estate Activity -->
     <string name="add_estate_activity_title">Add Real Estate</string>
     <string name="add_estate_activity_type_property">Type</string>
-    <string name="add_estate_activity_price_of_property">Price</string>
+    <string name="add_estate_activity_price_of_property">Price $</string>
     <string name="add_estate_activity_title_of_property">Title</string>
+    <string name="add_estate_activity_agent_name">Name</string>
     <string name="add_estate_activity_number_of_rooms">Rooms</string>
     <string name="add_estate_activity_number_of_bedrooms">Bedrooms</string>
     <string name="add_estate_activity_number_of_bathrooms">Bathrooms</string>
@@ -68,7 +69,7 @@
     <string name="add_estate_activity_checkbox_buses">Buses</string>
     <string name="add_estate_activity_checkbox_tramway">Tramway</string>
     <string name="add_estate_activity_checkbox_park">Park</string>
-    <string name="add_estate_activity_surface_of_property">Surface</string>
+    <string name="add_estate_activity_surface_of_property">Surface m2</string>
     <string name="add_estate_activity_description">Description</string>
     <string name="add_estate_activity_address_of_property">Address</string>
     <string name="add_estate_activity_take_photography_button">Camera</string>
@@ -155,7 +156,7 @@
     <string name="fragment_repayment_plan_result_with_deposit_label">With your deposit, your monthly payments will be : </string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-
+    <string name="add_estate_activity_dialog_agent_error_message">You must select an agent before to save</string>
 
 
 </resources>

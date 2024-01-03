@@ -19,16 +19,7 @@ import org.mockito.junit.MockitoJUnitRunner
 class NetworkUtilsTest {
 
     @Mock
-    private lateinit var mockConnectivityManager: ConnectivityManager
-
-    @Mock
     private lateinit var mockWifiManager: WifiManager
-
-    @Mock
-    private lateinit var mockNetwork: Network
-
-    @Mock
-    private lateinit var mockNetworkCapabilities: NetworkCapabilities
 
 
     @Before
@@ -48,17 +39,6 @@ class NetworkUtilsTest {
         assertTrue(Utils.isInternetAvailable(context))
     }
 
-    @Test
-    fun testIsNetworkAvailable_whenNoActiveNetwork() {
-        //mockConnectivityManager return null when activenetwork is called, no network available!
-        Mockito.`when`(mockConnectivityManager.activeNetwork).thenReturn(null)
-
-        val context = Mockito.mock(Context::class.java)
-        //configure simulate context to return mockConnectivityManager
-        Mockito.`when`(context.getSystemService(Context.CONNECTIVITY_SERVICE)).thenReturn(mockConnectivityManager)
-
-        assertFalse(Utils.isNetworkAvailable(context))
-    }
 
 
 

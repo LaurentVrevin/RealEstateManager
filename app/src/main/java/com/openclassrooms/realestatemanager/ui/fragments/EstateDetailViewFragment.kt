@@ -199,7 +199,7 @@ class EstateDetailViewFragment : Fragment(), OnMapReadyCallback {
                 if (propertyIsSold) {
                     isSoldTextView.visibility = VISIBLE
                     isSoldTextView.text =
-                        getString(R.string.estate_detail_fragment_is_sold_textview) + propertyDateSold
+                        getString(R.string.estate_detail_fragment_is_sold_textview) + propertyDateSold + " by " + property.agentId
                 } else {
                     isSoldTextView.visibility = GONE
                 }

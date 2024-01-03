@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.activities.AddEstateActivity"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    >
+
+    <LinearLayout
+        android:layout_width="400dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_gravity="center_horizontal">
+
+
+        <include layout="@layout/cardview_is_sold" />
+
+        <include layout="@layout/cardview_about_property" />
+
+        <include layout="@layout/cardview_informations" />
+
+        <include layout="@layout/cardview_near"/>
+
+        <include layout="@layout/carview_where" />
+
+        <include layout="@layout/cardview_take_picture"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewPhotos_add_estate_activity"
+            android:layout_width="400dp"
+            android:layout_height="match_parent"
+            android:foregroundGravity="center"
+            android:layout_gravity="center_horizontal"/>
+
+    </LinearLayout>
+
+</ScrollView>

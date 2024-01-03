@@ -31,7 +31,7 @@ class LoanHostFragment : Fragment() {
         val pagerAdapter = CreditSimulatorPagerAdapter(childFragmentManager, lifecycle)
         viewPager.adapter = pagerAdapter
 
-        // Utiliser TabLayoutMediator pour connecter TabLayout avec ViewPager2
+        // Use TabLayoutMediator to connect TabLayout with ViewPager2
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             tab.text = when (position) {
                 0 -> "Loan Simulation"

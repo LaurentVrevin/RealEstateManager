@@ -54,6 +54,30 @@
             app:layout_constraintTop_toTopOf="@+id/is_sold_textview"
             tools:ignore="UseSwitchCompatOrMaterialXml" />
 
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/agent_name_edittext_label"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="10dp"
+            android:hint="@string/add_estate_activity_agent_name"
+            android:padding="5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/is_sold_textview">
+
+        <AutoCompleteTextView
+            android:id="@+id/agent_name_edittext_autocomplete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorPrimary"
+            android:importantForAccessibility="yes"
+            android:inputType="text"
+            tools:ignore="LabelFor,MissingConstraints" />
+        </com.google.android.material.textfield.TextInputLayout>
+
 
 
 

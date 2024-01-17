@@ -520,7 +520,7 @@ class AddEstateActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private fun checkIfAllFieldsFilled(): Boolean {
-        // Vérifie d'abord les champs principaux
+
         // Check in first main fields
         val areMainFieldsFilled = checkIfFieldsFilled(
             titlePropertyEditText,
@@ -533,12 +533,12 @@ class AddEstateActivity : AppCompatActivity(), OnMapReadyCallback {
             numberOfBathroomsEditText
         )
 
-        // Si un des champs principaux n'est pas rempli, retourne faux
+        //If one of main fields is empty, return false
         if (!areMainFieldsFilled) {
             return false
         }
 
-        // Vérifie le champ de l'agent si la propriété est marquée comme vendue
+
         //check field about agent if property is sold
         if (isSold && agentNameAutocomplete.text.toString().isEmpty()) {
             showDialog(

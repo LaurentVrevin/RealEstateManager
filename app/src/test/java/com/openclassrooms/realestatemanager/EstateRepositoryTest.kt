@@ -81,21 +81,24 @@ class EstateRepositoryTest {
 
     @Test
     fun updateProperty_propertyDao() = runBlockingTest {
-        // Créer une copie de propertyForTest avec un titre mis à jour
+
+        // Make a copy of propertyForTest with  a updated title
         val updatedProperty = propertyForTest.copy(title = "Updated Title")
 
-        // Appeler la méthode de mise à jour avec la copie modifiée
+
+        // Call the method of update with copie edited
         repository.updateProperty(updatedProperty)
 
-        // Vérifier que la méthode updateProperty du DAO a été appelée avec la propriété mise à jour
+
+        // Check if method updateProperty of dao has been called with updated property
         verify(propertyDao).updateProperty(updatedProperty)
     }
     @Test
     fun getAllProperties_callsDaoMethod() = runBlockingTest {
-        // Appeler la méthode du repository
+        // call method of repo
         repository.propertyListDao
 
-        // Vérifier que la méthode getAllProperties du DAO a été appelée
+        // Check that method getAllPropertie of Dao has been called
         verify(propertyDao).getAllProperties()
     }
 
@@ -103,15 +106,12 @@ class EstateRepositoryTest {
     fun getPropertyById_callsDaoMethod() = runBlockingTest {
         val propertyId = "testId"
 
-        // Appeler la méthode du repository
+        // call method of repository
         repository.getPropertyById(propertyId)
 
-        // Vérifier que la méthode getPropertyById du DAO a été appelée avec le bon ID
+        // Check that method getPropertyById of Dao has been called with the good id
         verify(propertyDao).getPropertyById(propertyId)
     }
-
-
-
 
 
 }

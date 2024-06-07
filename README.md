@@ -20,9 +20,6 @@ RealEstateManager is an Android application tailored for real estate professiona
 
 ## Some previews
 
-## Some previews
-
-<!-- Images en format portrait -->
 <img src="https://github.com/LaurentVrevin/RealEstateManager/assets/94620399/aa972d93-349c-4353-a9fc-1a9f5c05cbd4" alt="screenshot-1717750822481" width="150"/>
 <img src="https://github.com/LaurentVrevin/RealEstateManager/assets/94620399/a4f930ee-9a97-4bb6-806e-9fe1be910f99" alt="screenshot-1704530732156" width="150"/>
 <img src="https://github.com/LaurentVrevin/RealEstateManager/assets/94620399/db3225e5-3c25-4123-944b-3fb490eefa0d" alt="screenshot-1704530642550" width="150"/>
@@ -31,17 +28,9 @@ RealEstateManager is an Android application tailored for real estate professiona
 <img src="https://github.com/LaurentVrevin/RealEstateManager/assets/94620399/d6a9ff00-2069-48fb-9688-7fee95984de5" alt="screenshot-1704530717239" width="150"/>
 <img src="https://github.com/LaurentVrevin/RealEstateManager/assets/94620399/17c1e68d-9ac0-42df-99f3-fd1a87ecb0a4" alt="screenshot-1704530687085" width="150"/>
 
-
-<!-- Ligne de séparation -->
 ---
-
-<!-- Images en format paysage -->
 <img src="https://github.com/LaurentVrevin/RealEstateManager/assets/94620399/0827b5d2-8ad8-47a4-a940-1fb4ab003a1d" alt="Screenshot_20240106_100832" width="300"/>
 <img src="https://github.com/LaurentVrevin/RealEstateManager/assets/94620399/c6989cc7-9d7b-451c-94c2-df11f1ec0d68" alt="Screenshot_20240106_100723" width="300"/>
-
-
-
-
 
 ## 🚀 Installation
 
